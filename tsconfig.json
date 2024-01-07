@@ -1,5 +1,5 @@
 {
-  "files": [],
+  // "files": [],
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
   "compilerOptions": {
     "allowJs": true
