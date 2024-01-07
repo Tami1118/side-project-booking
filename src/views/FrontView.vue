@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import UserHeader from "@/layouts/frontend/UserHeader.vue";
-import UserFooter from "@/layouts/frontend/UserFooter.vue";
+import UserHeader from "@/layouts/frontend/UserHeader";
+import UserFooter from "@/layouts/frontend/UserFooter";
 import { RouterView } from "vue-router";
 
 export default {
