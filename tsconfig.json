@@ -1,16 +1,18 @@
 {
-  // "files": [],
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
-  "compilerOptions": {
-    "allowJs": true,
-    "module": "esnext",
-  },
-  // "references": [
-  //   {
-  //     "path": "./tsconfig.node.json"
-  //   },
-  //   {
-  //     "path": "./tsconfig.app.json"
-  //   }
-  // ],
+  // "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  // "compilerOptions": {
+  //   "allowJs": true,
+  //   "module": "esnext",
+  //   "declaration": true
+  // },
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.app.json"
+    }
+  ],
+  
 }
