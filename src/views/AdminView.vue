@@ -7,7 +7,7 @@
 
 <script>
 import { RouterView } from "vue-router";
-import AdminHeader from "@/layouts/admin/AdminHeader.vie"
+import AdminHeader from "@/layouts/admin/AdminHeader.vue"
 
 export default {
   components: {
