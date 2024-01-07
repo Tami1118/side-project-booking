@@ -42,3 +42,22 @@
     </div>
   </div>
 </template>
+
+<script>
+const {VITE_URL} = import.meta.env
+
+export default {
+  mounted(){
+    this.getData()
+  },
+  methods: {
+    getData(){
+      const url = `${VITE_URL}/api/v1/rooms/`
+      this.$http.get(url)
+        .then(res => {
+          console.log(res)
+        })
+    }
+  }
+}
+</script>
