@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="relative">
     <user-header></user-header>
     <router-view></router-view>
     <user-footer></user-footer>

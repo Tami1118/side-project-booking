@@ -6,7 +6,7 @@
     <button class="p-3 bg-primary text-white" @click="login">登入</button>
     <button class="p-3 bg-primary text-white" @click="checkAdmin">驗證</button>
     <button class="p-3 bg-primary text-white" @click="addRoom">新增房型</button>
-
+    
   </div>
 </template>
 
