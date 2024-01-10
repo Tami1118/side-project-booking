@@ -14,6 +14,7 @@ export default {
         'primary-80': '#AE9984',
         'primary-60': '#E1D1C2',
         'primary-40': '#F1EAE4',
+        'primary-10': '#F7F2EE',
         'primary-tint': '#FAF7F5',
         'success-120': '#299F65',
         'success-100': '#52DD7E',
@@ -56,6 +57,9 @@ export default {
       },
       "fontFamily": {
         "noto-serif-tc" :['Noto Serif TC', 'serif','Comfortaa', 'sans-serif']
+      },
+      "boxShadow": {
+        'input': '0 0 0 4px rgba(190, 156, 124, 0.10)',
       }
     },
   },

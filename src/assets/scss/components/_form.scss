@@ -1,0 +1,13 @@
+.form-input {
+  @apply w-full rounded-2 p-4 focus-visible:shadow-input focus-visible:outline-primary-100 focus-visible:outline-1;
+}
+
+.form-input::placeholder {
+  @apply text-neutral-60
+}
+
+.form-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}

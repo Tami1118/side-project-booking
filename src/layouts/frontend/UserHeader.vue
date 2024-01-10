@@ -17,18 +17,20 @@ export default {
           <img src="/svg/logo-white-en.svg" alt="享樂酒店 Logo">
         </router-link>
 
-        <button type="button">
+        <!-- <button type="button">
           <span class="material-icons text-6">menu</span>
-        </button>
+        </button> -->
 
-        <!-- <nav class="">
+        <nav class="">
           <ul class="flex gap-4">
             <li><router-link class="hover:text-primary-100 p-4" to="/rooms">客房旅宿</router-link> </li>
             <li><router-link class="hover:text-primary-100 p-4" to="/login">會員登入</router-link> </li>
             <li><router-link class="hover:text-primary-100 p-4" to="/booking">立即訂房</router-link> </li>
-            <li><router-link class="hover:text-primary-100 p-4" to="/test">測試頁面</router-link> </li>
+            <li><router-link class="hover:text-primary-100 p-4" to="/guideline">Guideline</router-link> </li>
+            <li><router-link class="hover:text-primary-100 p-4" to="/login">Login</router-link> </li>
+            <li><router-link class="hover:text-primary-100 p-4" to="/admin">後台管理</router-link> </li>
           </ul>
-        </nav> -->
+        </nav>
       </div>
     </div>
   </div>

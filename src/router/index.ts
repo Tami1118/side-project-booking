@@ -60,10 +60,10 @@ const routes = [
         meta: {title: '註冊頁面'}
       },
       {
-        path: 'test',
-        name: 'test',
-        component: () => import('../views/frontend/TestView.vue'),
-        meta: {title: '測試頁面'}
+        path: 'guideline',
+        name: 'guideline',
+        component: () => import('../views/frontend/GuidelineView.vue'),
+        meta: {title: 'Guideline'}
       },
     ],
   },
