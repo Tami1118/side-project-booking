@@ -29,6 +29,7 @@ export default {
         'alert-20': '#F5CCD1',
         'alert-10': '#FDECEF',
         'neutral': '#140F0A',
+        'neutral-100': '#000',
         'neutral-80': '#4B4B4B',
         'neutral-60': '#909090',
         'neutral-40': '#ECECEC',

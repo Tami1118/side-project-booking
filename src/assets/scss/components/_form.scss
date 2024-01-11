@@ -1,5 +1,5 @@
 .form-input {
-  @apply w-full rounded-2 p-4 focus-visible:shadow-input focus-visible:outline-primary-100 focus-visible:outline-1;
+  @apply w-full rounded-2 p-4 border border-neutral-40 focus-visible:shadow-input focus-visible:outline-primary-100 focus-visible:outline-1;
 }
 
 .form-input::placeholder {
@@ -7,6 +7,7 @@
 }
 
 .form-select {
+  @apply border border-neutral-40;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;

@@ -1,13 +1,13 @@
 <template>
   <!-- 可以複製前兩行 class -->
-  <div class="bg-neutral">
+  <div class="bg-neutral-100">
     <div class="container mx-auto px-4 lg:px-0">
 
       <div class="py-20 text-white">
         <div class="flex flex-col lg:flex-row lg:justify-between mb-20">
           <div>
             <!-- logo -->
-            <router-link to="/" class="flex flex-col w-[196px] mb-10">
+            <router-link to="/" class="flex flex-col max-w-[196px] mb-10">
               <img src="/svg/logo-white.svg" alt="享樂酒店 Logo">
               <img src="/svg/logo-white-en.svg" alt="享樂酒店 Logo">
             </router-link>
