@@ -61,6 +61,9 @@ export default {
       },
       "boxShadow": {
         'input': '0 0 0 4px rgba(190, 156, 124, 0.10)',
+      },
+      "spacing": {
+        '18': '72px',
       }
     },
   },
