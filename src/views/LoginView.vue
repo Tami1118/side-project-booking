@@ -4,11 +4,11 @@
       <img class="h-screen w-full object-cover object-center overflow-hidden" src="../assets/images/desktop/register.png" />
     </div>
     <div class="col">
-      <div class="h-full flex justify-center items-center px-5 md:px-0">
-        <div class="basis-full md:basis-1/2 flex flex-col gap-10">
+      <div class="h-full flex justify-center items-center px-5 lg:px-0">
+        <div class="basis-full lg:basis-1/2 flex flex-col gap-10">
           <div class="text-bold">
             <div class="text-primary-100 text-3h md:text-4 mb-2">享樂酒店，誠摯歡迎</div>
-            <h1 class="text-white text-8  md:text-12">立即開始旅程</h1>
+            <h1 class="text-white text-8 xl:text-12">立即開始旅程</h1>
           </div>
           <div class="flex flex-col gap-4">
             <div class="flex flex-col gap-2">
