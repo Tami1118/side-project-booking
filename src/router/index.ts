@@ -48,12 +48,6 @@ const routes = [
         meta: {title: '訂單列表'}
       },
       {
-        path: 'login',
-        name: 'login',
-        component: () => import('../views/LoginView.vue'),
-        meta: {title: '登入頁面'}
-      },
-      {
         path: 'signin',
         name: 'signin',
         component: () => import('../views/SigninView.vue'),
@@ -66,6 +60,12 @@ const routes = [
         meta: {title: 'Guideline'}
       },
     ],
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../views/LoginView.vue'),
+    meta: {title: '登入頁面'}
   },
   {
     path: '/admin',

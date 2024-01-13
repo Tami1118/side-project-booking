@@ -1,22 +1,22 @@
+.btn {
+  @apply py-4 px-9 rounded-2 flex items-center justify-center
+}
+
 .btn-primary {
-  @apply   py-4 px-8 rounded-2 flex items-center
-         bg-primary-100 hover:bg-primary disabled:bg-transparent
+  @apply bg-primary-100 hover:bg-primary disabled:bg-transparent
          text-white disabled:text-neutral-60 ;
 }
 
 .btn-secondary {
-  @apply   py-4 px-8 rounded-2 border flex items-center
-         border-primary-100 hover:border-primary disabled:border-neutral-60 
+  @apply border-primary-100 hover:border-primary disabled:border-neutral-60 
          bg-white hover:bg-primary-10 disabled:bg-transparent 
          text-primary-100 hover:text-primary disabled:text-neutral-60 ;
 }
 
 .btn-ghost {
-  @apply  p-4 flex items-center
-          text-primary-100 hover:text-primary disabled:text-neutral-60;
+  @apply text-primary-100 hover:text-primary disabled:text-neutral-60;
 }
 
 .btn-text {
-  @apply  p-4 flex items-center underline decoration-1 
-          text-primary-100 hover:text-primary disabled:text-neutral-60;
+  @apply text-primary-100 hover:text-primary disabled:text-neutral-60;
 }
