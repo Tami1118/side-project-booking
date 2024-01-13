@@ -5,10 +5,10 @@
     </div>
     <div class="col">
       <div class="h-full flex justify-center items-center px-5 lg:px-0">
-        <div class="basis-full lg:basis-1/2 flex flex-col gap-10">
+        <div class="basis-full lg:basis-1/2 flex flex-col gap-10 duration-300">
           <div class="text-bold">
             <div class="text-primary-100 text-3h md:text-4 mb-2">享樂酒店，誠摯歡迎</div>
-            <h1 class="text-white text-8 xl:text-12">立即開始旅程</h1>
+            <h1 class="text-white text-8 xl:text-12 duration-300">立即開始旅程</h1>
           </div>
           <div class="flex flex-col gap-4">
             <div class="flex flex-col gap-2">
@@ -27,7 +27,7 @@
               <a href="#" class="block btn-text text-3h md:text-4 underline decoration-1">忘記密碼</a>
             </div>
           </div>
-          <a href="#" class="btn-primary btn text-center">會員註冊</a>
+          <a href="#" class="btn-primary font-bold btn text-center">會員註冊</a>
           <div class="text-white">還沒有會員嗎？<a href="#" class="btn-text underline decoration-1 ms-2">前往註冊</a></div>
         </div>
       </div>
