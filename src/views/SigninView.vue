@@ -1,5 +1,7 @@
 <template>
-  <div>
-    我是註冊頁
-  </div>
+  <!-- <div class="justify-center items-stretch bg-stone-950 flex flex-col">
+    <header class="header">
+      <img loading="lazy" srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/aadc6f35f889db13ade9dd43a99237fb657279ff3fed4a9729ae6a39f788157e?apiKey=48d2919cfa074703901ab1b8166c580a&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/aadc6f35f889db13ade9dd43a99237fb657279ff3fed4a9729ae6a39f788157e?apiKey=48d2919cfa074703901ab1b8166c580a&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/aadc6f35f889db13ade9dd43a99237fb657279ff3fed4a9729ae6a39f788157e?apiKey=48d2919cfa074703901ab1b8166c580a&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/aadc6f35f889db13ade9dd43a99237fb657279ff3fed4a9729ae6a39f788157e?apiKey=48d2919cfa074703901ab1b8166c580a&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/aadc6f35f889db13ade9dd43a99237fb657279ff3fed4a9729ae6a39f788157e?apiKey=48d2919cfa074703901ab1b8166c580a&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/aadc6f35f889db13ade9dd43a99237fb657279ff3fed4a9729ae6a39f788157e?apiKey=48d2919cfa074703901ab1b8166c580a&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/aadc6f35f889db13ade9dd43a99237fb657279ff3fed4a9729ae6a39f788157e?apiKey=48d2919cfa074703901ab1b8166c580a&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/aadc6f35f889db13ade9dd43a99237fb657279ff3fed4a9729ae6a39f788157e?apiKey=48d2919cfa074703901ab1b8166c580a&"class="aspect-[1.78] object-contain object-center w-full items-start overflow-hidden max-md:max-w-full" />
+    </header>
+  </div> -->
 </template>
