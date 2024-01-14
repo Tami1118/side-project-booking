@@ -69,10 +69,10 @@
               <input type="email" id="useremail" class="p-4 rounded-2" placeholder="請輸入電子信箱">
             </div>
             <div class="flex flex-col gap-2">
-              <label for="userpass" class="font-bold text-white">密碼</label>
-              <input type="email" id="userpass" class="p-4 rounded-2" placeholder="請輸入密碼">
+              <label for="password" class="font-bold text-white">密碼</label>
+              <input type="email" id="password" class="p-4 rounded-2" placeholder="請輸入密碼">
             </div>
-            <div class="flex justify-between">
+            <div class="flex justify-between items-center">
               <div>
                 <input type="checkbox" id="remember" class="p-4 rounded-2 me-2">
                 <label for="remember" class="font-bold text-3h md:text-4 text-white">記住帳號</label>
