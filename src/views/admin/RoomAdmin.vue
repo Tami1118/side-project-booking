@@ -38,7 +38,7 @@
 //   ]
 // }
 
-const { VITE_URL } = import.meta.env;
+const { VITE_URL } = import.meta.env
 
 export default {
   data() {
@@ -51,7 +51,6 @@ export default {
   methods: {
     login(){
       const url = `${VITE_URL}/api/v1/user/login`
-      // console.log('test')
       this.$http.post(url, {
         "email": "chenziyi93326@gmail.com",
         "password": "a12345678"

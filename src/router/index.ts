@@ -48,9 +48,9 @@ const routes = [
         meta: {title: '訂單列表'}
       },
       {
-        path: 'signin',
-        name: 'signin',
-        component: () => import('../views/SigninView.vue'),
+        path: 'signup',
+        name: 'signup',
+        component: () => import('../views/signupView.vue'),
         meta: {title: '註冊頁面'}
       },
       {
