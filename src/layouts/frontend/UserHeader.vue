@@ -1,16 +1,21 @@
-<script>
-export default {
-  data() {
-    return {
-      isMenu: false,
-    };
-  },
-  methods: {
-    toggleMenu() {
-      this.isMenu = !this.isMenu;
-    },
-  },
+<script setup>
+import { ref, onMounted } from "vue";
+import { useUserStore } from "@/stores/test";
+const userStore = useUserStore();
+
+const isMenu = ref(false);
+const toggleMenu = () => {
+  isMenu.value = !isMenu.value;
 };
+
+const checkUser = userStore.checkUser
+const getUser = userStore.getUser
+// const userInfo = userStore.userInfo
+
+onMounted(() => {
+  checkUser();
+  getUser();
+});
 </script>
 
 <template>
@@ -30,8 +35,9 @@ export default {
             </button>
             <div class="container px-5 w-full h-full flex justify-center items-center">
               <ul class="flex flex-col w-full gap-4">
-                <li><router-link to="/rooms"   @click="toggleMenu" class="block w-full text-center p-4 font-bold hover:text-primary-100">客房旅宿</router-link></li>
-                <li><router-link to="/login"   @click="toggleMenu" class="block w-full text-center p-4 font-bold hover:text-primary-100">會員登入</router-link></li>
+                <li><router-link to="/rooms" @click="toggleMenu" class="block w-full text-center p-4 font-bold hover:text-primary-100">客房旅宿</router-link></li>
+                <li><router-link to="/login" @click="toggleMenu" class="block w-full text-center p-4 font-bold hover:text-primary-100">會員登入</router-link></li>
+
                 <li><router-link to="/booking" @click="toggleMenu" class="block w-full text-center p-4 font-bold bg-primary-100 hover:bg-primary rounded-2 duration-300">立即訂房</router-link></li>
               </ul>
             </div>
