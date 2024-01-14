@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@sweetalert2/theme-dark": "^5.0.16",
+    "@vee-validate/i18n": "^4.12.4",
+    "@vee-validate/rules": "^4.12.4",
     "pinia": "^2.1.7",
     "sass": "^1.69.7",
     "sweetalert2": "^11.10.3",

@@ -89,6 +89,7 @@ export const useUserStore = defineStore('userStore', () => {
     // login
     loginData,
     login,
+    userInfo,
     // signup
     signupData,
     signupStep,
