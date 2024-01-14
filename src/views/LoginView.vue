@@ -75,10 +75,6 @@
               >
             </div>
             <div class="flex flex-col gap-2">
-<<<<<<< HEAD
-              <label for="password" class="font-bold text-white">密碼</label>
-              <input type="email" id="password" class="p-4 rounded-2" placeholder="請輸入密碼">
-=======
               <label for="user-password" class="font-bold text-white">密碼</label>
               <input 
                 type="email" 
@@ -87,7 +83,6 @@
                 placeholder="請輸入密碼"
                 v-model="loginData.password"
               >
->>>>>>> kelvinLin9-main
             </div>
             <div class="flex justify-between items-center">
               <div>
