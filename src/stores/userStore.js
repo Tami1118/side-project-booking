@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 const { VITE_URL } = import.meta.env
+import { Toast, Alert } from '@/mixins/swal'
 
 export const useUserStore = defineStore('userStore', () => {
   const router = useRouter()
@@ -17,24 +18,32 @@ export const useUserStore = defineStore('userStore', () => {
     console.log(loginData.value)
     const url = `${VITE_URL}/api/v1/user/login`
     axios.post(url, loginData.value)
-    .then(res => {
-      console.log(res)
-      const {token} = res.data
-      document.cookie = `typescript=${token}`;
-      axios.defaults.headers.common['Authorization'] = token;
-      userInfo.value = res.data.result
-      loginData.value = {
-        "email": "",
-        "password": "",
-      }
-      console.log(userInfo.value)
-      alert('登入成功')
-      router.push('/')
+      .then(res => {
+        console.log(res)
+        const { token } = res.data
+        document.cookie = `typescript=${token}`;
+        axios.defaults.headers.common['Authorization'] = token;
+        userInfo.value = res.data.result
+        loginData.value = {
+          "email": "",
+          "password": "",
+        }
+        console.log(userInfo.value)
+        Toast.fire({
+          icon: 'success',
+          title: '登入成功'
+        })
+        router.push('/')
+
       })
-    .catch(err => {
-      console.log(err)
-      alert(err.response.data.message)
-    })
+      .catch(err => {
+        console.log(err)
+        // alert(err.response.data.message)
+        Alert.fire({
+          icon: 'error',
+          title: '登入失敗'
+        })
+      })
   }
 
   // signup
@@ -55,26 +64,26 @@ export const useUserStore = defineStore('userStore', () => {
     console.log(signupData.value)
     const url = `${VITE_URL}/api/v1/user/signup`
     axios.post(url, signupData.value)
-    .then(res => {
-      console.log(res)
-      signupData.value = {
-        "name": "",
-        "email": "",
-        "password": "",
-        "phone": "",
-        "birthday": "",
-        "address": {
-          "zipcode": 0,
-          "detail": "",
+      .then(res => {
+        console.log(res)
+        signupData.value = {
+          "name": "",
+          "email": "",
+          "password": "",
+          "phone": "",
+          "birthday": "",
+          "address": {
+            "zipcode": 0,
+            "detail": "",
+          }
         }
-      }
-      alert('註冊成功')
-      router.push('/login')
+        alert('註冊成功')
+        router.push('/login')
       })
-    .catch(err => {
-      console.log(err)
-      alert(err.response.data.message)
-    })
+      .catch(err => {
+        console.log(err)
+        alert(err.response.data.message)
+      })
   }
   return {
     // login
