@@ -6,16 +6,8 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { RouterView } from "vue-router";
 import UserHeader from "@/layouts/frontend/UserHeader.vue";
 import UserFooter from "@/layouts/frontend/UserFooter.vue";
-import { RouterView } from "vue-router";
-
-export default {
-  components: {
-    RouterView,
-    UserHeader,
-    UserFooter
-  },
-};
 </script>
