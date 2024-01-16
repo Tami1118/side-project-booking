@@ -134,26 +134,26 @@
         <div class="flex flex-col gap-4">
           Primary
           <div class="flex justify-start items-center gap-3">
-            <button type="button" class="btn-primary">Button <span class="material-icons ms-1">face</span></button>
-            <button type="button" class="btn-primary" disabled>Button <span class="material-icons ms-1">face</span></button>
-            <button type="button" class="btn-primary">Button</button>
-            <button type="button" class="btn-primary" disabled>Button</button>
+            <button type="button" class="btn btn-primary">Button <span class="material-icons ms-1">face</span></button>
+            <button type="button" class="btn btn-primary" disabled>Button <span class="material-icons ms-1">face</span></button>
+            <button type="button" class="btn btn-primary">Button</button>
+            <button type="button" class="btn btn-primary" disabled>Button</button>
           </div>
 
           Secondary
           <div class="flex justify-start items-center gap-3">
-            <button type="button" class="btn-secondary">Button <span class="material-icons ms-1">face</span></button>
-            <button type="button" class="btn-secondary" disabled>Button <span class="material-icons ms-1">face</span></button>
-            <button type="button" class="btn-secondary">Button</button>
-            <button type="button" class="btn-secondary" disabled>Button</button>
+            <button type="button" class="btn btn-secondary">Button <span class="material-icons ms-1">face</span></button>
+            <button type="button" class="btn btn-secondary" disabled>Button <span class="material-icons ms-1">face</span></button>
+            <button type="button" class="btn btn-secondary">Button</button>
+            <button type="button" class="btn btn-secondary" disabled>Button</button>
           </div>
 
           Ghost
           <div class="flex flex-wrap gap-3">
-            <button type="button" class="btn-ghost">Button <span class="material-icons ms-1">face</span></button>
-            <button type="button" class="btn-ghost" disabled>Button <span class="material-icons ms-1">face</span></button>
-            <button type="button" class="btn-ghost">Button</button>
-            <button type="button" class="btn-ghost" disabled>Button</button>
+            <button type="button" class="btn btn-ghost">Button <span class="material-icons ms-1">face</span></button>
+            <button type="button" class="btn btn-ghost" disabled>Button <span class="material-icons ms-1">face</span></button>
+            <button type="button" class="btn btn-ghost">Button</button>
+            <button type="button" class="btn btn-ghost" disabled>Button</button>
           </div>
 
           Test
@@ -257,13 +257,6 @@ export default {
 <style lang="scss">
 .svg-icon {
   fill: #BF9D7D;
-}
-
-.material-icons{
-  color: #BF9D7D;
-}
-.test{
-  color: red;
 }
 </style>
 

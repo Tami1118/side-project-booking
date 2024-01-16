@@ -6,10 +6,9 @@
     <button class="p-3 bg-primary text-white" @click="login">登入</button>
     <button class="p-3 bg-primary text-white" @click="checkAdmin">驗證</button>
     <button class="p-3 bg-primary text-white" @click="addRoom">新增房型</button>
-    
+
   </div>
 </template>
-
 <script>
 // {
 //   "name": "家庭四人房",
@@ -38,7 +37,7 @@
 //   ]
 // }
 
-const { VITE_URL } = import.meta.env
+const { VITE_URL } = import.meta.env;
 
 export default {
   data() {
@@ -46,37 +45,40 @@ export default {
       data: {},
     };
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
-    login(){
-      const url = `${VITE_URL}/api/v1/user/login`
-      this.$http.post(url, {
-        "email": "chenziyi93326@gmail.com",
-        "password": "a12345678"
-        }).then(res => {
-          console.log(res)
-          const {token} = res.data
+    login() {
+      const url = `${VITE_URL}/api/v1/user/login`;
+      this.$http
+        .post(url, {
+          email: "chenziyi93326@gmail.com",
+          password: "a12345678",
+        })
+        .then((res) => {
+          console.log(res);
+          const { token } = res.data;
           document.cookie = `typescript=${token}`;
-          this.$http.defaults.headers.common['Authorization'] = token;
+          this.$http.defaults.headers.common["Authorization"] = token;
           // console.log(document.cookie)
           // this.checkAdmin()
-        })
+        });
     },
-    checkAdmin(){
-      const token = document.cookie.replace(/(?:(?:^|.*;\s*)typescript\s*=\s*([^;]*).*$)|^.*$/,"$1");
+    checkAdmin() {
+      const token = document.cookie.replace(
+        /(?:(?:^|.*;\s*)typescript\s*=\s*([^;]*).*$)|^.*$/,
+        "$1"
+      );
       this.$http.defaults.headers.common["Authorization"] = token;
 
-      const url = `${VITE_URL}/api/v1/user/check`
-      this.$http.get(url)
-      .then(res => {
-        console.log('驗證成功',res)
+      const url = `${VITE_URL}/api/v1/user/check`;
+      this.$http.get(url).then((res) => {
+        console.log("驗證成功", res);
         this.getRooms();
-      })
+      });
     },
     getRooms() {
       const url = `${VITE_URL}/api/v1/admin/rooms/`;
-      console.log(url)
+      console.log(url);
       this.$http
         .get(url)
         .then((res) => {
@@ -89,9 +91,10 @@ export default {
     },
     addRoom() {
       const url = `${VITE_URL}/api/v1/admin/rooms/`;
-      console.log(url)
+      console.log(url);
 
-      this.$http.post(url, {
+      this.$http
+        .post(url, {
           name: "家庭四人房",
           description:
             "享受高級的住宿體驗，尊爵雙人房提供給您舒適寬敞的空間和精緻的裝潢。",
@@ -118,13 +121,13 @@ export default {
             },
           ],
         })
-        .then(res => {
-          console.log(res)
-          this.getRooms()
+        .then((res) => {
+          console.log(res);
+          this.getRooms();
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };

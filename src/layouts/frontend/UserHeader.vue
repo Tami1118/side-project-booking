@@ -1,53 +1,66 @@
 <script setup>
-import { ref, onMounted } from "vue";
+// import
+import { ref, computed } from "vue";
 import { useUserStore } from "@/stores/test";
-const userStore = useUserStore();
+import { storeToRefs } from "pinia";
+import { useRoute } from "vue-router";
 
+// get store data
+const userStore = useUserStore();
+const { userInfo } = storeToRefs(userStore);
+
+// get route path
+const route = useRoute();
+const routePath = ref("");
+const getPath = computed(() => {
+  return (routePath.value = route.path); //*
+});
+
+// menu open or close
 const isMenu = ref(false);
 const toggleMenu = () => {
   isMenu.value = !isMenu.value;
 };
-
-const checkUser = userStore.checkUser
-const getUser = userStore.getUser
-// const userInfo = userStore.userInfo
-
-onMounted(() => {
-  checkUser();
-  getUser();
-});
 </script>
 
 <template>
-  <div class="fixed top-0 left-0 w-full z-10">
-    <div class="content mx-auto px-3 py-4">
+  <div :class="{'bg-black': getPath !== '/' && getPath === '/login' || getPath === '/signup'}" class="fixed top-0 left-0 w-full z-20">
+    <div class="container mx-auto px-3 py-4">
       <div class="flex justify-between items-center">
-        <router-link to="/" class="max-w-[109px] md:max-w-[196px]">
+        <router-link to="/" class="max-w-[109px] md:max-w-[196px] duration-200">
           <img src="/svg/logo-white.svg" alt="享樂飯店 Logo">
           <img src="/svg/logo-white-en.svg" alt="享樂飯店 Logo">
         </router-link>
 
-        <!-- 如何將 menu sm/md 合而為一 -->
         <div v-if="isMenu">
           <div class="fixed top-0 left-0 w-full h-full bg-black text-white z-10">
             <button type="button" class="absolute top-0 right-0 p-2 m-5">
               <span class="material-icons text-12" @click="toggleMenu">close</span>
             </button>
-            <div class="container px-5 w-full h-full flex justify-center items-center">
-              <ul class="flex flex-col w-full gap-4">
-                <li><router-link to="/rooms" @click="toggleMenu" class="block w-full text-center p-4 font-bold hover:text-primary-100">客房旅宿</router-link></li>
-                <li><router-link to="/login" @click="toggleMenu" class="block w-full text-center p-4 font-bold hover:text-primary-100">會員登入</router-link></li>
-
-                <li><router-link to="/booking" @click="toggleMenu" class="block w-full text-center p-4 font-bold bg-primary-100 hover:bg-primary rounded-2 duration-300">立即訂房</router-link></li>
-              </ul>
-            </div>
+            <ul class="w-full h-full px-5 flex flex-col gap-4 justify-center">
+              <li><router-link to="/rooms" @click="toggleMenu" class="block text-center p-4 font-bold">客房旅宿</router-link></li>
+              <li v-if="userInfo.state === false"><router-link to="/login" class="block text-center p-4 font-bold">會員登入</router-link></li>
+              <li v-if="userInfo !== undefined" class="group">
+                <router-link to="/login" class="flex justify-center items-center p-4 font-bold">
+                  <span class="material-symbols-outlined me-2">account_circle</span>
+                  {{userInfo.name}}
+                </router-link>
+              </li>
+              <li><router-link to="/booking" @click="toggleMenu" class="block w-full text-center p-4 font-bold bg-primary-100 duration-300 rounded-2">立即訂房</router-link></li>
+            </ul>
           </div>
         </div>
 
-        <div class="text-white hidden md:block">
-          <ul class="flex gap-4">
-            <li><router-link to="/rooms" class="font-bold p-4 hover:text-primary-100">客房旅宿</router-link></li>
-            <li><router-link to="/login" class="font-bold p-4 hover:text-primary-100">會員登入</router-link></li>
+        <div class="hidden md:block text-white">
+          <ul class="flex items-center gap-4">
+            <li><router-link to="/rooms" class="block text-center p-4 font-bold hover:text-primary-100">客房旅宿</router-link></li>
+            <li v-if="userInfo.state === false"><router-link to="/login" class="block text-center p-4 font-bold hover:text-primary-100">會員登入</router-link></li>
+            <li v-else class="group">
+              <router-link to="/login" class="text-center p-4 font-bold hover:text-primary-100 flex items-center">
+                <span class="material-symbols-outlined me-2">account_circle</span>
+                {{userInfo.name}}
+              </router-link>
+            </li>
             <li><router-link to="/booking" class="font-bold py-4 px-8 bg-primary-100 hover:bg-primary rounded-2 duration-300">立即訂房</router-link></li>
           </ul>
         </div>

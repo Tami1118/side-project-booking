@@ -1,0 +1,18 @@
+// home-banner
+// home-rooms
+// hoem-culinary 佳餚美饌
+
+.home-banner {
+  .swiper-pagination-bullet{
+    width: 32px;
+    border-radius: 2px;
+    height: 4px;
+    background: #fff;
+    opacity: 1;
+  }
+
+  .swiper-pagination-bullet-active{
+    width: 60px;
+    background: #BF9D7D;
+  }
+}

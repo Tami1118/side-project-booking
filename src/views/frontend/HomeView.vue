@@ -1,9 +1,49 @@
+<script>
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+
+export default {
+  components: {
+    Swiper,
+    SwiperSlide,
+  },
+  setup() {
+    return {
+      pagination: {
+        clickable: true,
+      },
+      modules: [Pagination, Autoplay],
+    };
+  },
+};
+</script>
+
 <template>
   <div class="relative">
-    <div>
-      <img class="h-screen object-cover w-full hidden md:block" src="../../assets/images/desktop/banner.png" alt="">
-      <img class="h-screen object-cover w-full md:hidden" src="../../assets/images/mobile/banner.png" alt="">
-    </div>
+    <swiper class="home-banner h-screen" :pagination="pagination" :modules="modules" :autoplay="{delay: 2000,disableOnInteraction: false}">
+      <swiper-slide class="h-full relative">
+        <div class="absolute top-0 left-0 w-full h-full bg-black opacity-50">
+          <div class="container mx-auto text-white h-full flex justify-center items-center">
+            this is content
+          </div>
+        </div>
+        <img class="h-full object-cover w-full" src="../../assets/images/desktop/banner.png" alt="">
+      </swiper-slide>
+      <swiper-slide class="h-full">
+        <img class="h-full object-cover w-full" src="../../assets/images/desktop/room2-1.png" alt="">
+      </swiper-slide>
+      <swiper-slide class="h-full">
+        <img class="h-full object-cover w-full" src="../../assets/images/desktop/room3-1.png" alt="">
+      </swiper-slide>
+      <!-- <swiper-slide class="h-full">
+        <img class="h-full object-cover w-full" src="../../assets/images/desktop/room4-1.png" alt="">
+      </swiper-slide>
+      <swiper-slide class="h-full">
+        <img class="h-full object-cover w-full" src="../../assets/images/desktop/room5-1.png" alt="">
+      </swiper-slide> -->
+    </swiper>
 
     <!-- hot-news -->
     <!-- about -->
@@ -115,16 +155,6 @@
   </div>
 </template>
 
-<script>
-import { mapState } from "pinia";
-import homeStore from "@/stores/homeStore";
-
-export default {
-  computed: {
-    ...mapState(homeStore, ["hotNew", "about", "supplyInfo", "transportation"]),
-  },
-};
-</script>
 
 <style lang="scss">
 .svg-icon {
