@@ -85,6 +85,21 @@ export const useUserStore = defineStore('userStore', () => {
         alert(err.response.data.message)
       })
   }
+
+  // check
+  const checkUser = () => {
+    const url = `${VITE_URL}/api/v1/user/check`
+    const token = document.cookie.replace(/(?:(?:^|.*;\s*)typescript\s*=\s*([^;]*).*$)|^.*$/, "$1");
+    axios.defaults.headers.common["Authorization"] = token;
+    axios.get(url)
+      .then(res => {
+        console.log('checkUser 驗證成功', res)
+      })
+      .catch(err => {
+        console.log('checkUser 驗證失敗', err)
+      })
+  }
+
   return {
     // login
     loginData,
@@ -95,6 +110,7 @@ export const useUserStore = defineStore('userStore', () => {
     signupStep,
     passwordConfirm,
     signup,
-
+    // check
+    checkUser,
   }
 })

@@ -1,134 +1,98 @@
 <template>
-  <div class="container mx-auto">
-    我是房間管理頁
-    {{data}}
+  <RoomModal v-if="showRoomModal"/>
+  
+  
+  <button 
+    class="p-3 ms-auto bg-primary text-white"
+    @click="showRoomModal = true, updateRoomType = 'create'"
+  >
+    新增房型 
+  </button>
+  <div class="mt-6">共 {{ roomData.length }} 筆資料</div>
+  <div class="overflow-x-auto relative mt-3">
+    <table class="w-full text-sm text-left">
+    <thead>
+      <tr>
+        <th scope="col" class="py-1 px-2">圖片</th>
+        <th scope="col" class="py-1 px-2">名稱/描述</th>
+        <th scope="col" class="py-1 px-2">規格</th>
+        <th scope="col" class="py-1 px-2">價錢</th>
+        <!-- <th scope="col" class="py-1 px-2">其他</th> -->
+        <th scope="col" class="py-1 px-2">編輯</th>
+        <th scope="col" class="py-1 px-2">刪除</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr 
+        v-for="item in roomData" :key="item.id"
+        class=""
+      >
+        <td class="py-2 px-2">
+          <img :src="item.imageUrl" alt="room img" style="width: 80px;">
+        </td>
+        <td class="py-2 px-2">
+          <div class="">{{ item.name }}</div>
+          <div class="">{{ item.description }}</div>
+        </td>
+        <td class="py-2 px-2">
+          <div class="">{{ item.areaInfo }} 坪</div>
+          <div class="">{{ item.bedInfo }}</div>
+        </td>
+        <td class="py-2 px-2">
+          {{ item.price }}
+        </td>
+        <!-- <td class="py-2 px-2">
+          <div class="">{{item.facilityInfo }}</div>
+          <div class="">{{ item.amenityInfo }}</div>
+        </td> -->
+        <td class="py-2 px-2">
+          <button 
+            class="p-3 me-3 bg-primary text-white"
+            @click="
+              showRoomModal = true, 
+              roomDataTemp = JSON.parse(JSON.stringify(item)),
+              updateRoomType = 'edit',
+              editRoomId = item._id"
+          >
+            編輯
+          </button>
+        </td>
+        <td class="py-2 px-2">
+          <button 
+            class="p-3 me-3 bg-primary text-white"
+            @click="deleteRoom(item._id)"
+          >
+            刪除
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-    <button class="p-3 bg-primary text-white" @click="login">登入</button>
-    <button class="p-3 bg-primary text-white" @click="checkAdmin">驗證</button>
-    <button class="p-3 bg-primary text-white" @click="addRoom">新增房型</button>
 
-  </div>
 </template>
-<script>
-// {
-//   "name": "家庭四人房",
-//   "description": "享受高級的住宿體驗，尊爵雙人房提供給您舒適寬敞的空間和精緻的裝潢。",
-//   "imageUrl": "https://fakeimg.pl/300/",
-//   "imageUrlList": [
-//     "https://fakeimg.pl/300/",
-//     "https://fakeimg.pl/300/",
-//     "https://fakeimg.pl/300/"
-//   ],
-//   "areaInfo": "24坪",
-//   "bedInfo": "兩張大床",
-//   "maxPeople": 4,
-//   "price": 10000,
-//   "facilityInfo": [
-//     {
-//       "title": "平面電視",
-//       "isProvide": true
-//     }
-//   ],
-//   "amenityInfo": [
-//     {
-//       "title": "衛生紙",
-//       "isProvide": true
-//     }
-//   ]
-// }
 
-const { VITE_URL } = import.meta.env;
+<script setup>
+import RoomModal from '../../components/admin/RoomModal.vue'
+import { onMounted } from 'vue';
+import { storeToRefs } from'pinia' 
+import { useUserStore } from '@/stores/userStore'
+import { useRoomStore } from '@/stores/roomStore'
 
-export default {
-  data() {
-    return {
-      data: {},
-    };
-  },
-  mounted() {},
-  methods: {
-    login() {
-      const url = `${VITE_URL}/api/v1/user/login`;
-      this.$http
-        .post(url, {
-          email: "chenziyi93326@gmail.com",
-          password: "a12345678",
-        })
-        .then((res) => {
-          console.log(res);
-          const { token } = res.data;
-          document.cookie = `typescript=${token}`;
-          this.$http.defaults.headers.common["Authorization"] = token;
-          // console.log(document.cookie)
-          // this.checkAdmin()
-        });
-    },
-    checkAdmin() {
-      const token = document.cookie.replace(
-        /(?:(?:^|.*;\s*)typescript\s*=\s*([^;]*).*$)|^.*$/,
-        "$1"
-      );
-      this.$http.defaults.headers.common["Authorization"] = token;
+const userStore = useUserStore()
+const checkUser = userStore.checkUser
 
-      const url = `${VITE_URL}/api/v1/user/check`;
-      this.$http.get(url).then((res) => {
-        console.log("驗證成功", res);
-        this.getRooms();
-      });
-    },
-    getRooms() {
-      const url = `${VITE_URL}/api/v1/admin/rooms/`;
-      console.log(url);
-      this.$http
-        .get(url)
-        .then((res) => {
-          console.log(res);
-          this.data = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-    addRoom() {
-      const url = `${VITE_URL}/api/v1/admin/rooms/`;
-      console.log(url);
+const roomStore = useRoomStore()
+const { showRoomModal, roomData, roomDataTemp, updateRoomType, editRoomId } = storeToRefs(roomStore)
+const getRooms = roomStore.getRooms
+const createRoom = roomStore.createRoom
+const editRoom = roomStore.editRoom
+const deleteRoom = roomStore.deleteRoom
 
-      this.$http
-        .post(url, {
-          name: "家庭四人房",
-          description:
-            "享受高級的住宿體驗，尊爵雙人房提供給您舒適寬敞的空間和精緻的裝潢。",
-          imageUrl: "https://fakeimg.pl/300/",
-          imageUrlList: [
-            "https://fakeimg.pl/300/",
-            "https://fakeimg.pl/300/",
-            "https://fakeimg.pl/300/",
-          ],
-          areaInfo: "24坪",
-          bedInfo: "兩張大床",
-          maxPeople: 4,
-          price: 10000,
-          facilityInfo: [
-            {
-              title: "平面電視",
-              isProvide: true,
-            },
-          ],
-          amenityInfo: [
-            {
-              title: "衛生紙",
-              isProvide: true,
-            },
-          ],
-        })
-        .then((res) => {
-          console.log(res);
-          this.getRooms();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-  },
-};
+
+onMounted(() => {
+  checkUser()
+  getRooms()
+})
 </script>

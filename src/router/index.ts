@@ -58,7 +58,7 @@ const routes = [
   {
     path: '/signup',
     name: 'signup',
-    component: () => import('../views/signupView.vue'),
+    component: () => import('../views/SignupView.vue'),
     meta: { title: '註冊頁面' }
   },
   {
