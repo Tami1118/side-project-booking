@@ -24,7 +24,7 @@ const toggleMenu = () => {
 </script>
 
 <template>
-  <div :class="{'bg-black': getPath !== '/' && getPath === '/login' || getPath === '/signup'}" class="fixed top-0 left-0 w-full z-20">
+  <div :class="getPath === '/' || getPath === '/login' || getPath === '/signup'? 'fixed top-0 left-0 bg-transparent':''" class="bg-black w-full z-20">
     <div class="container mx-auto px-3 py-4">
       <div class="flex justify-between items-center">
         <router-link to="/" class="max-w-[109px] md:max-w-[196px] duration-200">
