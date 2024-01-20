@@ -57,17 +57,11 @@ import { useRoomStore } from '@/stores/roomStore'
 
 const roomStore = useRoomStore()
 const { roomData } = storeToRefs(roomStore)
-const getRooms = roomStore.getRooms
+const getFrontRooms = roomStore.getFrontRooms
 
 onMounted(() => {
-  getRooms()
+  getFrontRooms()
 })
-
-// user 之後要整理到外面
-import { useUserStore } from '@/stores/userStore'
-const userStore = useUserStore()
-const checkUser = userStore.checkUser
-checkUser()
 
 </script>
   

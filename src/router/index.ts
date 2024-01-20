@@ -18,8 +18,8 @@ const routes = [
         meta: { title: '旅宿房型' }
       },
       {
-        // path: 'room/:id',
-        path: 'room-detail',
+        path: 'room/:id',
+        // path: 'room-detail',
         name: 'room-detail',
         component: () => import('../views/frontend/RoomDetail.vue'),
         meta: { title: '房型詳細資訊' }

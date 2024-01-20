@@ -141,6 +141,21 @@
         </div>
       </div>
       <div class="flex flex-col gap-2">
+        <div class="font-bold">格局</div>
+        <div class="flex">
+          <div v-for="item in roomDataTemp.patternInfo" :key="item" class="me-3">
+            <input 
+              class="form-check-input" 
+              type="checkbox" 
+              value="" 
+              :id="item.title" 
+              :name="item.title" 
+              v-model="item.isProvide"> 
+            <label :for="item.title">{{ item.title }}</label>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col gap-2">
         <label for="room-img" class="font-bold ">
           圖片
         </label>

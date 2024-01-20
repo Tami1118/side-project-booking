@@ -139,3 +139,18 @@
 }
 </style>
 
+<script setup>
+import { onMounted } from 'vue';
+// import { storeToRefs } from'pinia' 
+import { useRoomStore } from '@/stores/roomStore'
+
+const roomStore = useRoomStore()
+// const { roomDetail } = storeToRefs(roomStore)
+const getFrontRoom = roomStore.getFrontRoom
+
+onMounted(() => {
+  getFrontRoom()
+})
+
+</script>
+
