@@ -21,24 +21,29 @@ export default {
 </script>
 
 <template>
-  <div>
-      <swiper class="home-banner h-screen" :pagination="pagination" :modules="modules" :autoplay="{delay: 2000,disableOnInteraction: false}">
-        <swiper-slide class="h-full relative">
-          <div class="absolute top-0 left-0 w-full h-full bg-black opacity-50">
-            <div class="container mx-auto text-white h-full flex justify-center items-center">
-              this is content
-            </div>
+  <div class="relative">
+    <swiper class="home-banner h-screen" :pagination="pagination" :modules="modules" :autoplay="{delay: 2000,disableOnInteraction: false}">
+      <swiper-slide class="h-full relative">
+        <div class="absolute top-0 left-0 w-full h-full bg-black opacity-50">
+          <div class="container mx-auto text-white h-full flex justify-center items-center">
+            this is content
           </div>
-          <img class="h-full object-cover w-full" src="../../assets/images/desktop/banner.png" alt="">
-        </swiper-slide>
-        <swiper-slide class="h-full">
-          <img class="h-full object-cover w-full" src="../../assets/images/desktop/room2-1.png" alt="">
-        </swiper-slide>
-        <swiper-slide class="h-full">
-          <img class="h-full object-cover w-full" src="../../assets/images/desktop/room3-1.png" alt="">
-        </swiper-slide>
-      </swiper>
-    </div>
+        </div>
+        <img class="h-full object-cover w-full" src="../../assets/images/desktop/banner.png" alt="">
+      </swiper-slide>
+      <swiper-slide class="h-full">
+        <img class="h-full object-cover w-full" src="../../assets/images/desktop/room2-1.png" alt="">
+      </swiper-slide>
+      <swiper-slide class="h-full">
+        <img class="h-full object-cover w-full" src="../../assets/images/desktop/room3-1.png" alt="">
+      </swiper-slide>
+      <!-- <swiper-slide class="h-full">
+        <img class="h-full object-cover w-full" src="../../assets/images/desktop/room4-1.png" alt="">
+      </swiper-slide>
+      <swiper-slide class="h-full">
+        <img class="h-full object-cover w-full" src="../../assets/images/desktop/room5-1.png" alt="">
+      </swiper-slide> -->
+    </swiper>
 
     <!-- hot-news -->
     <!-- about -->
