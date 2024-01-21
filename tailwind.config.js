@@ -64,6 +64,15 @@ export default {
       },
       "spacing": {
         '18': '72px',
+      },
+      "margin": {
+        '30': '120px',
+      },
+      "padding": {
+        '30': '120px',
+      },
+      "fontWeight": {
+        "700": "700"
       }
     },
   },
