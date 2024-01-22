@@ -10,8 +10,8 @@ export const useUserStore = defineStore('userStore', () => {
 
   // login
   const loginData = ref({
-    "email": "",
-    "password": "",
+    email: "",
+    password: "",
   })
   const userInfo = ref({})
   const login = () => {
@@ -103,8 +103,8 @@ export const useUserStore = defineStore('userStore', () => {
   return {
     // login
     loginData,
-    login,
     userInfo,
+    login,
     // signup
     signupData,
     signupStep,
