@@ -12,8 +12,8 @@ const routes = [
         meta: { title: '首頁' }
       },
       {
-        path: 'rooms',
-        name: 'rooms',
+        path: 'room',
+        name: 'room',
         component: () => import('../views/frontend/RoomsView.vue'),
         meta: { title: '旅宿房型' }
       },
@@ -74,14 +74,14 @@ const routes = [
     component: () => import('../views/AdminView.vue'),
     children: [
       {
-        path: 'room',
-        name: 'room',
+        path: 'rooms',
+        name: 'rooms',
         component: () => import('../views/admin/RoomAdmin.vue'),
         meta: { title: '房型管理' }
       },
       {
-        path: 'order',
-        name: 'order',
+        path: 'news',
+        name: 'news',
         component: () => import('../views/admin/OrderAdmin.vue'),
         meta: { title: '消息管理' }
       },
@@ -89,11 +89,11 @@ const routes = [
         path: 'culinary',
         name: 'culinary',
         component: () => import('../views/admin/CulinaryAdmin.vue'),
-        meta: { title: '餐飲管理' }
+        meta: { title: '菜單管理' }
       },
       {
-        path: 'order',
-        name: 'order',
+        path: 'orders',
+        name: 'orders',
         component: () => import('../views/admin/OrderAdmin.vue'),
         meta: { title: '訂單管理' }
       },
