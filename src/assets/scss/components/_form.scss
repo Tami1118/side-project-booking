@@ -1,3 +1,8 @@
+label{
+  @apply block font-bold
+}
+
+
 .form-input {
   @apply w-full rounded-2 p-4 border border-neutral-40 focus-visible:shadow-input focus-visible:outline-primary-100 focus-visible:outline-1;
 }

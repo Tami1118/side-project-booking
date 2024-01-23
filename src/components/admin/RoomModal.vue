@@ -2,8 +2,8 @@
   <p class="">{{ updateRoomType }}</p>
   <VForm  v-slot="{ errors }"
     @submit="updateRoomType === 'create' ? createRoom() : editRoom(), showRoomModal = false">
-    <div class="flex flex-col gap-4">
-      <div class="flex flex-col gap-2">
+    <div class="flex flex-wrap gap-4">
+      <div class="flex flex-col gap-2 w-1/2">
         <label for="room-name" class="font-bold ">
           名稱
         </label>
@@ -19,7 +19,7 @@
         />
         <ErrorMessage class="text-alert-100" name="名稱"/>
       </div>
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2 w-1/2">
         <label for="room-name" class="font-bold ">
           描述
         </label>
@@ -78,6 +78,22 @@
         </div>
         <ErrorMessage class="invalid-feedback" name="床數"/>
       </div>
+      <!-- <div class="flex flex-col gap-2">
+        <label for="room-people" class="font-bold">
+          至少人數
+        </label>
+        <VField
+          name="至少人數"
+          id="room-people-min"
+          type="number"
+          rules="required|min_value:1|max_value:100"
+          class="form-input"
+          :class="{ 'is-invalid': errors['至少人數'] }"
+          placeholder="請輸入至少人數"
+          v-model="roomDataTemp.minPeople"
+        />
+        <ErrorMessage class=" text-alert-100" name="至少人數"/>
+      </div> -->
       <div class="flex flex-col gap-2">
         <label for="room-people" class="font-bold">
           最大人數

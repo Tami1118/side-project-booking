@@ -25,7 +25,8 @@ const routes = [
         meta: { title: '房型詳細資訊' }
       },
       {
-        path: 'booking',
+        path: 'booking/:id',
+        // path: 'booking',
         name: 'booking',
         component: () => import('../views/frontend/BookingView.vue'),
         meta: { title: '房型預約' }

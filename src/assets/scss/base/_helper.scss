@@ -16,8 +16,27 @@ $alert-120 : '#C22538';
 $alert-100 : '#DA3E51';
 $alert-20 : '#F5CCD1';
 $alert-10 : '#FDECEF';
-$neutral : '#140F0A';
+$neutral-100 : '#140F0A';
 $neutral-80 : '#4B4B4B';
 $neutral-60 : '#909090';
 $neutral-40 : '#ECECEC';
 $neutral-10 : '#F9F9F9';
+
+
+.title-deco {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    left: 0;
+    display: block;
+    width: 4px;
+    height: 24px;
+    background: #bf9d7d;
+    border-radius: 10px;
+  }
+}

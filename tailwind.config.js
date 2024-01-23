@@ -7,6 +7,9 @@ export default {
     "./src/views/**/*.{vue,js,ts,jsx,tsx, scss}",
   ],
   theme: {
+    borderRadius: {
+      '5': '20px'      
+    },
     extend: {
       colors: {
         'primary': '#7B6651',
@@ -40,40 +43,41 @@ export default {
         4: '16px',
       },
       fontSize: {
-        '3': '12px',
+        '3':  '12px',
         '3h': '14px',
-        '4': '16px',
+        '4':  '16px',
         '4h': '18px',
-        '5': '20px',
-        '6': '24px',
+        '5':  '20px',
+        '5h': '22px',
+        '6':  '24px',
         '6h': '26px',
-        '7': '28px',
-        '8': '32px',
-        '9': '36px',
+        '7':  '28px',
+        '8':  '32px',
+        '9':  '36px',
         '10': '40px',
         '12': '48px',
         '13': '52px',
         '16': '64px',
         '24': '96px',
       },
-      "fontFamily": {
-        "noto-serif-tc" :['Noto Serif TC', 'serif','Comfortaa', 'sans-serif']
+      fontFamily: {
+        "noto-serif-tc": ['Noto Serif TC', 'serif', 'Comfortaa', 'sans-serif']
       },
-      "boxShadow": {
+      boxShadow: {
         'input': '0 0 0 4px rgba(190, 156, 124, 0.10)',
       },
-      "spacing": {
+      spacing: {
         '18': '72px',
       },
-      "margin": {
+      margin: {
         '30': '120px',
       },
-      "padding": {
+      padding: {
         '30': '120px',
       },
-      "fontWeight": {
+      fontWeight: {
         "700": "700"
-      }
+      },
     },
   },
   plugins: [],
