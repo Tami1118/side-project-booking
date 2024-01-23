@@ -8,7 +8,7 @@
 }
 
 .btn-secondary {
-  @apply border-primary-100 hover:border-primary disabled:border-neutral-60 
+  @apply border border-primary-100 hover:border-primary disabled:border-neutral-60 
          bg-white hover:bg-primary-10 disabled:bg-transparent 
          text-primary-100 hover:text-primary disabled:text-neutral-60 ;
 }

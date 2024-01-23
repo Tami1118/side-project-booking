@@ -78,6 +78,11 @@ export default {
       fontWeight: {
         "700": "700"
       },
+      gap: {
+        '15': '60px',
+        '18': '72px',
+        '30': '120px',
+      }
     },
   },
   plugins: [],
