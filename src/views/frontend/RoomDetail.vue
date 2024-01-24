@@ -77,8 +77,8 @@
                     <p class="text-netural-80 font-500">{{roomDetail.description}}</p>
                   </div>
                   <div class="flex gap-3">
-                    <input type="text" class="form-input">
-                    <input type="text" class="form-input">
+                    <input type="date" class="form-input">
+                    <input type="date" class="form-input">
                   </div>
                   <div class="flex items-center">
                     <p>人數</p>
@@ -136,7 +136,7 @@ import { Pagination } from "swiper/modules";
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useRoomStore } from "@/stores/roomStore";
-import roomInfo from "../../components/frontend/roomInfo.vue";
+import roomInfo from "@/components/frontend/roomInfo.vue";
 
 const roomStore = useRoomStore();
 const { roomDetail } = storeToRefs(roomStore);

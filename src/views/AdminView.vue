@@ -5,14 +5,16 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import AdminHeader from "@/layouts/admin/AdminHeader.vue";
 import { RouterView } from "vue-router";
-import AdminHeader from "@/layouts/admin/AdminHeader.vue"
+import { onMounted } from "vue";
 
-export default {
-  components: {
-    RouterView,
-    AdminHeader
-  },
-};
+import { useUserStore } from "@/stores/userStore";
+const userStore = useUserStore();
+const checkUser = userStore.checkUser;
+
+onMounted(async () => {
+  await checkUser();
+});
 </script>

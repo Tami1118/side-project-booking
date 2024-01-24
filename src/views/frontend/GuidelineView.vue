@@ -84,8 +84,8 @@
             <span class="material-icons">keyboard_arrow_up</span>
             <span class="material-icons">keyboard_arrow_left</span>
             <span class="material-icons">close</span>
-            <span class="material-icons">arrow_back</span>
             <span class="material-icons">arrow_forward</span>
+            <span class="material-icons">arrow_back</span>
             <span class="material-icons">menu</span>
             <span class="material-icons">bed</span>
             <span class="material-icons">account_circle</span>
