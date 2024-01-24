@@ -295,6 +295,7 @@ export const useRoomStore = defineStore('roomStore', () => {
     editRoom,
     deleteRoom,
     getFrontRooms,
-    getFrontRoom
+    getFrontRoom,
+    resetRoomDataTemp,
   }
 })

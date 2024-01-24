@@ -87,13 +87,16 @@ export const useUserStore = defineStore('userStore', () => {
   }
 
   // check
+  const checked = ref(false)
   const checkUser = () => {
+    checked.value = false
     const url = `${VITE_URL}/api/v1/user/check`
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)typescript\s*=\s*([^;]*).*$)|^.*$/, "$1");
     axios.defaults.headers.common["Authorization"] = token;
     axios.get(url)
       .then(res => {
         console.log('checkUser 驗證成功', res)
+        checked.value = true
       })
       .catch(err => {
         console.log('checkUser 驗證失敗', err)
@@ -111,6 +114,7 @@ export const useUserStore = defineStore('userStore', () => {
     passwordConfirm,
     signup,
     // check
+    checked,
     checkUser,
   }
 })

@@ -57,9 +57,16 @@
 
 <script setup>
 import RoomModal from "@/components/admin/RoomModal.vue";
-import { onMounted } from "vue";
+import { watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useRoomStore } from "@/stores/roomStore";
+import { useUserStore } from '@/stores/userStore'
+
+const userStore = useUserStore()
+const { checked } = storeToRefs(userStore);
+watch(checked, (n) => {
+  if (n) getRooms();
+})
 
 const roomStore = useRoomStore();
 const { showRoomModal, roomData, roomDataTemp, updateRoomType, editRoomId } = storeToRefs(roomStore);
@@ -67,7 +74,5 @@ const getRooms = roomStore.getRooms;
 const deleteRoom = roomStore.deleteRoom;
 
 // 問題：如果直接跳到 roomAdim時，會因為 checkuser 較慢無法取得 roomData
-onMounted(() => {
-  getRooms();
-});
+// 解決：用watch監聽 checked，當 checked 為 true 時，再去取得 roomData
 </script>
