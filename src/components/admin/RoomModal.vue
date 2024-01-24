@@ -6,7 +6,7 @@
           <h1 class="text-5">
             {{updateRoomType === "create" ? '新增':'編輯'}}房型
           </h1>
-          <span class="material-icons cursor-pointer" @click="showRoomModal = false">close</span>
+          <span class="material-icons cursor-pointer" @click="showRoomModal = false, resetRoomDataTemp()">close</span>
         </div>
         <div class="p-5">
           <VForm v-slot="{errors}"
@@ -193,7 +193,7 @@
               </div>
             </div>
             <div class="flex gap-2 justify-end">
-              <button type="button" class="btn btn-secondary" @click="showRoomModal = false">取消</button>
+              <button type="button" class="btn btn-secondary" @click="showRoomModal = false, resetRoomDataTemp()">取消</button>
               <button type="submit" class="btn btn-primary">確認</button>
             </div>
           </VForm>
@@ -212,4 +212,5 @@ const roomStore = useRoomStore();
 const { showRoomModal, updateRoomType, roomDataTemp, bedType } = storeToRefs(roomStore);
 const createRoom = roomStore.createRoom;
 const editRoom = roomStore.editRoom;
+const resetRoomDataTemp = roomStore.resetRoomDataTemp;
 </script>

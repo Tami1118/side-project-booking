@@ -13,7 +13,7 @@ const { userInfo } = storeToRefs(userStore);
 const route = useRoute();
 const routePath = ref("");
 const getPath = computed(() => {
-  return (routePath.value = route.path); //*
+  return routePath.value = route.path; //*
 });
 
 // menu open or close
@@ -46,7 +46,7 @@ const toggleMenu = () => {
                   {{userInfo.name}}
                 </router-link>
               </li>
-              <li><router-link to="/booking" @click="toggleMenu" class="block w-full text-center p-4 font-bold bg-primary-100 duration-300 rounded-2">立即訂房</router-link></li>
+              <li><router-link to="/room" @click="toggleMenu" class="block w-full text-center p-4 font-bold bg-primary-100 duration-300 rounded-2">立即訂房</router-link></li>
             </ul>
           </div>
         </div>
@@ -61,7 +61,7 @@ const toggleMenu = () => {
                 {{userInfo.name}}
               </router-link>
             </li>
-            <li><router-link to="/booking" class="font-bold py-4 px-8 bg-primary-100 hover:bg-primary rounded-2 duration-300">立即訂房</router-link></li>
+            <li><router-link to="/room" class="font-bold py-4 px-8 bg-primary-100 hover:bg-primary rounded-2 duration-300">立即訂房</router-link></li>
           </ul>
         </div>
 
