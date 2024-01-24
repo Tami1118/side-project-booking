@@ -4,6 +4,7 @@
       <div class="py-10 lg:py-[168px]">
         <p class="text-3h lg:text-5 mb-2 lg:mb-4 font-bold">房型選擇</p>
         <h2 class="text-8 lg:text-12 text-primary-100 mb-10 lg:mb-20">各種房型，任您挑選</h2>
+        
         <div class="flex flex-col gap-12">
           <div class="flex flex-wrap lg:flex-row rounded-[24px] overflow-hidden bg-white duration-300" v-for="item in roomData" :key="item">
             <div class="w-full lg:w-7/12">
@@ -14,6 +15,7 @@
                           nextEl: '.swiper-button-next',
                           prevEl: '.swiper-button-prev'
                         }"
+                        :loop="true"
                         :modules="modules">
 
                   <div class="hidden lg:block">
@@ -31,6 +33,7 @@
                 </swiper>
               </div>
             </div>
+
             <div class="w-full lg:w-5/12 flex flex-col gap-6 lg:gap-10 p-4 lg:p-10">
               <div>
                 <h3 class="text-7 lg:text-10 mb-2">{{item.name}}</h3>
@@ -52,7 +55,6 @@
                 </div>
                 <span class="block absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-primary-100"></span>
               </div>
-
               <div class="py-[13.5px] flex justify-between items-center">
                 <p class="text-primary-100 text-4 lg:text-6 font-bold">NT$ {{item.price}}</p>
                 <router-link :to="`/room/${item._id}`">
@@ -70,11 +72,11 @@
 <script setup>
 // swiper
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { Pagination, Navigation, Autoplay } from "swiper/modules";
+import { Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-const modules = [Pagination, Navigation, Autoplay];
+const modules = [Pagination, Navigation];
 
 // room
 import { onMounted } from "vue";
@@ -82,8 +84,8 @@ import { storeToRefs } from "pinia";
 import { useRoomStore } from "@/stores/roomStore";
 
 const roomStore = useRoomStore();
-const { roomData } = storeToRefs(roomStore);
 const getFrontRooms = roomStore.getFrontRooms;
+const { roomData } = storeToRefs(roomStore);
 
 onMounted(() => {
   getFrontRooms();
