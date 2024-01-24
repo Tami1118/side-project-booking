@@ -1,9 +1,9 @@
 body{
-  @apply font-noto-serif-tc
+  @apply font-noto-serif-tc text-neutral-100
 }
 
-h1, h2, h3, h4, h5, h6, p, span, a, button, ul, ol, li{
-  @apply leading-[1.2] font-[400]
+h1, h2, h3, h4, h5, h6, span, a, button {
+  @apply leading-[1.2] font-bold
 }
 
 p{

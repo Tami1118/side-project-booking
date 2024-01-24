@@ -12,7 +12,9 @@ export const useRoomStore = defineStore('roomStore', () => {
   const showRoomModal = ref(false)
   const updateRoomType = ref("create")
   const editRoomId = ref("")
+  const bedType = ref(["一張大床", "兩張大床", "三張大床"])
   const roomData = ref([])
+  const roomDetail = ref({})
   const roomDataTemp = ref({
     "name": "",
     "description": "",
@@ -106,41 +108,18 @@ export const useRoomStore = defineStore('roomStore', () => {
         "isProvide": true,
       },
     ],
-    "patternInfo": [
-      {
-        "title": "市景",
-        "isProvide": true,
-      },
-      {
-        "title": "獨立衛浴",
-        "isProvide": true,
-      },
-      {
-        "title": "客廳",
-        "isProvide": true,
-      },
-      {
-        "title": "書房",
-        "isProvide": true,
-      },
-      {
-        "title": "樓梯電梯",
-        "isProvide": true,
-      },
-    ]
   })
-  const roomDetail = ref({})
 
 
   const getRooms = () => {
     const url = `${VITE_URL}/api/v1/admin/rooms/`
     axios.get(url)
       .then((res) => {
-        console.log('成功取得房型資料', res)
+        console.log('getRooms 取得房型列表', res)
         roomData.value = res.data.result
       })
       .catch((err) => {
-        console.log(err)
+        console.log('getRooms 列表取得失敗', err)
       })
   }
   const createRoom = () => {
@@ -275,28 +254,6 @@ export const useRoomStore = defineStore('roomStore', () => {
           "isProvide": true,
         },
       ],
-      "patternInfo": [
-        {
-          "title": "市景",
-          "isProvide": true,
-        },
-        {
-          "title": "獨立衛浴",
-          "isProvide": true,
-        },
-        {
-          "title": "客廳",
-          "isProvide": true,
-        },
-        {
-          "title": "書房",
-          "isProvide": true,
-        },
-        {
-          "title": "樓梯電梯",
-          "isProvide": true,
-        },
-      ]
     }
   }
   const getFrontRooms = () => {
@@ -316,7 +273,6 @@ export const useRoomStore = defineStore('roomStore', () => {
       .then((res) => {
         console.log('成功取得單一資料', res)
         roomDetail.value = res.data.result
-        // roomData.value = res.data.result
       })
       .catch((err) => {
         console.log(err)
@@ -324,12 +280,16 @@ export const useRoomStore = defineStore('roomStore', () => {
   }
 
   return {
+    // data
     showRoomModal,
-    roomData,
-    roomDataTemp,
     updateRoomType,
     editRoomId,
+    bedType,
+    roomData,
+    roomDetail,
+    roomDataTemp,
 
+    // methods
     getRooms,
     createRoom,
     editRoom,
@@ -337,5 +297,4 @@ export const useRoomStore = defineStore('roomStore', () => {
     getFrontRooms,
     getFrontRoom
   }
-
 })

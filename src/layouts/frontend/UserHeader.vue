@@ -38,7 +38,7 @@ const toggleMenu = () => {
               <span class="material-icons text-12" @click="toggleMenu">close</span>
             </button>
             <ul class="w-full h-full px-5 flex flex-col gap-4 justify-center">
-              <li><router-link to="/rooms" @click="toggleMenu" class="block text-center p-4 font-bold">客房旅宿</router-link></li>
+              <li><router-link to="/room" @click="toggleMenu" class="block text-center p-4 font-bold">客房旅宿</router-link></li>
               <li v-if="userInfo.state === false"><router-link to="/login" class="block text-center p-4 font-bold">會員登入</router-link></li>
               <li v-if="userInfo !== undefined" class="group">
                 <router-link to="/login" class="flex justify-center items-center p-4 font-bold">
@@ -53,7 +53,7 @@ const toggleMenu = () => {
 
         <div class="hidden md:block text-white">
           <ul class="flex items-center gap-4">
-            <li><router-link to="/rooms" class="block text-center p-4 font-bold hover:text-primary-100">客房旅宿</router-link></li>
+            <li><router-link to="/room" class="block text-center p-4 font-bold hover:text-primary-100">客房旅宿</router-link></li>
             <li v-if="userInfo.state === false"><router-link to="/login" class="block text-center p-4 font-bold hover:text-primary-100">會員登入</router-link></li>
             <li v-else class="group">
               <router-link to="/login" class="text-center p-4 font-bold hover:text-primary-100 flex items-center">
