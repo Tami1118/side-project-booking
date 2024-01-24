@@ -132,16 +132,9 @@
                   v-model="signupData.phone"
                 >
               </div>
-              <!-- <div class="flex flex-col gap-2">
-                <label for="user-password" class="font-bold text-white">確認密碼</label>
-                <input 
-                  type="email" 
-                  id="user-password" 
-                  class="p-4 rounded-2" 
-                  placeholder="請輸入密碼"
-                  v-model="passwordConfirm"
-                >
-              </div> -->
+
+              <DateSelect/>
+              <CitySelect/>
   
   
             </div>
@@ -163,7 +156,9 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
+import DateSelect from '@/components/widgets/DateSelect.vue'
+import CitySelect from '@/components/widgets/CitySelect.vue'
 import { storeToRefs } from'pinia' 
 import { useUserStore } from '@/stores/userStore'
 

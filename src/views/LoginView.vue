@@ -72,9 +72,10 @@
       </div>
     </div>
   </div>
+
 </template>
 
-<script setup lang="ts">
+<script setup>
 import BgWave from '@/components/widgets/BgWave.vue'
 import { storeToRefs } from'pinia' 
 import { useUserStore } from '@/stores/userStore'
@@ -82,4 +83,6 @@ import { useUserStore } from '@/stores/userStore'
 const userStore = useUserStore()
 const { loginData } = storeToRefs(userStore)
 const login = userStore.login
+
+console.log(loginData)
 </script>
