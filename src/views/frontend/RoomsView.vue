@@ -1,14 +1,30 @@
 <template>
   <div class="bg-primary-10">
     <div class="container mx-auto px-4">
-      <div class="py-10">
-        <p class="text-3h lg:text-5 mb-2 lg:mb-4">房型選擇</p>
+      <div class="py-10 lg:py-[168px]">
+        <p class="text-3h lg:text-5 mb-2 lg:mb-4 font-bold">房型選擇</p>
         <h2 class="text-8 lg:text-12 text-primary-100 mb-10 lg:mb-20">各種房型，任您挑選</h2>
         <div class="flex flex-col gap-12">
           <div class="flex flex-wrap lg:flex-row rounded-[24px] overflow-hidden bg-white duration-300" v-for="item in roomData" :key="item">
             <div class="w-full lg:w-7/12">
               <div class="h-[200px] lg:h-[464px]">
-                <swiper class="h-full" :pagination="{ clickable: true }" :navigation="true" :modules="modules">
+                <swiper class="room-list-swiper h-full"
+                        :pagination="{ clickable: true }"
+                        :navigation="{
+                          nextEl: '.swiper-button-next',
+                          prevEl: '.swiper-button-prev'
+                        }"
+                        :modules="modules">
+
+                  <div class="hidden lg:block">
+                    <div class="swiper-button-prev bg-white text-block" style="height: 56px; width: 56px; border-radius: 100%">
+                      <span class="material-icons text-black">keyboard_arrow_left</span>
+                    </div>
+                    <div class="swiper-button-next bg-white text-block" style="height: 56px; width: 56px; border-radius: 100%">
+                      <span class="material-icons text-black">keyboard_arrow_right</span>
+                    </div>
+                  </div>
+
                   <swiper-slide v-for="imgList in item.imageUrlList" :key="imgList">
                     <img class="object-cover h-full w-full" :src="imgList" alt="room img">
                   </swiper-slide>
@@ -38,7 +54,7 @@
               </div>
 
               <div class="py-[13.5px] flex justify-between items-center">
-                <p class="text-primary-100 text-4 lg:text-6">NT$ {{item.price}}</p>
+                <p class="text-primary-100 text-4 lg:text-6 font-bold">NT$ {{item.price}}</p>
                 <router-link :to="`/room/${item._id}`">
                   <span class="material-icons text-primary-100 text-6 block">arrow_forward</span>
                 </router-link>
