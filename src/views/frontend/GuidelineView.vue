@@ -1,6 +1,6 @@
 <template>
   <!-- 第一行 container 可複製於各頁面 -->
-  <div class="container mx-auto px-4 sm:px-0 py-10">
+  <div class="container mx-auto px-4 lg:px-0 py-10">
     <div class="flex flex-col gap-8">
       <div aria-label="Color System">
         <h2 class="text-6 font-bold pb-2 mb-4 border-b">Color System</h2>
@@ -246,6 +246,13 @@
       <div aria-label="address list">
         <h2 class="text-6 font-bold pb-2 mb-4 border-b">Address List</h2>
         {{city}}
+
+        <form action="">
+          <select name="" id="" class="form-input">
+            <option value="">請選擇</option>
+            <option :value="item" v-for="(item, key) in city" :key="key">{{item}}</option>
+          </select>
+        </form>
       </div>
     </div>
     <!--

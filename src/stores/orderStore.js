@@ -129,13 +129,24 @@ export const useOrderStore = defineStore('order', () => {
       .then(res => {
         console.log(res)
         addressList.value = res.data
-        city.value = Array.from(
-          new Set(addressList.value.map(item => item.name))
-        )
+        city.value = addressList.value.map(item => item.name)
+        // city.value = Array.from(
+        //   new Set(addressList.value.map(item => item.name))
+        // )
       })
       .catch(err => {
         console.log(err)
       })
+  }
+
+  const districtsList = ref([])
+  const getDistricts = (city) => {
+    console.log(city)
+    // 選取 city
+    // const index
+    // index = addressList.findIndex(item => item.city === city)
+    // return addressList[index].districts
+    // Array.from(new Set(addressList[index].districts.map(item => item.name)))
   }
 
   return {
@@ -156,6 +167,8 @@ export const useOrderStore = defineStore('order', () => {
     // address
     addressList,
     city,
-    address
+    districtsList,
+    address,
+    getDistricts,
   }
 })
