@@ -133,7 +133,7 @@
         <h2 class="text-6 font-bold pb-2 mb-4 border-b">Button</h2>
         <div class="flex flex-col gap-4">
           Primary
-          <div class="flex justify-start items-center gap-3">
+          <div class="flex justify-start items-center gap-3 flex-wrap">
             <button type="button" class="btn btn-primary">Button <span class="material-icons ms-1">face</span></button>
             <button type="button" class="btn btn-primary" disabled>Button <span class="material-icons ms-1">face</span></button>
             <button type="button" class="btn btn-primary">Button</button>
@@ -141,7 +141,7 @@
           </div>
 
           Secondary
-          <div class="flex justify-start items-center gap-3">
+          <div class="flex justify-start items-center gap-3 flex-wrap">
             <button type="button" class="btn btn-secondary">Button <span class="material-icons ms-1">face</span></button>
             <button type="button" class="btn btn-secondary" disabled>Button <span class="material-icons ms-1">face</span></button>
             <button type="button" class="btn btn-secondary">Button</button>
@@ -227,19 +227,24 @@
           </div>
         </div>
       </div>
+
+      <div aria-label="Date Picker">
+        <h2 class="text-6 font-bold pb-2 mb-4 border-b">Vue DatePicker</h2>
+        <VueDatePicker v-model="date"
+                       locale="tw"
+                       cancelText="清除日期"
+                       selectText="確定日期"
+                       range
+                       multi-calendars
+                       fixed-start
+                       :enable-time-picker="false"
+                       :clearable="false"
+                       :day-names="['一', '二', '三', '四', '五', '六', '日']" >
+          </VueDatePicker>
+      </div>
     </div>
     
-    <VueDatePicker v-model="date"
-                   locale="tw"
-                   cancelText="清除日期"
-                   selectText="確定日期"
-                   range
-                   multi-calendars
-                   fixed-start
-                   :enable-time-picker="false"
-                   :clearable="false"
-                   :day-names="['一', '二', '三', '四', '五', '六', '日']" >
-    </VueDatePicker>
+    
     
   </div>
 

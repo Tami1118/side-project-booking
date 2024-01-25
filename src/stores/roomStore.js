@@ -7,14 +7,23 @@ import { useRoute } from 'vue-router'
 
 export const useRoomStore = defineStore('roomStore', () => {
   const route = useRoute()
-  // const currentRouteId = ref(null)
-
   const showRoomModal = ref(false)
   const updateRoomType = ref("create")
-  const editRoomId = ref("")
   const bedType = ref(["一張大床", "兩張大床", "三張大床"])
+
   const roomData = ref([])
-  const roomDetail = ref({})
+  const getRooms = () => {
+    const url = `${VITE_URL}/api/v1/admin/rooms/`
+    axios.get(url)
+      .then((res) => {
+        console.log('getRooms 以取得房型列表', res)
+        roomData.value = res.data.result
+      })
+      .catch((err) => {
+        console.log('getRooms 失敗', err)
+      })
+  }
+
   const roomDataTemp = ref({
     "name": "",
     "description": "",
@@ -109,56 +118,48 @@ export const useRoomStore = defineStore('roomStore', () => {
       },
     ],
   })
-
-  const getRooms = async () => {
-    const url = `${VITE_URL}/api/v1/admin/rooms/`
-    axios.get(url)
-      .then((res) => {
-        console.log('getRooms 取得房型列表', res)
-        roomData.value = res.data.result
-      })
-      .catch((err) => {
-        console.log('getRooms 列表取得失敗', err)
-      })
-  }
   const createRoom = () => {
-    console.log('createRoom')
+    // console.log('createRoom')
     const url = `${VITE_URL}/api/v1/admin/rooms/`
     axios.post(url, roomDataTemp.value)
       .then((res) => {
-        console.log('成功建立房型資料', res)
+        console.log('createRoom 已新增房型', res)
         resetRoomDataTemp()
         getRooms()
       })
       .catch((err) => {
-        console.log(err)
+        console.log('createRoom 失敗', err)
       })
   }
+
+  const editRoomId = ref("")
   const editRoom = () => {
     console.log('editRoom', editRoomId.value)
     const url = `${VITE_URL}/api/v1/admin/rooms/${editRoomId.value}`
     axios.put(url, roomDataTemp.value)
       .then((res) => {
-        console.log('成功編輯房型資料', res)
+        console.log('editRoomId 已更新房型', res)
         resetRoomDataTemp()
         getRooms()
       })
       .catch((err) => {
-        console.log(err)
+        console.log('editRoomId 失敗',err)
       })
   }
+
   const deleteRoom = (id) => {
     console.log(id)
     const url = `${VITE_URL}/api/v1/admin/rooms/${id}`
     axios.delete(url)
       .then((res) => {
-        console.log(res)
+        console.log('deleteRoom 已刪除房型',res)
         getRooms()
       })
       .catch((err) => {
         console.log(err)
       })
   }
+
   const resetRoomDataTemp = () => {
     roomDataTemp.value = {
       "name": "",
@@ -260,45 +261,44 @@ export const useRoomStore = defineStore('roomStore', () => {
     const url = `${VITE_URL}/api/v1/rooms/`
     axios.get(url)
       .then((res) => {
-        console.log('成功取得房型資料', res)
+        console.log('getFrontRooms 取得列表資料', res)
         roomData.value = res.data.result
       })
       .catch((err) => {
-        console.log(err)
+        console.log('getFrontRooms 失敗',err)
       })
   }
 
+  const roomDetail = ref({})
   const imageList = ref([])
   const getFrontRoom = () => {
     const url = `${VITE_URL}/api/v1/rooms/${route.params.id}`
     axios.get(url)
       .then((res) => {
-        console.log('成功取得單一資料', res)
+        console.log('getFrontRoom 取得房型資料', res)
         roomDetail.value = res.data.result
         imageList.value = res.data.result.imageUrlList
       })
       .catch((err) => {
-        console.log(err)
+        console.log('getFrontRoom 失敗',err)
       })
   }
 
   return {
-    // data
     showRoomModal,
     updateRoomType,
-    editRoomId,
     bedType,
-    roomData,
-    roomDetail,
-    roomDataTemp,
-    imageList,
 
-    // methods
+    roomData,
     getRooms,
+    roomDataTemp,
     createRoom,
+    resetRoomDataTemp,
+    editRoomId,
     editRoom,
     deleteRoom,
-    resetRoomDataTemp,
+    roomDetail,
+    imageList,
     getFrontRooms,
     getFrontRoom,
   }
