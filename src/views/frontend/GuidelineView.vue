@@ -242,17 +242,32 @@
                        :day-names="['一', '二', '三', '四', '五', '六', '日']" >
           </VueDatePicker>
       </div>
+
+      <div aria-label="address list">
+        <h2 class="text-6 font-bold pb-2 mb-4 border-b">Address List</h2>
+        {{city}}
+      </div>
     </div>
-    
-    
-    
+    <!--
+      todo：
+      1. 調整RWD CS
+      2. html插入套件
+      3. input:date 格式需分為兩個
+      4. 調整日期格式
+      5. 轉為元件
+      6. 日期須暫存本地端（跨頁時顯示上一頁選擇結果）
+    -->
   </div>
 
 </template>
 
 <script setup>
 import { ref, onMounted, watchEffect } from 'vue';
-
+import { useOrderStore } from '@/stores/orderStore.js'
+import { storeToRefs } from 'pinia';
+const orderStore = useOrderStore()
+const address = orderStore.address;
+const {city, addressList} = storeToRefs(orderStore)
 
 const date = ref();
 
@@ -260,6 +275,7 @@ onMounted(() => {
   const startDate = new Date();
   const endDate = new Date(new Date().setDate(startDate.getDate() + 2));
   date.value = [startDate, endDate];
+  address()
 
   watchEffect(() => {
     console.log(date.value)

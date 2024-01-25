@@ -40,7 +40,7 @@
                 <p class="font-500 text-3h lg:text-4">{{item.description}}</p>
               </div>
 
-              <div class="flex flex-wrap gap-4 pb-6 lg:pb-10 relative">
+              <div class="flex flex-wrap gap-2 lg:gap-4 pb-6 lg:pb-10 relative">
                 <div class="p-4 h-[97px] aspect-square rounded-2 bg-white flex flex-col justify-between border border-primary-40">
                   <img src="/svg/zoom.svg" class="w-[24px] h-[24px]" alt="">
                   <p class="mt-2 text-3h lg:text-4 text-nowrap">{{item.areaInfo}}坪</p>

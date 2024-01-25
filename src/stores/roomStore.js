@@ -11,6 +11,7 @@ export const useRoomStore = defineStore('roomStore', () => {
   const updateRoomType = ref("create")
   const bedType = ref(["一張大床", "兩張大床", "三張大床"])
 
+  // admin
   const roomData = ref([])
   const getRooms = () => {
     const url = `${VITE_URL}/api/v1/admin/rooms/`
@@ -269,6 +270,7 @@ export const useRoomStore = defineStore('roomStore', () => {
       })
   }
 
+  // front
   const roomDetail = ref({})
   const imageList = ref([])
   const getFrontRoom = () => {
@@ -289,6 +291,7 @@ export const useRoomStore = defineStore('roomStore', () => {
     updateRoomType,
     bedType,
 
+    // admin
     roomData,
     getRooms,
     roomDataTemp,
@@ -297,6 +300,8 @@ export const useRoomStore = defineStore('roomStore', () => {
     editRoomId,
     editRoom,
     deleteRoom,
+
+    // front
     roomDetail,
     imageList,
     getFrontRooms,

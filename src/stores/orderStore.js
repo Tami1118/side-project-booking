@@ -9,33 +9,14 @@ import axios from 'axios'
 export const useOrderStore = defineStore('order', () => {
   // const route = useRoute()
 
-  const orderList = ref([])
-  const order = ref({})
-  const tempOrder = ref(
-    {
-      // "roomId": "",
-      // "checkInDate": "",
-      // "checkOutDate": "",
-      // "peopleNum": 0,
-      // "userInfo": {
-      //   "address": {
-      //     "zipcode": 0,
-      //     "detail": ""
-      //   },
-      //   "name": "",
-      //   "phone": "",
-      //   "email": ""
-      // }
-    }
-  )
-
 
   // admin
+  const orderList = ref([])
   const getOrders = () => {
     const url = `${VITE_URL}/api/v1/admin/orders/`
     axios.get(url)
       .then(res => {
-        console.log(res)
+        console.log('getOrder 訂單列表',res)
         orderList.value = res.data.result
       })
       .catch(err => {
@@ -43,6 +24,23 @@ export const useOrderStore = defineStore('order', () => {
       })
   }
 
+  const tempOrder = ref(
+    {
+      "roomId": "",
+      "checkInDate": "",
+      "checkOutDate": "",
+      "peopleNum": 0,
+      "userInfo": {
+        "address": {
+          "zipcode": 0,
+          "detail": ""
+        },
+        "name": "",
+        "phone": "",
+        "email": ""
+      }
+    }
+  )
   const editOrder = () => {
     // const url = `${VITE_URL}/api/v1/admin/orders/${route.params.id}`
     const url = `${VITE_URL}/api/v1/admin/orders/65ac8c5080ae3e636b421c46`
@@ -84,6 +82,7 @@ export const useOrderStore = defineStore('order', () => {
       })
   }
 
+  const order = ref({})
   const getFrontOrder = () => {
     // const url = `${VITE_URL}/api/v1/order/${route.params.id}`
     const url = `${VITE_URL}/api/v1/orders/65ac8c5080ae3e636b421c46`
@@ -120,12 +119,19 @@ export const useOrderStore = defineStore('order', () => {
       })
   }
 
-  // 地址無法取得
+  // 問題：http 無法取得地址，可能須為 https 才能夠取得
+  // 已解決：調整 vite.config 環境設定
+  const addressList = ref([])
+  const city = ref([])
   const address = () => {
     const url = 'https://gist.githubusercontent.com/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json'
     axios.get(url)
       .then(res => {
         console.log(res)
+        addressList.value = res.data
+        city.value = Array.from(
+          new Set(addressList.value.map(item => item.name))
+        )
       })
       .catch(err => {
         console.log(err)
@@ -133,17 +139,23 @@ export const useOrderStore = defineStore('order', () => {
   }
 
   return {
+    // admin
     orderList,
-    order,
-    tempOrder,
-
     getOrders,
+    tempOrder,
     editOrder,
     deleteOrder,
+
+    // front
     getFrontOrders,
+    order,
     getFrontOrder,
     createOrder,
     deleteFrontOrder,
+
+    // address
+    addressList,
+    city,
     address
   }
 })
