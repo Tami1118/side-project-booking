@@ -1,46 +1,22 @@
-# side-project-booking
+# 享樂酒店訂房網
 
-This template should help get you started developing with Vue 3 in Vite.
+###### (訂房網Demo)[https://tami1118.github.io/side-project-booking/]
+###### (UI 設計稿)[https://www.figma.com/file/23VhjSXFWeZfXYXjcZOceb/%E5%85%AD%E8%A7%92-Project-%2F-%E9%85%92%E5%BA%97%E8%A8%82%E6%88%BF%E7%B6%B2%E7%AB%99?node-id=4323%3A10366&mode=dev]
 
-## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## 專案技術
+- Vite 環境建置
+- Vue 3 Composition API
+- Tailwind + SCSS 響應式設計
+- TypeScript
+- Pinia 狀態管理
+- Vue Router 路由管理
+- Eslint 程式碼結構
 
-## Type Support for `.vue` Imports in TS
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+## 專案套件
+- Vue Axios 串接 RESTful API 資料
+- Vue Datepicker 日期套件
+- Vee Validate 表單驗證管理
+- Sweet Alert 2 彈跳視窗設計
+- Swiper 圖片輪播設計
