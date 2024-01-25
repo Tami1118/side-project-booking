@@ -1,8 +1,8 @@
 import { defineStore } from "pinia"
 import { ref } from 'vue'
+const { VITE_URL } = import.meta.env
 import axios from 'axios'
 import { useRouter } from 'vue-router'
-const { VITE_URL } = import.meta.env
 import { Toast, Alert } from '@/mixins/swal'
 
 export const useUserStore = defineStore('userStore', () => {
@@ -15,11 +15,11 @@ export const useUserStore = defineStore('userStore', () => {
   })
   const userInfo = ref({})
   const login = () => {
-    console.log(loginData.value)
+    // console.log(loginData.value)
     const url = `${VITE_URL}/api/v1/user/login`
     axios.post(url, loginData.value)
       .then(res => {
-        console.log(res)
+        console.log('login 成功',res)
         const { token } = res.data
         document.cookie = `typescript=${token}`;
         axios.defaults.headers.common['Authorization'] = token;
@@ -34,16 +34,31 @@ export const useUserStore = defineStore('userStore', () => {
           title: '登入成功'
         })
         router.push('/')
-
       })
       .catch(err => {
-        console.log(err)
-        // alert(err.response.data.message)
+        console.log('login 失敗',err)
+        // console.log(err.response.data.message)
         Alert.fire({
           icon: 'error',
           title: '登入失敗'
         })
       })
+  }
+  const getUser = () => {
+    const url = `${VITE_URL}/api/v1/user`
+    axios.get(url)
+      .then(res => {
+        console.log('getUser 成功', res)
+        userInfo.value = res.data.result
+      })
+      .catch(err => {
+        console.log('getUser 失敗', err)
+        userInfo.value.state = false
+      })
+  }
+  const logout = () => {
+    document.cookie = `typescript=""`
+    router.push('/')
   }
 
   // signup
@@ -61,7 +76,7 @@ export const useUserStore = defineStore('userStore', () => {
   })
   const passwordConfirm = ref("")
   const signup = () => {
-    console.log(signupData.value)
+    // console.log(signupData.value)
     const url = `${VITE_URL}/api/v1/user/signup`
     axios.post(url, signupData.value)
       .then(res => {
@@ -87,16 +102,15 @@ export const useUserStore = defineStore('userStore', () => {
   }
 
   // check
-  const checked = ref(false)
-  const checkUser = () => {
-    checked.value = false
-    const url = `${VITE_URL}/api/v1/user/check`
+  const isChecked = ref(false)
+  const checkUser = async () => {
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)typescript\s*=\s*([^;]*).*$)|^.*$/, "$1");
     axios.defaults.headers.common["Authorization"] = token;
+    const url = `${VITE_URL}/api/v1/user/check`
     axios.get(url)
       .then(res => {
         console.log('checkUser 驗證成功', res)
-        checked.value = true
+        isChecked.value = true
       })
       .catch(err => {
         console.log('checkUser 驗證失敗', err)
@@ -108,13 +122,17 @@ export const useUserStore = defineStore('userStore', () => {
     loginData,
     userInfo,
     login,
+    logout,
+    getUser,
+
     // signup
     signupData,
     signupStep,
     passwordConfirm,
     signup,
+
     // check
-    checked,
+    isChecked,
     checkUser,
   }
 })

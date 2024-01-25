@@ -1,11 +1,12 @@
 <script setup>
 // import
 import { ref, computed } from "vue";
-import { useUserStore } from "@/stores/test";
 import { storeToRefs } from "pinia";
 import { useRoute } from "vue-router";
 
-// get store data
+
+// user
+import { useUserStore } from "@/stores/userStore";
 const userStore = useUserStore();
 const { userInfo } = storeToRefs(userStore);
 

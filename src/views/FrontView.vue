@@ -7,12 +7,16 @@
 </template>
 
 <script setup>
+// view
 import UserHeader from "@/layouts/frontend/UserHeader.vue";
 import UserFooter from "@/layouts/frontend/UserFooter.vue";
 import { RouterView } from "vue-router";
-import { onMounted } from "vue";
-import { useUserStore } from "@/stores/test";
 
+// basic
+import { onMounted } from "vue";
+
+// user
+import { useUserStore } from "@/stores/userStore";
 const userStore = useUserStore()
 const checkUser = userStore.checkUser;
 const getUser = userStore.getUser;

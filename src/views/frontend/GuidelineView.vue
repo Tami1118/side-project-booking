@@ -228,30 +228,38 @@
         </div>
       </div>
     </div>
+    
+    <VueDatePicker v-model="date"
+                   locale="tw"
+                   cancelText="清除日期"
+                   selectText="確定日期"
+                   range
+                   multi-calendars
+                   fixed-start
+                   :enable-time-picker="false"
+                   :clearable="false"
+                   :day-names="['一', '二', '三', '四', '五', '六', '日']" >
+    </VueDatePicker>
+    
   </div>
+
 </template>
 
-<script>
-const { VITE_URL } = import.meta.env;
+<script setup>
+import { ref, onMounted, watchEffect } from 'vue';
 
-export default {
-  data() {
-    return {
-      is_disabled: true,
-    };
-  },
-  mounted() {
-    this.getData();
-  },
-  methods: {
-    getData() {
-      const url = `${VITE_URL}/api/v1/rooms/`;
-      this.$http.get(url).then((res) => {
-        console.log(res);
-      });
-    },
-  },
-};
+
+const date = ref();
+
+onMounted(() => {
+  const startDate = new Date();
+  const endDate = new Date(new Date().setDate(startDate.getDate() + 2));
+  date.value = [startDate, endDate];
+
+  watchEffect(() => {
+    console.log(date.value)
+  })
+})
 </script>
 
 <style lang="scss">

@@ -28,8 +28,7 @@
           <td class="p-2 text-end">{{ item.price }}</td>
           <td class="p-2">
             <div class="flex flex-wrap gap-2">
-              <button class="p-3 btn-primary"
-                      @click="
+              <button class="p-3 btn-primary" @click="
                       showRoomModal = true, 
                       roomDataTemp = JSON.parse(JSON.stringify(item)),
                       updateRoomType = 'edit',
@@ -57,22 +56,44 @@
 
 <script setup>
 import RoomModal from "@/components/admin/RoomModal.vue";
+// import { watch, onMounted, watchEffect } from "vue";
 import { watch } from "vue";
 import { storeToRefs } from "pinia";
+
+// room
 import { useRoomStore } from "@/stores/roomStore";
-import { useUserStore } from '@/stores/userStore'
-
-const userStore = useUserStore()
-const { checked } = storeToRefs(userStore);
-watch(checked, (n) => {
-  if (n) getRooms();
-})
-
 const roomStore = useRoomStore();
-const { showRoomModal, roomData, roomDataTemp, updateRoomType, editRoomId } = storeToRefs(roomStore);
+const { roomData, roomDataTemp, updateRoomType, editRoomId, showRoomModal } = storeToRefs(roomStore);
 const getRooms = roomStore.getRooms;
 const deleteRoom = roomStore.deleteRoom;
 
+// user
+import { useUserStore } from "@/stores/userStore";
+const userStore = useUserStore();
+const { isChecked } = storeToRefs(userStore)
+
+watch(isChecked, (n) => {
+  if(n) getRooms()
+})
+
+// onMounted(async () => {
+  // await getRooms()
+  // console.log(route.path)
+// })
+
 // 問題：如果直接跳到 roomAdim時，會因為 checkuser 較慢無法取得 roomData
 // 解決：用watch監聽 checked，當 checked 為 true 時，再去取得 roomData
+
+// // route
+// import { useRoute } from "vue-router"
+// const route  = useRoute()
+// watchEffect(() => {
+//   if (route.path === '/admin/rooms') {
+//     getRooms()
+//     window.scrollTo(0, 0);
+//   }
+// });
+
+// 延伸
+// 問題：若不加 onMounted 會需要再重新更新頁面才會出現，但加了 onMounted 變成先取得失敗然後再重新驗證一次
 </script>

@@ -2,7 +2,7 @@ import { defineStore } from "pinia"
 import { ref } from 'vue'
 import axios from 'axios'
 const { VITE_URL } = import.meta.env
-import { Toast, Alert } from '@/mixins/swal'
+// import { Toast, Alert } from '@/mixins/swal'
 import { useRoute } from 'vue-router'
 
 export const useRoomStore = defineStore('roomStore', () => {
@@ -110,8 +110,7 @@ export const useRoomStore = defineStore('roomStore', () => {
     ],
   })
 
-
-  const getRooms = () => {
+  const getRooms = async () => {
     const url = `${VITE_URL}/api/v1/admin/rooms/`
     axios.get(url)
       .then((res) => {
@@ -256,6 +255,7 @@ export const useRoomStore = defineStore('roomStore', () => {
       ],
     }
   }
+
   const getFrontRooms = () => {
     const url = `${VITE_URL}/api/v1/rooms/`
     axios.get(url)
@@ -267,12 +267,15 @@ export const useRoomStore = defineStore('roomStore', () => {
         console.log(err)
       })
   }
+
+  const imageList = ref([])
   const getFrontRoom = () => {
     const url = `${VITE_URL}/api/v1/rooms/${route.params.id}`
     axios.get(url)
       .then((res) => {
         console.log('成功取得單一資料', res)
         roomDetail.value = res.data.result
+        imageList.value = res.data.result.imageUrlList
       })
       .catch((err) => {
         console.log(err)
@@ -288,6 +291,7 @@ export const useRoomStore = defineStore('roomStore', () => {
     roomData,
     roomDetail,
     roomDataTemp,
+    imageList,
 
     // methods
     getRooms,
@@ -297,6 +301,5 @@ export const useRoomStore = defineStore('roomStore', () => {
     resetRoomDataTemp,
     getFrontRooms,
     getFrontRoom,
-    resetRoomDataTemp,
   }
 })

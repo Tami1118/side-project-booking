@@ -3,10 +3,9 @@ import router from '../router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
+// VeeValidate
 // 引入 VeeValidate 元件跟功能
-import {
-  Field, Form, ErrorMessage, defineRule, configure,
-} from 'vee-validate';
+import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate';
 // 引入 VeeValidate 的驗證規則
 import * as AllRules from '@vee-validate/rules';
 // 引入 VeeValidate 的 i18n 功能
@@ -25,7 +24,12 @@ configure({
 });
 setLocale('zh_TW');
 
-export function registerPlugins (app) {
+
+// vue datepicker
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+
+export function registerPlugins(app) {
   app
     .use(createPinia())
     .use(router)
@@ -33,4 +37,5 @@ export function registerPlugins (app) {
     .component('VField', Field)
     .component('VForm', Form)
     .component('ErrorMessage', ErrorMessage)
+    .component('VueDatePicker', VueDatePicker)
 }

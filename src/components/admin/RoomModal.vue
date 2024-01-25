@@ -159,6 +159,10 @@
                                v-model="roomDataTemp.imageUrlList[0]" />
                         <img :src="roomDataTemp.imageUrlList[0]" class="rounded-2 h-[200px] w-full object-cover" alt="">
                       </div>
+                      <!-- 
+                        待辦：
+                        新增、刪除按鈕
+                       -->
                       <div>
                         <input type="text"
                                class="form-input mb-2"
@@ -204,11 +208,11 @@
 </template>
 
 <script setup>
-import { useRoomStore } from "@/stores/roomStore";
 import { storeToRefs } from "pinia";
 
+// room
+import { useRoomStore } from "@/stores/roomStore";
 const roomStore = useRoomStore();
-
 const { showRoomModal, updateRoomType, roomDataTemp, bedType } = storeToRefs(roomStore);
 const createRoom = roomStore.createRoom;
 const editRoom = roomStore.editRoom;

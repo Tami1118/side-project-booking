@@ -78,11 +78,11 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 const modules = [Pagination, Navigation];
 
-// room
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
-import { useRoomStore } from "@/stores/roomStore";
 
+// room
+import { useRoomStore } from "@/stores/roomStore";
 const roomStore = useRoomStore();
 const getFrontRooms = roomStore.getFrontRooms;
 const { roomData } = storeToRefs(roomStore);
@@ -91,5 +91,3 @@ onMounted(() => {
   getFrontRooms();
 });
 </script>
-  
-

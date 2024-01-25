@@ -97,30 +97,30 @@
     </div>
   </div>
 
-
   <!-- <RoomModal v-if="showRoomModal" /> -->
 </template>
 
 <script setup>
-import { onMounted } from "vue";
-import { useOrderStore } from "@/stores/orderStore.js";
-import { useUserStore } from "@/stores/userStore.js"
+import { watch } from "vue";
 import { storeToRefs } from "pinia";
 
+// order
+import { useOrderStore } from "@/stores/orderStore.js";
 const orderStore = useOrderStore();
-const userStore = useUserStore();
-
 const getOrders = orderStore.getOrders;
-const checkUser = userStore.checkUser;
 const deleteOrder = orderStore.deleteOrder;
 const { orderList, tempOrder } = storeToRefs(orderStore);
+
+// user
+import { useUserStore } from '@/stores/userStore'
+const userStore = useUserStore()
+const { isChecked } = storeToRefs(userStore);
+
+watch(isChecked, (n) => {
+  if (n) getOrders();
+})
 
 const dataFormat = (data) => {
   return data.split("T")[0];
 };
-
-onMounted(() => {
-  checkUser();
-  getOrders();
-});
 </script>

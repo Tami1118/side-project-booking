@@ -3,8 +3,9 @@
     <!-- 調整 swiper navigation style -->
     <div class="lg:hidden">
       <swiper :pagination="true"
-              class="h-[250px] md:h-[500px] duration-300"
-              :modules="modules">
+              :modules="modules"
+              class="room-list-swiper h-[250px] md:h-[500px] duration-300"
+              >
         <swiper-slide class="h-full" v-for="(item, key) in roomDetail.imageUrlList" :key="key">
           <img :src="item" class="w-full h-full object-cover" alt="">
         </swiper-slide>
@@ -14,24 +15,15 @@
     <div class="container mx-auto px-4 sm:px-0">
       <div class="hidden lg:block py-20">
         <div class="flex gap-2 bg-white rounded-[16px] overflow-hidden">
-          <!-- 連結待處理 -->
           <div class="basis-6/12">
-            <img src="../../assets/images/desktop/room2-1.png" alt="">
+            <img :src="imageList[0]" alt="">
           </div>
           <div class="basis-6/12">
             <div class="grid grid-cols-2 gap-2 h-full">
-              <div>
-                <img class="h-full w-full object-cover" src="../../assets/images/desktop/room2-2.png" alt="">
-              </div>
-              <div>
-                <img class="h-full w-full object-cover" src="../../assets/images/desktop/room2-3.png" alt="">
-              </div>
-              <div>
-                <img class="h-full w-full object-cover" src="../../assets/images/desktop/room2-4.png" alt="">
-              </div>
-              <div>
-                <img class="h-full w-full object-cover" src="../../assets/images/desktop/room2-5.png" alt="">
-              </div>
+              <div><img class="h-full w-full object-cover" :src="imageList[1]" alt=""></div>
+              <div><img class="h-full w-full object-cover" :src="imageList[2]" alt=""></div>
+              <div><img class="h-full w-full object-cover" :src="imageList[3]" alt=""></div>
+              <div><img class="h-full w-full object-cover" :src="imageList[4]" alt=""></div>
             </div>
           </div>
         </div>
@@ -63,7 +55,6 @@
                   <li class="text-neutral-80 text-3h font-bold leading-[1.5]">為了確保所有客人的安全，請勿在走廊或公共區域大聲喧嘩，並遵守酒店的其他規定。</li>
                 </ul>
               </div>
-
             </div>
           </div>
 
@@ -104,26 +95,6 @@
   </div>
 </template>
 
-<style lang="scss">
-.title-deco {
-  position: relative;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    left: 0;
-    display: block;
-    width: 4px;
-    height: 24px;
-    background: #bf9d7d;
-    border-radius: 10px;
-  }
-}
-</style>
-
 <script setup>
 // swiper
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -131,20 +102,44 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination } from "swiper/modules";
+const modules = [Pagination];
+
+
+import roomInfo from "@/components/frontend/roomInfo.vue";
+import { ref, onMounted, watchEffect } from "vue";
+import { storeToRefs } from "pinia";
 
 // room
-import { onMounted } from "vue";
-import { storeToRefs } from "pinia";
 import { useRoomStore } from "@/stores/roomStore";
-import roomInfo from "@/components/frontend/roomInfo.vue";
-
 const roomStore = useRoomStore();
-const { roomDetail } = storeToRefs(roomStore);
+const { roomDetail, imageList } = storeToRefs(roomStore);
 const getFrontRoom = roomStore.getFrontRoom;
 
-onMounted(() => {
-  getFrontRoom();
-});
 
-const modules = [Pagination];
+// 問題
+// 1. 無法取得 roomDetail.imageUrlList[0]... 陣列
+// 2. 嘗試使用 JSON.parse(JSON.stringfy()) 深層拷貝
+// 3. 還是會發生資料順序取得問題
+// 目前解決方式：store 新增一陣列變數 imageList，導入結果值
+
+const roomData = ref({})
+const deepCopy = (sourse) => JSON.parse(JSON.stringify(sourse));
+
+const asyncFunctions = async () => {
+  try {
+    await getFrontRoom()
+    roomData.value = await deepCopy(roomDetail.value)
+
+  } catch(error) {
+    console.log(error)
+  }
+}
+
+onMounted(() => {
+  asyncFunctions()
+
+  watchEffect(() => {
+    console.log(roomData.value)
+  })
+});
 </script>
