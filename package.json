@@ -12,15 +12,16 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
     "@sweetalert2/theme-dark": "^5.0.16",
     "@vee-validate/i18n": "^4.12.4",
     "@vee-validate/rules": "^4.12.4",
-    "@vuepic/vue-datepicker": "^7.4.1",
     "date-fns": "^3.3.1",
     "pinia": "^2.1.7",
     "sass": "^1.69.7",
     "sweetalert2": "^11.10.3",
     "swiper": "^11.0.5",
+    "v-calendar": "^3.1.2",
     "vee-validate": "^4.12.4",
     "vue": "^3.3.11",
     "vue-axios": "^3.5.2",

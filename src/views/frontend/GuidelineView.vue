@@ -230,17 +230,7 @@
 
       <div aria-label="Date Picker">
         <h2 class="text-6 font-bold pb-2 mb-4 border-b">Vue DatePicker</h2>
-        <VueDatePicker v-model="date"
-                       locale="tw"
-                       cancelText="清除日期"
-                       selectText="確定日期"
-                       range
-                       multi-calendars
-                       fixed-start
-                       :enable-time-picker="false"
-                       :clearable="false"
-                       :day-names="['一', '二', '三', '四', '五', '六', '日']" >
-          </VueDatePicker>
+          <room-date></room-date>
       </div>
 
       <div aria-label="address list">
@@ -269,6 +259,7 @@
 </template>
 
 <script setup>
+import RoomDate from '@/components/widgets/RoomDate.vue'
 import { ref, onMounted, watchEffect } from 'vue';
 import { useOrderStore } from '@/stores/orderStore.js'
 import { storeToRefs } from 'pinia';

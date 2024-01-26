@@ -16,7 +16,7 @@
 
 ## 專案套件
 - Vue Axios 串接 RESTful API 資料
-- Vue Datepicker 日期套件
+- VCalendar 日期套件
 - Vee Validate 表單驗證管理
 - Sweet Alert 2 彈跳視窗設計
 - Swiper 圖片輪播設計

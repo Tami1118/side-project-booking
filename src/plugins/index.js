@@ -25,9 +25,15 @@ configure({
 setLocale('zh_TW');
 
 
-// vue datepicker
-import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css'
+// VCalendar
+import VCalendar from 'v-calendar';
+import 'v-calendar/style.css';
+
+
+
+// mixins
+import { getNight, getLocalDateFormat, toThousands } from "@/mixins/format"
+
 
 export function registerPlugins(app) {
   app
@@ -37,5 +43,6 @@ export function registerPlugins(app) {
     .component('VField', Field)
     .component('VForm', Form)
     .component('ErrorMessage', ErrorMessage)
-    .component('VueDatePicker', VueDatePicker)
+    .use(VCalendar, {})
+    .config.globalProperties.$formats = { getNight, getLocalDateFormat, toThousands };
 }
