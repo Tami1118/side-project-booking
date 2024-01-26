@@ -52,13 +52,16 @@
           <button class="btn btn-primary" @click="checkDate">確定日期</button>
         </div>
       </div>
+      {{getResulte.start}} <br>
+      {{getResulte.end}}
+      <button @click="retrieveBookingDate">取得日期</button>
     </div>
   </div>
 </template>
 
 <script setup>
 import { useScreens } from 'vue-screen-utils';
-import { ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 const bookingDate = ref({
   start: new Date(),
@@ -72,9 +75,29 @@ const resetDate = () => {
   }
 }
 
+watch(bookingDate, (n) => {
+  console.log(n)
+})
+
+
+// 存取本地端，跨頁使用
 const checkDate = () => {
-  console.log(nightNum.value)
-}
+  localStorage.setItem('bookingDate', JSON.stringify(bookingDate.value));
+  
+};
+
+const getResulte = ref({})
+const retrieveBookingDate = () => {
+  const storedBookingDate = localStorage.getItem('bookingDate');
+  if (storedBookingDate) {
+    getResulte.value = JSON.parse(storedBookingDate);
+  }
+};
+
+
+onMounted(() => {
+  retrieveBookingDate()
+})
 
 
 // style

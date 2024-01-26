@@ -1,14 +1,14 @@
 <template>
-  <div class="flex flex-col space-y-1">
-    <label for="birthdate" class="text-white">生日</label>
-    <div class="flex space-x-2">
-      <select v-model="birthdate.year" class="form-select block w-full mt-1" @change="updateDays">
-        <option v-for="year in years" :key="year" :value="year">{{ year }} 年</option>
+  <div>
+    <label for="birthdate" class="form-label text-white">生日</label>
+    <div class="flex gap-2">
+      <select v-model="birthdate.year" class="form-input" @change="updateDays">
+        <option v-for="year in Array.from({ length: new Date().getFullYear() - 1899 }, (_, index) => index + 1900).reverse()" :key="year" :value="year">{{ year }} 年</option>
       </select>
-      <select v-model="birthdate.month" class="form-select block w-full mt-1" @change="updateDays">
+      <select v-model="birthdate.month" class="form-input" @change="updateDays">
         <option v-for="month in Array.from({ length: 12 }, (_, index) => index + 1)" :key="month" :value="month">{{ month }} 月</option>
       </select>
-      <select v-model="birthdate.day" class="form-select block w-full mt-1">
+      <select v-model="birthdate.day" class="form-input">
         <option v-for="day in daysInMonth" :key="day" :value="day">{{ day }} 日</option>
       </select>
     </div>
@@ -19,29 +19,29 @@
 import { ref, computed, watch } from 'vue';
 
 const birthdate = ref({
-  year: 1990,
-  month: 8,
-  day: 15
+  year: new Date().getFullYear(),
+  month: 1,
+  day: 1
 });
 
-const currentYear = new Date().getFullYear();
-const years = ref([...Array(currentYear - 1899).keys()].map(i => i + 1900).reverse());
 
+// 月份對應之天數
+// 注意：每400年或100年，且為4的倍數，2月有29天
 const daysInMonth = computed(() => {
-  const month = birthdate.value.month;
   const year = birthdate.value.year;
+  const month = birthdate.value.month;
   
-  if (month === 2) { // February
-    // Check for leap year
+  if (month === 2) {
     const isLeapYear = year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0);
     return isLeapYear ? 29 : 28;
-  } else if ([4, 6, 9, 11].includes(month)) { // April, June, September, November
+  } else if ([4, 6, 9, 11].includes(month)) {
     return 30;
   } else {
     return 31;
   }
 });
 
+// 天數隨年、月變動
 const updateDays = () => {
   const maxDay = daysInMonth.value;
   if (birthdate.value.day > maxDay) {
@@ -51,6 +51,7 @@ const updateDays = () => {
 
 watch(() => birthdate.value.year, updateDays);
 watch(() => birthdate.value.month, updateDays);
+
 </script>
 
 <style>
