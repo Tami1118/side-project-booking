@@ -18,17 +18,14 @@
         <div class="basis-full lg:basis-5/12 bg-white rounded-[20px] p-4 lg:p-10 flex flex-col gap-6 lg:gap-10 h-fit duration-300">
           <h2 class="text-5 lg:text-6">
             修改密碼
-            <!-- {{Boolean(isForm)}} toggle 都沒有反應 -->
-            <!-- 修改 {{isFrom ? '1':'2'}} -->
           </h2>
-
-          <!-- <user-acount :is-form="isForm"></user-acount> -->
           <UserAccount/>
         </div>
 
         <div class="basis-full lg:basis-7/12 bg-white rounded-[20px] p-4 lg:p-10 flex flex-col gap-6 lg:gap-10 h-fit duration-300">
           <h2 class="text-5 lg:text-6">基本資料</h2>
-          <div class="flex flex-col gap-6" :class="{'hidden': isForm}">
+          <UserFrom v-if="showEditUserInfo"/>
+          <div v-if="!showEditUserInfo" class="flex flex-col gap-6">
             <div>
               <p class="font-500 mb-2 text-neutral-80">姓名</p>
               <p class="font-bold">{{ userInfo.name }}</p>
@@ -46,12 +43,10 @@
               <p class="font-bold">{{ userInfo.address?.detail }}</p>
             </div>
           </div>
-          <user-from :class="{'hidden': !isForm}"></user-from>
-
-          <div v-if="!isForm">
-            <button class="btn btn-secondary border border-primary-100 w-fit">編輯</button>
+          <div v-if="!showEditUserInfo">
+            <button class="btn btn-secondary border border-primary-100 w-fit" @click="showEditUserInfo = true">編輯</button>
           </div>
-          <div v-else>
+          <div v-if="showEditUserInfo">
             <button class="btn bg-neutral-40 text-neutral-60 w-full lg:w-fit">儲存設定</button>
           </div>
         </div>
@@ -62,13 +57,13 @@
 
 <script setup lang="ts">
 import UserAccount from '@/components/frontend/UserAccount.vue'
-import userFrom from '@/components/frontend/userForm.vue'
-import { ref, onMounted } from "vue";
+import UserFrom from '@/components/frontend/UserFrom.vue'
+import { onMounted } from "vue";
 import { storeToRefs } from'pinia' 
 import { useUserStore } from '@/stores/userStore'
 
 const userStore = useUserStore()
-const { userInfo } = storeToRefs(userStore)
+const { userInfo, showEditUserInfo } = storeToRefs(userStore)
 const getUer = userStore.getUser
 
 
@@ -76,8 +71,4 @@ onMounted (() => {
   getUer()
 })
 
-const isForm = ref(false);
-// const toggleFrom = () => {
-//   isFrom.value = !isForm.value
-// }
 </script>
