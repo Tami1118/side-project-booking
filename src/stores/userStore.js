@@ -44,23 +44,11 @@ export const useUserStore = defineStore('userStore', () => {
         })
       })
   }
-  const getUser = () => {
-    const url = `${VITE_URL}/api/v1/user`
-    axios.get(url)
-      .then(res => {
-        console.log('getUser 成功', res)
-        userInfo.value = res.data.result
-      })
-      .catch(err => {
-        console.log('getUser 失敗', err)
-        userInfo.value.state = false
-      })
-  }
+  // logout
   const logout = () => {
     document.cookie = `typescript=""`
     router.push('/')
   }
-
   // signup
   const signupStep = ref(1)
   const signupData = ref({
@@ -75,8 +63,21 @@ export const useUserStore = defineStore('userStore', () => {
     }
   })
   const passwordConfirm = ref("")
+  const birthdate = ref({
+    year: new Date().getFullYear(),
+    month: 1,
+    day: 1
+  });
+  const selectedCity = ref(null)
+  const selectedDistrict = ref(null)
+  const selectedZip = ref(null)
+  const detailedAddress = ref("")
   const signup = () => {
-    // console.log(signupData.value)
+
+    signupData.value.address.zipcode = selectedZip.value
+    signupData.value.address.detail = `${selectedCity.value}${selectedDistrict.value}${detailedAddress.value}`
+    signupData.value.birthday = `${birthdate.value.year}/${birthdate.value.month}/${birthdate.value.day}`
+    console.log(signupData.value.address, signupData.value.birthday)
     const url = `${VITE_URL}/api/v1/user/signup`
     axios.post(url, signupData.value)
       .then(res => {
@@ -93,14 +94,13 @@ export const useUserStore = defineStore('userStore', () => {
           }
         }
         alert('註冊成功')
-        router.push('/login')
+        router.push('/')
       })
       .catch(err => {
         console.log(err)
         alert(err.response.data.message)
       })
   }
-
   // check
   const isChecked = ref(false)
   const checkUser = async () => {
@@ -116,6 +116,60 @@ export const useUserStore = defineStore('userStore', () => {
         console.log('checkUser 驗證失敗', err)
       })
   }
+  // edit
+  const editUserData = ref({
+    userId: "",
+    name: "",
+    phone: "",
+    birthday: "",
+    address: {
+      zipcode: 0,
+      detail: ""
+    },
+    oldPassword: "",
+    newPassword: ""
+  })
+  const newPassword2 = ref("");
+  const showEditPassword = ref(false);
+  const showEditUserInfo = ref(false);
+  const getUser = () => {
+    const url = `${VITE_URL}/api/v1/user`
+    axios.get(url)
+      .then(res => {
+        console.log('getUser 成功', res)
+        userInfo.value = res.data.result
+      })
+      .catch(err => {
+        console.log('getUser 失敗', err)
+        userInfo.value.state = false
+      })
+  }
+  const editUser = () => {
+    if (editUserData.value.newPassword !== newPassword2.value) {
+      alert("密碼不一致");
+      return;
+    }
+    const url = `${VITE_URL}/api/v1/user`
+    axios.put(url, editUserData.value)
+      .then(res => {
+        console.log('修改資料 成功',res)
+        userInfo.value = res.data.result
+        showEditPassword.value = false
+        Toast.fire({
+          icon: 'success',
+          title: '修改資料成功'
+        })
+
+      })
+      .catch(err => {
+        console.log('login 失敗',err)
+        Alert.fire({
+          icon: 'error',
+          title: '修改資料失敗'
+        })
+      })
+  }
+
 
   return {
     // login
@@ -123,16 +177,28 @@ export const useUserStore = defineStore('userStore', () => {
     userInfo,
     login,
     logout,
-    getUser,
 
     // signup
     signupData,
     signupStep,
     passwordConfirm,
+    birthdate,
+    selectedCity,
+    detailedAddress,
+    selectedDistrict,
+    selectedZip,
     signup,
 
     // check
     isChecked,
     checkUser,
+
+    // edit
+    editUserData,
+    newPassword2,
+    showEditPassword,
+    showEditUserInfo,
+    getUser,
+    editUser,
   }
 })

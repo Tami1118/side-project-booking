@@ -1,19 +1,30 @@
 <template>
   <div class="flex flex-col space-y-1">
-    <label for="district" class="text-gray-700">地區</label>
-    <div class="flex space-x-2">
-      <select v-model="selectedCity" class="form-select block w-full mt-1" @change="updateDistricts">
-        <option v-for="city in cities" :key="city.name" :value="city.name">{{ city.name }}</option>
-      </select>
-      <select v-model="selectedDistrict" class="form-select block w-full mt-1">
-        <option v-for="district in districts" :key="district.zip" :value="district.name">{{ district.name }}</option>
-      </select>
+    <label for="district" class="form-label text-white ">地區</label>
+    <div class="">
+      <div class="flex space-x-2">
+        <select v-model="selectedCity" class="form-input block w-full mt-1" @change="updateDistricts">
+          <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
+        </select>
+        <select v-model="selectedDistrict" class="form-input block w-full mt-1">
+          <option v-for="district in districts" :key="district.zip" :value="district.name">{{ district.name }}</option>
+        </select>
+      </div>
+      <div class="mt-3">
+        <input type="text" id="address" v-model="detailedAddress" class="form-input mt-1 block w-full" placeholder="請輸入詳細地址">
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
+import { storeToRefs } from'pinia' 
+import { useUserStore } from '@/stores/userStore'
+
+const userStore = useUserStore()
+const { selectedCity, selectedDistrict, detailedAddress, selectedZip } = storeToRefs(userStore)
+
 
 const taiwanCities = ref([
   {
@@ -1634,8 +1645,8 @@ const taiwanCities = ref([
   },
 ]);
 
-const selectedCity = ref(taiwanCities.value[0].name);
-const selectedDistrict = ref(null);
+selectedCity.value = ref(taiwanCities.value[0].name);
+selectedZip.value
 const cities = computed(() => taiwanCities.value.map((city) => city.name));
 
 const districts = computed(() => {
@@ -1643,12 +1654,22 @@ const districts = computed(() => {
   return city ? city.districts : [];
 });
 
+
+
 const updateDistricts = () => {
-  selectedDistrict.value =
-    districts.value.length > 0 ? districts.value[0].name : null;
+  console.log(districts.value)
+  selectedDistrict.value = districts.value.length > 0 ? districts.value[0].name : null;
+  selectedZip.value = districts.value.length > 0 ? districts.value[0].zip : null;
 };
 
 watch(selectedCity, updateDistricts);
+watch(selectedDistrict, updateDistricts);
+onMounted(() => {
+  if (taiwanCities.value.length > 0) {
+    selectedCity.value = taiwanCities.value[0].name;
+    updateDistricts();
+  }
+});
 </script>
 
 <style>
