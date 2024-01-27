@@ -48,5 +48,5 @@
 </template>
 
 <script setup lang="ts">
-import orderRoomInfo from "@/components/frontend/orderRoomInfo.vue";
+import orderRoomInfo from "@/components/frontend/OrderRoomInfo.vue";
 </script>
