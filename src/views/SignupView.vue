@@ -35,7 +35,7 @@
               <div class="flex flex-col gap-2">
                 <label for="user-password" class="font-bold text-white">密碼</label>
                 <input 
-                  type="email" 
+                  type="password"  
                   id="user-password" 
                   class="p-4 rounded-2" 
                   placeholder="請輸入密碼"
@@ -45,11 +45,11 @@
               <div class="flex flex-col gap-2">
                 <label for="user-password" class="font-bold text-white">確認密碼</label>
                 <input 
-                  type="email" 
+                  type="password" 
                   id="user-password" 
                   class="p-4 rounded-2" 
-                  placeholder="請輸入密碼"
-                  v-model="signupData.password"
+                  placeholder="請再輸入一次密碼"
+                  v-model="passwordConfirm"
                 >
               </div>
   
