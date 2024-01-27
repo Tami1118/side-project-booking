@@ -98,9 +98,9 @@
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useRoomStore } from "@/stores/roomStore";
-import roomInfo from "@/components/frontend/roomInfo.vue";
-import userForm from "@/components/frontend/userForm.vue";
-// import bookingLoading from "@/components/frontend/bookingLoading.vue";
+import roomInfo from "@/components/frontend/RoomInfo.vue";
+import userForm from "@/components/frontend/UserForm.vue";
+// import bookingLoading from "@/components/frontend/BookingLoading.vue";
 
 const roomStore = useRoomStore();
 const { roomDetail } = storeToRefs(roomStore);
