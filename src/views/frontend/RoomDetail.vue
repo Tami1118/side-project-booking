@@ -2,10 +2,7 @@
   <div class="bg-primary-10">
     <!-- 調整 swiper navigation style -->
     <div class="lg:hidden">
-      <swiper :pagination="true"
-              :modules="modules"
-              class="room-list-swiper h-[250px] md:h-[500px] duration-300"
-              >
+      <swiper :pagination="true" :modules="modules" class="room-list-swiper h-[250px] md:h-[500px] duration-300">
         <swiper-slide class="h-full" v-for="(item, key) in roomDetail.imageUrlList" :key="key">
           <img :src="item" class="w-full h-full object-cover" alt="">
         </swiper-slide>
@@ -37,9 +34,7 @@
                 <h1 class="text-8 lg:text-12 font-bold mb-4">{{roomDetail.name}}</h1>
                 <p class="text-3h lg:text-4 font-500">{{roomDetail.description}}</p>
               </div>
-
               <room-info :room-detail="roomDetail"></room-info>
-
               <div class="">
                 <h2 class="title-deco ps-4 lg:text-6 text-neutral-100 font-bold mb-4 lg:mb-6">訂房須知</h2>
                 <ul class="list-decimal ps-0 ms-6">
@@ -67,9 +62,20 @@
                     <p class="text-10 font-bold text-neutral-80 mb-2">{{roomDetail.name}}</p>
                     <p class="text-netural-80 font-500">{{roomDetail.description}}</p>
                   </div>
-                  <div class="flex gap-3">
-                    <input type="date" class="form-input">
-                    <input type="date" class="form-input">
+                  <div>
+                    <div class="flex gap-3" @click="openModal">
+                      <div class="grow border border-neutral-100 rounded-2 p-4">
+                        <p class="text-3 text-neutral-80">入住</p>
+                        <p>{{ $formats.getLocalDateFormat(bookingDate.start) }}</p>
+                      </div>
+                      <div class="grow border border-neutral-100 rounded-2 p-4">
+                        <p class="text-3 text-neutral-80">退房</p>
+                        <p>{{ $formats.getLocalDateFormat(bookingDate.end) }}</p>
+                      </div>
+                    </div>
+
+                    <booking-date-pick></booking-date-pick>
+
                   </div>
                   <div class="flex items-center">
                     <p>人數</p>
@@ -96,6 +102,10 @@
 </template>
 
 <script setup>
+// basic
+import { ref, onMounted, watchEffect } from "vue";
+import { storeToRefs } from "pinia";
+
 // swiper
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
@@ -104,42 +114,50 @@ import "swiper/css/navigation";
 import { Pagination } from "swiper/modules";
 const modules = [Pagination];
 
+// bookingDate
+import BookingDatePick from "@/components/widgets/BookingDatePick.vue";
+import { useModalStore } from "@/stores/modalStore.js"
+const modalStore = useModalStore()
+const openModal = modalStore.openModal;
 
-import roomInfo from "@/components/frontend/roomInfo.vue";
-import { ref, onMounted, watchEffect } from "vue";
-import { storeToRefs } from "pinia";
+// date
+import { useOrderStore } from "@/stores/orderStore.js";
+const orderStore = useOrderStore();
+const { bookingDate } = storeToRefs(orderStore);
 
 // room
+import roomInfo from "@/components/frontend/roomInfo.vue";
 import { useRoomStore } from "@/stores/roomStore";
 const roomStore = useRoomStore();
 const { roomDetail, imageList } = storeToRefs(roomStore);
 const getFrontRoom = roomStore.getFrontRoom;
 
 
+
+
+// ===== 測試用 =====
 // 問題
 // 1. 無法取得 roomDetail.imageUrlList[0]... 陣列
 // 2. 嘗試使用 JSON.parse(JSON.stringfy()) 深層拷貝
 // 3. 還是會發生資料順序取得問題
 // 目前解決方式：store 新增一陣列變數 imageList，導入結果值
-
-const roomData = ref({})
+const roomData = ref({});
 const deepCopy = (sourse) => JSON.parse(JSON.stringify(sourse));
 
 const asyncFunctions = async () => {
   try {
-    await getFrontRoom()
-    roomData.value = await deepCopy(roomDetail.value)
-
-  } catch(error) {
-    console.log(error)
+    await getFrontRoom();
+    roomData.value = await deepCopy(roomDetail.value);
+  } catch (error) {
+    console.log(error);
   }
-}
+};
 
 onMounted(() => {
-  asyncFunctions()
+  asyncFunctions();
 
   watchEffect(() => {
-    console.log(roomData.value)
-  })
+    console.log(roomData.value);
+  });
 });
 </script>

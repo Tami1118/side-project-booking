@@ -16,7 +16,7 @@ export const useOrderStore = defineStore('order', () => {
     const url = `${VITE_URL}/api/v1/admin/orders/`
     axios.get(url)
       .then(res => {
-        console.log('getOrder 訂單列表',res)
+        console.log('getOrder 訂單列表', res)
         orderList.value = res.data.result
       })
       .catch(err => {
@@ -47,7 +47,7 @@ export const useOrderStore = defineStore('order', () => {
     axios.put(url)
       .then(res => {
         console.log(res)
-        
+
       })
       .catch(err => {
         console.log(err)
@@ -59,7 +59,7 @@ export const useOrderStore = defineStore('order', () => {
     const url = `${VITE_URL}/api/v1/admin/orders/${id}`
     axios.delete(url)
       .then(res => {
-        console.log('刪除成功',res)
+        console.log('刪除成功', res)
         getOrders()
       })
       .catch(err => {
@@ -119,35 +119,23 @@ export const useOrderStore = defineStore('order', () => {
       })
   }
 
-  // 問題：http 無法取得地址，可能須為 https 才能夠取得
-  // 已解決：調整 vite.config 環境設定
-  const addressList = ref([])
-  const city = ref([])
-  const address = () => {
-    const url = 'https://gist.githubusercontent.com/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json'
-    axios.get(url)
-      .then(res => {
-        console.log(res)
-        addressList.value = res.data
-        city.value = addressList.value.map(item => item.name)
-        // city.value = Array.from(
-        //   new Set(addressList.value.map(item => item.name))
-        // )
-      })
-      .catch(err => {
-        console.log(err)
-      })
+
+
+  // 日期
+  const bookingDate = ref({
+    start: new Date(),
+    end: new Date()
+  });
+  const resetDate = () => {
+    bookingDate.value = {
+      start: new Date(),
+      end: new Date()
+    }
   }
 
-  const districtsList = ref([])
-  const getDistricts = (city) => {
-    console.log(city)
-    // 選取 city
-    // const index
-    // index = addressList.findIndex(item => item.city === city)
-    // return addressList[index].districts
-    // Array.from(new Set(addressList[index].districts.map(item => item.name)))
-  }
+  // 人數
+  const peopleNum = ref(0)
+
 
   return {
     // admin
@@ -164,11 +152,10 @@ export const useOrderStore = defineStore('order', () => {
     createOrder,
     deleteFrontOrder,
 
-    // address
-    addressList,
-    city,
-    districtsList,
-    address,
-    getDistricts,
+    bookingDate,
+    resetDate,
+
+    peopleNum,
+
   }
 })

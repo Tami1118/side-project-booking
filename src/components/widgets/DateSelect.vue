@@ -53,6 +53,3 @@ watch(() => birthdate.value.year, updateDays);
 watch(() => birthdate.value.month, updateDays);
 
 </script>
-
-<style>
-</style>

@@ -230,19 +230,12 @@
 
       <div aria-label="Date Picker">
         <h2 class="text-6 font-bold pb-2 mb-4 border-b">Vue DatePicker</h2>
-          <room-date></room-date>
+          <booking-date></booking-date>
       </div>
 
       <div aria-label="address list">
-        <h2 class="text-6 font-bold pb-2 mb-4 border-b">Address List</h2>
-        {{city}}
-
-        <form action="">
-          <select name="" id="" class="form-input">
-            <option value="">請選擇</option>
-            <option :value="item" v-for="(item, key) in city" :key="key">{{item}}</option>
-          </select>
-        </form>
+        <h2 class="text-6 font-bold pb-2 mb-4 border-b">Address Select</h2>
+        <city-form></city-form>
       </div>
     </div>
     <!--
@@ -259,13 +252,9 @@
 </template>
 
 <script setup>
-import RoomDate from '@/components/widgets/RoomDate.vue'
+import BookingDate from '@/components/widgets/BookingDate.vue'
+import CityForm from '@/components/widgets/CityForm.vue'
 import { ref, onMounted, watchEffect } from 'vue';
-import { useOrderStore } from '@/stores/orderStore.js'
-import { storeToRefs } from 'pinia';
-const orderStore = useOrderStore()
-const address = orderStore.address;
-const {city, addressList} = storeToRefs(orderStore)
 
 const date = ref();
 
@@ -273,7 +262,6 @@ onMounted(() => {
   const startDate = new Date();
   const endDate = new Date(new Date().setDate(startDate.getDate() + 2));
   date.value = [startDate, endDate];
-  address()
 
   watchEffect(() => {
     console.log(date.value)
