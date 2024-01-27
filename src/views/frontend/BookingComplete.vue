@@ -47,6 +47,11 @@
   </div>
 </template>
 
+<<<<<<< HEAD
 <script setup>
 import orderRoomInfo from "@/components/frontend/orderRoomInfo.vue";
+=======
+<script setup lang="ts">
+import orderRoomInfo from "@/components/frontend/OrderRoomInfo.vue";
+>>>>>>> refs/remotes/origin/kelvinLin9-main
 </script>

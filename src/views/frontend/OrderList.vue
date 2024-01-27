@@ -28,6 +28,6 @@
 </template>
 
 <script setup lang="ts">
-import orderRoomInfo from '@/components/frontend/orderRoomInfo.vue'
-import orderRoomHistory from '@/components/frontend/orderRoomHistory.vue'
+import orderRoomInfo from '@/components/frontend/OrderRoomInfo.vue'
+import orderRoomHistory from '@/components/frontend/OrderRoomHistory.vue'
 </script>

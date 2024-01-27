@@ -143,7 +143,7 @@ const increase = orderStore.increase;
 const decrease = orderStore.decrease;
 
 // room
-import roomInfo from "@/components/frontend/roomInfo.vue";
+import roomInfo from "@/components/frontend/RoomInfo.vue";
 import { useRoomStore } from "@/stores/roomStore";
 const roomStore = useRoomStore();
 const { roomDetail } = storeToRefs(roomStore);
