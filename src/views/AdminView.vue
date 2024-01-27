@@ -5,7 +5,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // view
 import AdminHeader from "@/layouts/admin/AdminHeader.vue";
 import { RouterView } from "vue-router";

@@ -6,7 +6,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // view
 import UserHeader from "@/layouts/frontend/UserHeader.vue";
 import UserFooter from "@/layouts/frontend/UserFooter.vue";

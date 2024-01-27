@@ -60,7 +60,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import UserAccount from '@/components/frontend/UserAccount.vue'
 import userFrom from '@/components/frontend/userForm.vue'
 import { ref, onMounted } from "vue";

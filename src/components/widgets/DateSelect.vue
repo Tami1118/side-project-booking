@@ -15,13 +15,14 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, watch } from 'vue';
 import { storeToRefs } from'pinia' 
-import { useUserStore } from '@/stores/userStore'
+// import { useUserStore } from '@/stores/userStore'
+import { useUserStore } from '../../stores/userStore'
 
 const userStore = useUserStore()
-const { birthdate, zip } = storeToRefs(userStore)
+const { birthdate } = storeToRefs(userStore)
 
 
 

@@ -10,7 +10,7 @@
     </div>
 
     <div class="container mx-auto px-4 sm:px-0">
-      <div class="hidden lg:block py-20">
+      <!-- <div class="hidden lg:block py-20">
         <div class="flex gap-2 bg-white rounded-[16px] overflow-hidden">
           <div class="basis-6/12">
             <img :src="imageList[0]" alt="">
@@ -21,6 +21,21 @@
               <div><img class="h-full w-full object-cover" :src="imageList[2]" alt=""></div>
               <div><img class="h-full w-full object-cover" :src="imageList[3]" alt=""></div>
               <div><img class="h-full w-full object-cover" :src="imageList[4]" alt=""></div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+      <div class="hidden lg:block py-20" v-if="roomDetail?.imageUrlList">
+        <div class="flex gap-2 bg-white rounded-[16px] overflow-hidden">
+          <div class="basis-6/12">
+            <img :src="roomDetail?.imageUrlList[0]" alt="">
+          </div>
+          <div class="basis-6/12">
+            <div class="grid grid-cols-2 gap-2 h-full">
+              <div><img class="h-full w-full object-cover" :src="roomDetail?.imageUrlList[1]" alt=""></div>
+              <div><img class="h-full w-full object-cover" :src="roomDetail?.imageUrlList[2]" alt=""></div>
+              <div><img class="h-full w-full object-cover" :src="roomDetail?.imageUrlList[3]" alt=""></div>
+              <div><img class="h-full w-full object-cover" :src="roomDetail?.imageUrlList[4]" alt=""></div>
             </div>
           </div>
         </div>
@@ -101,7 +116,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // basic
 import { ref, onMounted, watchEffect } from "vue";
 import { storeToRefs } from "pinia";
@@ -131,11 +146,15 @@ const decrease = orderStore.decrease;
 import roomInfo from "@/components/frontend/roomInfo.vue";
 import { useRoomStore } from "@/stores/roomStore";
 const roomStore = useRoomStore();
-const { roomDetail, imageList } = storeToRefs(roomStore);
+const { roomDetail } = storeToRefs(roomStore);
 const getFrontRoom = roomStore.getFrontRoom;
 
 import { useRoute } from "vue-router";
 const route = useRoute();
+
+onMounted(() => {
+  getFrontRoom()
+})
 
 
 
@@ -145,23 +164,24 @@ const route = useRoute();
 // 2. 嘗試使用 JSON.parse(JSON.stringfy()) 深層拷貝
 // 3. 還是會發生資料順序取得問題
 // 目前解決方式：store 新增一陣列變數 imageList，導入結果值
-const roomData = ref({});
-const deepCopy = (sourse) => JSON.parse(JSON.stringify(sourse));
 
-const asyncFunctions = async () => {
-  try {
-    await getFrontRoom();
-    roomData.value = await deepCopy(roomDetail.value);
-  } catch (error) {
-    console.log(error);
-  }
-};
+// const roomData = ref({});
+// const deepCopy = (sourse) => JSON.parse(JSON.stringify(sourse));
 
-onMounted(() => {
-  asyncFunctions();
+// const asyncFunctions = async () => {
+//   try {
+//     await getFrontRoom();
+//     roomData.value = await deepCopy(roomDetail.value);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
-  watchEffect(() => {
-    console.log(roomData.value);
-  });
-});
+// onMounted(() => {
+//   asyncFunctions();
+
+//   watchEffect(() => {
+//     console.log(roomData.value);
+//   });
+// });
 </script>

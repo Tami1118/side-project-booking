@@ -75,7 +75,7 @@
 
 </template>
 
-<script setup>
+<script setup lang="ts">
 import BgWave from '@/components/widgets/BgWave.vue'
 import { storeToRefs } from'pinia' 
 import { useUserStore } from '@/stores/userStore'

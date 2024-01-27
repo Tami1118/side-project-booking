@@ -126,7 +126,7 @@
   </VForm>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {ref} from 'vue'
 const userInfo = ref({})
 const address = ref({})
