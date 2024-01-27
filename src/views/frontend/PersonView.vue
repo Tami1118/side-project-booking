@@ -23,7 +23,7 @@
           </h2>
 
           <!-- <user-acount :is-form="isForm"></user-acount> -->
-          <user-acount></user-acount>
+          <UserAccount/>
         </div>
 
         <div class="basis-full lg:basis-7/12 bg-white rounded-[20px] p-4 lg:p-10 flex flex-col gap-6 lg:gap-10 h-fit duration-300">
@@ -31,19 +31,19 @@
           <div class="flex flex-col gap-6" :class="{'hidden': isForm}">
             <div>
               <p class="font-500 mb-2 text-neutral-80">姓名</p>
-              <p class="font-bold">Tami</p>
+              <p class="font-bold">{{ userInfo.name }}</p>
             </div>
             <div>
               <p class="font-500 mb-2 text-neutral-80">手機號碼</p>
-              <p class="font-bold">0987654321</p>
+              <p class="font-bold">{{ userInfo.phone }}</p>
             </div>
             <div>
               <p class="font-500 mb-2 text-neutral-80">生日</p>
-              <p class="font-bold">1990 年 1 月 1 日</p>
+              <p class="font-bold">{{ userInfo.birthday?.replace(/^(\d{4})-(\d{2})-(\d{2})T.*$/, '$1/$2/$3') }}</p>
             </div>
             <div>
               <p class="font-500 mb-2 text-neutral-80">地址</p>
-              <p class="font-bold">新北市板橋區文化路一段</p>
+              <p class="font-bold">{{ userInfo.address?.detail }}</p>
             </div>
           </div>
           <user-from :class="{'hidden': !isForm}"></user-from>
@@ -61,9 +61,21 @@
 </template>
 
 <script setup>
-import userAcount from '@/components/frontend/userAcount.vue'
+import UserAccount from '@/components/frontend/UserAccount.vue'
 import userFrom from '@/components/frontend/userForm.vue'
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { storeToRefs } from'pinia' 
+import { useUserStore } from '@/stores/userStore'
+
+const userStore = useUserStore()
+const { userInfo } = storeToRefs(userStore)
+const getUer = userStore.getUser
+
+
+onMounted (() => {
+  getUer()
+})
+
 const isForm = ref(false);
 // const toggleFrom = () => {
 //   isFrom.value = !isForm.value

@@ -70,11 +70,11 @@ const deleteRoom = roomStore.deleteRoom;
 // user
 import { useUserStore } from "@/stores/userStore";
 const userStore = useUserStore();
-const { isChecked } = storeToRefs(userStore)
+const { isChecked } = storeToRefs(userStore);
 
 watch(isChecked, (n) => {
-  if(n) getRooms()
-})
+  if(n) getRooms();
+});
 
 // onMounted(async () => {
   // await getRooms()

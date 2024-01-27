@@ -16,13 +16,14 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { computed, watch } from 'vue';
+import { storeToRefs } from'pinia' 
+import { useUserStore } from '@/stores/userStore'
 
-const birthdate = ref({
-  year: new Date().getFullYear(),
-  month: 1,
-  day: 1
-});
+const userStore = useUserStore()
+const { birthdate, zip } = storeToRefs(userStore)
+
+
 
 
 // 月份對應之天數
