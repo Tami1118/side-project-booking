@@ -135,6 +135,12 @@ export const useOrderStore = defineStore('order', () => {
 
   // 人數
   const peopleNum = ref(0)
+  const increase = () => {
+    peopleNum.value++
+  }
+  const decrease = () => {
+    peopleNum.value--
+  }
 
 
   return {
@@ -156,6 +162,7 @@ export const useOrderStore = defineStore('order', () => {
     resetDate,
 
     peopleNum,
-
+    increase,
+    decrease
   }
 })

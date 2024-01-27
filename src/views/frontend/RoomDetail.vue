@@ -80,17 +80,17 @@
                   <div class="flex items-center">
                     <p>人數</p>
                     <div class="ms-auto">
-                      <button class="rounded-full p-4 border border-neutral-40">
+                      <button class="rounded-full p-4 border border-neutral-40" @click="decrease">
                         <span class="material-symbols-outlined text-6">remove</span>
                       </button>
-                      <input type="number" value="2" class="w-[48px] mx-4 text-center text-5">
-                      <button class="rounded-full p-4 border border-neutral-40">
+                      <input type="number" v-model="peopleNum" class="w-[48px] mx-4 text-center text-5">
+                      <button class="rounded-full p-4 border border-neutral-40" @click="increase">
                         <span class="material-symbols-outlined text-6">add</span>
                       </button>
                     </div>
                   </div>
-                  <p class="text-primary-100 text-6 font-bold">NT$ {{roomDetail.price}}</p>
-                  <button type="button" class="btn btn-primary">立即預訂</button>
+                  <p class="text-primary-100 text-6 font-bold">NT$ {{ roomDetail.price }}</p>
+                  <router-link :to="`/booking/${route.params.id}`" class="btn btn-primary">立即預訂</router-link>
                 </div>
               </div>
             </div>
@@ -116,14 +116,16 @@ const modules = [Pagination];
 
 // bookingDate
 import BookingDatePick from "@/components/widgets/BookingDatePick.vue";
-import { useModalStore } from "@/stores/modalStore.js"
-const modalStore = useModalStore()
+import { useModalStore } from "@/stores/modalStore.js";
+const modalStore = useModalStore();
 const openModal = modalStore.openModal;
 
-// date
+// date and people
 import { useOrderStore } from "@/stores/orderStore.js";
 const orderStore = useOrderStore();
-const { bookingDate } = storeToRefs(orderStore);
+const { bookingDate, peopleNum } = storeToRefs(orderStore);
+const increase = orderStore.increase;
+const decrease = orderStore.decrease;
 
 // room
 import roomInfo from "@/components/frontend/roomInfo.vue";
@@ -132,6 +134,8 @@ const roomStore = useRoomStore();
 const { roomDetail, imageList } = storeToRefs(roomStore);
 const getFrontRoom = roomStore.getFrontRoom;
 
+import { useRoute } from "vue-router";
+const route = useRoute();
 
 
 

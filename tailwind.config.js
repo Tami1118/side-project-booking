@@ -7,9 +7,6 @@ export default {
     "./src/views/**/*.{vue,js,ts,jsx,tsx, scss}",
   ],
   theme: {
-    borderRadius: {
-      '5': '20px'      
-    },
     extend: {
       colors: {
         'primary': '#7B6651',
@@ -41,6 +38,7 @@ export default {
       borderRadius: {
         2: '8px',
         4: '16px',
+        5: '20px',
       },
       fontSize: {
         '3':  '12px',
@@ -82,7 +80,7 @@ export default {
         '15': '60px',
         '18': '72px',
         '30': '120px',
-      }
+      },
     },
   },
   plugins: [],
