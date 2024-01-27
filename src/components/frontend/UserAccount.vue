@@ -5,21 +5,21 @@
       <p class="font-bold">{{ userInfo.email }}</p>
     </div>
 
-    <div class="flex" :class="{'hidden': !showEditPassword}">
+    <div class="flex" :class="{'hidden': showEditPassword}">
       <div class="grow">
         <p class="font-500 mb-2 text-neutral-80">密碼</p>
         <input type="password" class="block font-bold" value="12345678">
       </div>
       <button 
         class="text-primary-100 underline" 
-        :class="{'hidden': !showEditPassword}" 
+        :class="{'hidden': showEditPassword}" 
         @click="showEditPassword = true , handleData()"
       >
         重設
       </button>
     </div>
 
-    <div :class="{'hidden': showEditPassword}">
+    <div :class="{'hidden': !showEditPassword}">
       <label for="oldPassword" class="mb-2 text-neutral-80 font-bold">舊密碼</label>
       <input 
         type="password" 
@@ -30,7 +30,7 @@
       >
     </div>
 
-    <div :class="{'hidden': showEditPassword}">
+    <div :class="{'hidden': !showEditPassword}">
       <label for="newPassword" class="mb-2 text-neutral-80 font-bold">新密碼</label>
       <input 
         type="password" 
@@ -41,7 +41,7 @@
       >
     </div>
 
-    <div :class="{'hidden': showEditPassword}">
+    <div :class="{'hidden': !showEditPassword}">
       <label for="checkNewPassword" class="mb-2 text-neutral-80 font-bold">確認新密碼</label>
       <input 
         type="password" 
@@ -53,7 +53,7 @@
     </div>
   </div>
 
-  <div :class="{'hidden': showEditPassword}">
+  <div :class="{'hidden': !showEditPassword}">
     <button 
       class="btn bg-neutral-40 text-neutral-60 w-full lg:w-fit"
       @click="editUser()"
