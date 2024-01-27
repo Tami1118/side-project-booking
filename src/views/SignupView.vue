@@ -107,7 +107,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import BgWave from '@/components/widgets/BgWave.vue'
 import DateSelect from '@/components/widgets/DateSelect.vue'
 import CitySelect from '@/components/widgets/CitySelect.vue'

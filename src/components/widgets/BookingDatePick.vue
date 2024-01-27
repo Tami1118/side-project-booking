@@ -60,7 +60,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useScreens } from "vue-screen-utils";
 import { computed, ref, watch } from "vue";
 import { storeToRefs } from "pinia";

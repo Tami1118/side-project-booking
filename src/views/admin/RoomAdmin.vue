@@ -54,7 +54,7 @@
   <RoomModal v-if="showRoomModal" />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import RoomModal from "@/components/admin/RoomModal.vue";
 // import { watch, onMounted, watchEffect } from "vue";
 import { watch } from "vue";

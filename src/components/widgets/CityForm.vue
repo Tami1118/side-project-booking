@@ -14,7 +14,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import axios from "axios";
 import { ref, watch, computed, onMounted } from "vue";
 

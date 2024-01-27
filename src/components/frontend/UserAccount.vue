@@ -63,7 +63,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { storeToRefs } from'pinia' 
 import { useUserStore } from '@/stores/userStore'
 

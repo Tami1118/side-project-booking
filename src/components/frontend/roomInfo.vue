@@ -32,16 +32,27 @@
     <div class="">
       <h2 class="title-deco ps-4 lg:text-6 text-neutral-100 font-bold mb-4 lg:mb-6">房間設備</h2>
       <ul class="bg-white p-6 rounded-2 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-x-10 gap-y-2">
-        <li class="flex items-center gap-2 text-neutral-80 font-bold" v-for="(item, key) in roomDetail.facilityInfo" :key="key"><span class="material-icons text-primary-100">done</span>{{item.title}}</li>
+        <template v-for="(item, key) in roomDetail.facilityInfo" :key="key">
+          <li class="flex items-center gap-2 text-neutral-80 font-bold" v-if="item.isProvide">
+            <span class="material-icons text-primary-100">done</span>
+            {{item.title}}
+          </li>
+        </template>
       </ul>
     </div>
 
     <div class="">
       <h2 class="title-deco ps-4 lg:text-6 text-neutral-100 font-bold mb-4 lg:mb-6">備品提供</h2>
       <ul class="bg-white p-6 rounded-2 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-x-10 gap-y-2">
-        <li class="flex items-center gap-2 text-neutral-80 font-bold" v-for="(item, key) in roomDetail.amenityInfo" :key="key"><span class="material-icons text-primary-100">done</span>{{item.title}}</li>
+        <template v-for="(item, key) in roomDetail.amenityInfo" :key="key">
+          <li class="flex items-center gap-2 text-neutral-80 font-bold" v-if="item.isProvide">
+            <span class="material-icons text-primary-100">done</span>
+            {{item.title}}
+          </li>
+        </template>
       </ul>
     </div>
+    
   </div>
 </template>
 

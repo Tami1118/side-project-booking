@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 // import
 import { ref, computed } from "vue";
 import { storeToRefs } from "pinia";

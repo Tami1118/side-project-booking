@@ -251,7 +251,7 @@
 
 </template>
 
-<script setup>
+<script setup lang="ts">
 import BookingDate from '@/components/widgets/BookingDate.vue'
 import CityForm from '@/components/widgets/CityForm.vue'
 import { ref, onMounted, watchEffect } from 'vue';

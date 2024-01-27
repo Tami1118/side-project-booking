@@ -25,7 +25,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import DateSelect from '@/components/widgets/DateSelect.vue'
 import CitySelect from '@/components/widgets/CitySelect.vue'
 import { storeToRefs } from'pinia' 

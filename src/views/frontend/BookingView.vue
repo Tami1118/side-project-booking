@@ -93,7 +93,7 @@
   <!-- <bookingLoading /> -->
 </template>
 
-<script setup>
+<script setup lang="ts">
 // room
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
