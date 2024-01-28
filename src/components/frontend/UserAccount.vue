@@ -56,7 +56,7 @@
   <div :class="{'hidden': !showEditPassword}">
     <button 
       class="btn bg-neutral-40 text-neutral-60 w-full lg:w-fit"
-      @click="editUser()"
+      @click="editUserPass()"
     >
       儲存設定
     </button>
@@ -69,7 +69,8 @@ import { useUserStore } from '@/stores/userStore'
 
 const userStore = useUserStore()
 const { userInfo, editUserData, newPassword2, showEditPassword } = storeToRefs(userStore)
-const editUser = userStore.editUser
+const editUserPass = userStore.editUserPass
+
 
 const handleData = () => {
   editUserData.value.userId = userInfo.value._id

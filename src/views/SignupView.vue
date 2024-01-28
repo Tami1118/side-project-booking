@@ -1,4 +1,5 @@
 <template>
+  <UserHeader/>
   <div class="grid grid-cols-1 md:grid-cols-2 bg-neutral-100 h-screen">
     <div class="col hidden md:block">
       <img class="h-screen w-full object-cover object-center overflow-hidden" src="../assets/images/desktop/register.png" />
@@ -14,9 +15,16 @@
             <h1 class="text-white font-bold text-8 xl:text-12 duration-300">立即註冊</h1>
           </div>
 
-          <div class="flex justify-around z-10">
-            <div class="text-white" @click="signupStep = 1">1</div>
-            <div class="text-white" @click="signupStep = 2">2</div>
+          <div class="flex justify-around items-center z-10">
+            <div class="text-white">
+              <div class="text-center border border-white" @click="signupStep = 1">1</div>
+              <div class="">輸入信箱及密碼</div>
+            </div>
+            <div class="bg-white h-[1px] grow"></div>
+            <div class="text-white">
+              <div class="text-center" @click="signupStep = 1">2</div>
+              <div class="">填寫基本資料</div>
+            </div>
           </div>
           
           <!-- step1 -->
@@ -108,6 +116,7 @@
 </template>
 
 <script setup lang="ts">
+import UserHeader from "@/layouts/frontend/UserHeader.vue"
 import BgWave from '@/components/widgets/BgWave.vue'
 import DateSelect from '@/components/widgets/DateSelect.vue'
 import CitySelect from '@/components/widgets/CitySelect.vue'

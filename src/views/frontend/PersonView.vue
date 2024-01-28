@@ -57,7 +57,7 @@
 
 <script setup lang="ts">
 import UserAccount from '@/components/frontend/UserAccount.vue'
-import UserFrom from '@/components/frontend/UserFrom.vue'
+import UserFrom from '@/components/frontend/UserForm.vue'
 import { onMounted } from "vue";
 import { storeToRefs } from'pinia' 
 import { useUserStore } from '@/stores/userStore'
