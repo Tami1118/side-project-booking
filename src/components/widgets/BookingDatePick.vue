@@ -44,7 +44,7 @@
 
             <div class="hidden md:flex justify-between md:justify-end gap-4">
               <button class="btn" @click="resetDate">清除日期</button>
-              <button class="btn btn-primary" @click="closeModal">確定日期</button>
+              <button class="btn btn-primary" @click="localStorage.setItem('bookingDate', JSON.stringify(bookingDate.value)), isModalOpen = false">確定日期</button>
             </div>
           </div>
 
@@ -76,8 +76,7 @@ import { useOrderStore } from "@/stores/orderStore.js";
 const orderStore = useOrderStore();
 const { bookingDate } = storeToRefs(orderStore);
 const resetDate = orderStore.resetDate;
-
-// 選擇人數
+const setItemDate = orderStore.setItemDate;
 
 
 // datepicker style

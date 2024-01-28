@@ -3,11 +3,11 @@ import { ref } from 'vue'
 const { VITE_URL } = import.meta.env
 import axios from 'axios'
 // import { Toast, Alert } from '@/mixins/swal'
-// import { useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 
 export const useOrderStore = defineStore('order', () => {
-  // const route = useRoute()
+  const route = useRoute()
 
 
   // admin
@@ -24,23 +24,7 @@ export const useOrderStore = defineStore('order', () => {
       })
   }
 
-  const tempOrder = ref(
-    {
-      "roomId": "",
-      "checkInDate": "",
-      "checkOutDate": "",
-      "peopleNum": 0,
-      "userInfo": {
-        "address": {
-          "zipcode": 0,
-          "detail": ""
-        },
-        "name": "",
-        "phone": "",
-        "email": ""
-      }
-    }
-  )
+
   const editOrder = () => {
     // const url = `${VITE_URL}/api/v1/admin/orders/${route.params.id}`
     const url = `${VITE_URL}/api/v1/admin/orders/65ac8c5080ae3e636b421c46`
@@ -54,7 +38,7 @@ export const useOrderStore = defineStore('order', () => {
       })
   }
 
-  const deleteOrder = (id) => {
+  const deleteOrder = (id : string) => {
     // const url = `${VITE_URL}/api/v1/admin/orders/${route.params.id}`
     const url = `${VITE_URL}/api/v1/admin/orders/${id}`
     axios.delete(url)
@@ -96,15 +80,53 @@ export const useOrderStore = defineStore('order', () => {
       })
   }
 
+  const tempOrder = ref(
+    {
+      "roomId": "",
+      "checkInDate": "",
+      "checkOutDate": "",
+      "peopleNum": 0,
+      "userInfo": {
+        "name": "",
+        "phone": "",
+        "email": "",
+        "address": {
+          "zipcode": "",
+          "detail": ""
+        },
+      }
+    }
+  )
   const createOrder = () => {
+    // console.log(tempOrder.value)
+    tempOrder.value.roomId = route.params.id
+
     const url = `${VITE_URL}/api/v1/orders/`
     axios.post(url, tempOrder.value)
       .then(res => {
-        console.log(res)
+        console.log('createOrder 新增成功',res)
+        resetTempOrder()
       })
       .catch(err => {
-        console.log(err)
+        console.log('createOrder 失敗',err)
       })
+  }
+  const resetTempOrder = () => {
+    tempOrder.value = {
+      "roomId": "",
+      "checkInDate": "",
+      "checkOutDate": "",
+      "peopleNum": 0,
+      "userInfo": {
+        "name": "",
+        "phone": "",
+        "email": "",
+        "address": {
+          "zipcode": 0,
+          "detail": ""
+        },
+      }
+    }
   }
 
   const deleteFrontOrder = () => {
@@ -121,17 +143,53 @@ export const useOrderStore = defineStore('order', () => {
 
 
 
-  // 日期
+
+  // 日期格式
+  // "checkInDate": "",
+  // "checkOutDate": "",
+  // "peopleNum": 0,
+  
   const bookingDate = ref({
     start: new Date(),
     end: new Date()
   });
+
+  const setBookingDate = () => {
+    localStorage.setItem('bookingDate', JSON.parse(JSON.stringify(bookingDate.value)))
+  }
+
+  const getBookingDate = () => {
+
+  }
+
+
+  // 日期
+  // Flow
+  // 1. 點擊 roomDetail.vue 中日期 input，開啟日期元件
+  // 2. 點擊 bookingDatePick.vue 起迄日期，點擊確定日期，存取於 localStorage.setItem()，並關閉
+  // 3. roomDetail.vue input 確認後才能夠變動
+  // 4. 選取人數並送出後進入到下一頁
+
   const resetDate = () => {
     bookingDate.value = {
       start: new Date(),
       end: new Date()
     }
   }
+  const setItemDate = () => {
+    localStorage.setItem('bookingDate', JSON.stringify(bookingDate.value));
+  }
+  const getItemDate = () => {
+    const storedBookingDate = localStorage.getItem('bookingDate');
+    const stroedBookingNum = localStorage.getItem('peopleNum');
+    if (storedBookingDate) {
+      bookingDate.value = JSON.parse(storedBookingDate);
+    }
+    if (stroedBookingNum) {
+      peopleNum.value = Number('peopleNum')
+    }
+  }
+  
 
   // 人數
   const peopleNum = ref(0)
@@ -156,10 +214,13 @@ export const useOrderStore = defineStore('order', () => {
     order,
     getFrontOrder,
     createOrder,
+    resetTempOrder,
     deleteFrontOrder,
 
     bookingDate,
     resetDate,
+    setItemDate,
+    getItemDate,
 
     peopleNum,
     increase,

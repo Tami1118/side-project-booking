@@ -1,35 +1,36 @@
 <template>
   <div class="grid grid-cols-2 gap-2">
-    <select v-model="address.city" @change="updateDistricts" class="form-input">
+    <select v-model="selectCity" @change="updateDistricts" class="form-input">
       <option value="" selected>請選擇縣市</option>
       <option v-for="city in cities" :key="city" :value="city">{{city}}</option>
     </select>
 
-    <select v-model="address.district" class="form-input">
+    <select v-model="tempOrder.userInfo.address.zipcode" class="form-input">
       <option value="" selected>請選擇行政區</option>
-      <option v-for="district in districts" :key="district.zip" :value="district.name">{{district.name}}</option>
+      <option v-for="district in districts" :key="district.zipcode" :value="district.name">{{district.name}}</option>
     </select>
 
-    <input type="text" v-model="address.detail" placeholder="請輸入詳細地址" class="form-input col-span-2">
+    <input type="text" v-model="tempOrder.userInfo.address.detail" placeholder="請輸入詳細地址" class="form-input col-span-2">
   </div>
 </template>
 
-<script setup lang="ts">
-import axios from "axios";
+<script setup>
 import { ref, watch, computed, onMounted } from "vue";
+import { storeToRefs } from "pinia";
+import axios from "axios";
 
-const address = ref({
-  city: "",
-  district: "",
-  detail: "",
-});
+// order
+import { useOrderStore } from "@/stores/orderStore";
+const orderStore = useOrderStore();
+const { tempOrder } = storeToRefs(orderStore);
 
+const selectCity = ref("");
 const taiwanCities = ref([]);
 const getTaiwanCity = () => {
-  const url ="https://gist.githubusercontent.com/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json";
+  const url = "https://gist.githubusercontent.com/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json";
   axios.get(url)
     .then((res) => {
-      console.log('取得縣市列表',res)
+      console.log("取得縣市列表", res);
       taiwanCities.value = res.data;
     })
     .catch((err) => {
@@ -39,27 +40,23 @@ const getTaiwanCity = () => {
 
 // 縣市列表
 const cities = computed(() => {
-  return taiwanCities.value.map((item) => item.name)
-})
+  return taiwanCities.value.map((item) => item.name);
+});
 
 // 行政區列表
 const districts = computed(() => {
-  const city = taiwanCities.value.find((item) => item.name === address.value.city);
-  return city ? city.districts: []
+  const city = taiwanCities.value.find((item) => item.name === selectCity.value);
+  return city ? city.districts : [];
 });
 
 // 縣市變動時，行政區隨縣市列表變動
-const updateDistricts = () => {
-  address.value.district =
-    districts.value.length > 0 ? "" : null;
-};
-
-// 取得所有地址
-const fullAddress = computed(() => {
-  return `${address.value.city}${address.value.district}${address.value.detail}`
-})
-
-watch(address, updateDistricts);
+watch(selectCity, () => {
+  if (tempOrder.userInfo) {
+    if (tempOrder.userInfo.address) {
+      tempOrder.userInfo.address.zipcode = districts.value.length > 0 ? districts.value.name : "";
+    }
+  }
+});
 
 onMounted(() => {
   getTaiwanCity();

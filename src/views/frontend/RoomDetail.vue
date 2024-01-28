@@ -10,21 +10,6 @@
     </div>
 
     <div class="container mx-auto px-4 sm:px-0">
-      <!-- <div class="hidden lg:block py-20">
-        <div class="flex gap-2 bg-white rounded-[16px] overflow-hidden">
-          <div class="basis-6/12">
-            <img :src="imageList[0]" alt="">
-          </div>
-          <div class="basis-6/12">
-            <div class="grid grid-cols-2 gap-2 h-full">
-              <div><img class="h-full w-full object-cover" :src="imageList[1]" alt=""></div>
-              <div><img class="h-full w-full object-cover" :src="imageList[2]" alt=""></div>
-              <div><img class="h-full w-full object-cover" :src="imageList[3]" alt=""></div>
-              <div><img class="h-full w-full object-cover" :src="imageList[4]" alt=""></div>
-            </div>
-          </div>
-        </div>
-      </div> -->
       <div class="hidden lg:block py-20" v-if="roomDetail?.imageUrlList">
         <div class="flex gap-2 bg-white rounded-[16px] overflow-hidden">
           <div class="basis-6/12">
@@ -163,25 +148,6 @@ onMounted(() => {
 // 1. 無法取得 roomDetail.imageUrlList[0]... 陣列
 // 2. 嘗試使用 JSON.parse(JSON.stringfy()) 深層拷貝
 // 3. 還是會發生資料順序取得問題
-// 目前解決方式：store 新增一陣列變數 imageList，導入結果值
-
-// const roomData = ref({});
-// const deepCopy = (sourse) => JSON.parse(JSON.stringify(sourse));
-
-// const asyncFunctions = async () => {
-//   try {
-//     await getFrontRoom();
-//     roomData.value = await deepCopy(roomDetail.value);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-// onMounted(() => {
-//   asyncFunctions();
-
-//   watchEffect(() => {
-//     console.log(roomData.value);
-//   });
-// });
+// 解決方式1：store 新增一陣列變數 imageList，導入結果值
+// 解決方式2：因初始化渲染取得可能為null, undefined ，外層加 v-for="roomDetail?.imageUrl"
 </script>
