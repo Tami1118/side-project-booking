@@ -16,15 +16,27 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from 'vue';
+import { computed, watch, onMounted } from 'vue';
 import { storeToRefs } from'pinia' 
 // import { useUserStore } from '@/stores/userStore'
 import { useUserStore } from '../../stores/userStore'
 
 const userStore = useUserStore()
-const { birthdate } = storeToRefs(userStore)
+const { birthdate, userInfo } = storeToRefs(userStore)
 
+onMounted (() => {
+  console.log('birthdate',birthdate.value)
+  console.log('userInfo',userInfo.value)
+  let match = userInfo.value.birthday.match(/^(\d{4})-(\d{2})-(\d{2})/);
 
+  if (match) {
+    birthdate.value.year = parseInt(match[1]);
+    birthdate.value.month = parseInt(match[2]);
+    birthdate.value.day = parseInt(match[3]);
+
+    console.log(birthdate.value);
+  }
+  })
 
 
 // 月份對應之天數

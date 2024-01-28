@@ -23,9 +23,11 @@
     <DateSelect/>
     <CitySelect/>
   </div>
+  {{ editUserData }}
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import DateSelect from '@/components/widgets/DateSelect.vue'
 import CitySelect from '@/components/widgets/CitySelect.vue'
 import { storeToRefs } from'pinia' 
@@ -33,5 +35,16 @@ import { useUserStore } from '@/stores/userStore'
 
 const userStore = useUserStore()
 const { userInfo, editUserData  } = storeToRefs(userStore)
+const editUserInfo = userStore.editUserInfo
 
+onMounted (() => {
+  console.log('userInfo',userInfo.value)
+  editUserData.value.userId = userInfo.value._id
+  editUserData.value.email = userInfo.value.email
+  editUserData.value.name = userInfo.value.name
+  editUserData.value.phone = userInfo.value.phone
+  editUserData.value.birthday = userInfo.value.birthday
+  editUserData.value.address = userInfo.value.address
+  console.log(editUserData.value) 
+})
 </script>

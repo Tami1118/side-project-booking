@@ -144,7 +144,7 @@ export const useUserStore = defineStore('userStore', () => {
         userInfo.value.state = false
       })
   }
-  const editUser = () => {
+  const editUserPass = () => {
     if (editUserData.value.newPassword !== newPassword2.value) {
       alert("密碼不一致");
       return;
@@ -169,7 +169,27 @@ export const useUserStore = defineStore('userStore', () => {
         })
       })
   }
+  const editUserInfo = () => {
+    const url = `${VITE_URL}/api/v1/user`
+    axios.put(url, editUserData.value)
+      .then(res => {
+        console.log('修改資料 成功',res)
+        userInfo.value = res.data.result
+        showEditPassword.value = false
+        Toast.fire({
+          icon: 'success',
+          title: '修改資料成功'
+        })
 
+      })
+      .catch(err => {
+        console.log('login 失敗',err)
+        Alert.fire({
+          icon: 'error',
+          title: '修改資料失敗'
+        })
+      })
+  }
 
   return {
     // login
@@ -199,6 +219,7 @@ export const useUserStore = defineStore('userStore', () => {
     showEditPassword,
     showEditUserInfo,
     getUser,
-    editUser,
+    editUserPass,
+    editUserInfo,
   }
 })
