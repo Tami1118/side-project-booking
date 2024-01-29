@@ -17,12 +17,12 @@
 
           <div class="flex justify-around items-center z-10">
             <div class="text-white flex flex-col items-center">
-              <span class="text-center w-[32px] h-[32px] bg-primary-100 flex items-center justify-center" @click="signupStep = 1">1</span>
+              <span class="text-center w-[32px] h-[32px] bg-primary-100 flex items-center justify-center rounded-full" @click="signupStep = 1">1</span>
               <div class="">輸入信箱及密碼</div>
             </div>
             <div class="bg-white h-[1px] grow mx-3"></div>
             <div class="text-white flex flex-col items-center">
-              <span class="text-center w-[32px] h-[32px] bg-primary-100 flex items-center justify-center" @click="signupStep = 1">2</span>
+              <span class="text-center w-[32px] h-[32px] bg-primary-100 flex items-center justify-center rounded-full" @click="signupStep = 1">2</span>
               <div class="">填寫基本資料</div>
             </div>
           </div>
