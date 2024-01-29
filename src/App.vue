@@ -1,12 +1,19 @@
-<script>
+<script setup>
 import { RouterView } from "vue-router";
 
+// basic
+import { onMounted } from "vue";
 
-export default {
-  components: {
-    RouterView,
-  },
-};
+// user
+import { useUserStore } from "@/stores/userStore";
+const userStore = useUserStore()
+const checkUser = userStore.checkUser;
+const getUser = userStore.getUser;
+
+onMounted(async () => {
+  await checkUser();
+  await getUser();
+});
 </script>
 
 <template>

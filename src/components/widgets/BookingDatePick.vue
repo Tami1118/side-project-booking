@@ -44,7 +44,7 @@
 
             <div class="hidden md:flex justify-between md:justify-end gap-4">
               <button class="btn" @click="resetDate">清除日期</button>
-              <button class="btn btn-primary" @click="localStorage.setItem('bookingDate', JSON.stringify(bookingDate.value)), isModalOpen = false">確定日期</button>
+              <button class="btn btn-primary" @click="setItemDate(), isModalOpen = false">確定日期</button>
             </div>
           </div>
 
@@ -68,7 +68,7 @@ import { storeToRefs } from "pinia";
 // 開啟/關閉 modal
 import { useModalStore } from "@/stores/modalStore.js";
 const modalStore = useModalStore();
-const isModalOpen = computed(() => modalStore.isModalOpen);
+const { isModalOpen } = storeToRefs(modalStore);
 const closeModal = modalStore.closeModal;
 
 // 選擇日期
