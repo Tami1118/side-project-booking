@@ -13,12 +13,16 @@ const getNight = (range) => {
 
 // 標準格式 2024/1/1
 const getLocalDateFormat = (date) => {
-  return date.toLocaleDateString()
+  return new Date(date).toLocaleDateString()
+}
+
+// 1月1日，星期一
+const getTradDateFormat = (data) => {
+  const newDate = new Date(data).toISOString().split('T')[0].split('-')
+  return `${newDate[1]} 月${newDate[2]} 日`
 }
 
 
-
-// 
 export {
   // money
   toThousands,
@@ -26,4 +30,5 @@ export {
   // date
   getNight,
   getLocalDateFormat,
+  getTradDateFormat,
 }

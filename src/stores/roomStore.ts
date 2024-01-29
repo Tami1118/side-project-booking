@@ -17,7 +17,7 @@ export const useRoomStore = defineStore('roomStore', () => {
     const url = `${VITE_URL}/api/v1/admin/rooms/`
     axios.get(url)
       .then((res) => {
-        console.log('getRooms 以取得房型列表', res)
+        console.log('getRooms 已取得房型列表', res)
         roomData.value = res.data.result
       })
       .catch((err) => {

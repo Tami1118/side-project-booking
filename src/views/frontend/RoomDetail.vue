@@ -66,11 +66,11 @@
                     <div class="flex gap-3" @click="openModal">
                       <div class="grow border border-neutral-100 rounded-2 p-4">
                         <p class="text-3 text-neutral-80">入住</p>
-                        <p>{{ $formats.getLocalDateFormat(bookingDate.start) }}</p>
+                        <p>{{ $formats.getLocalDateFormat(bookingDateRange.start) }}</p>
                       </div>
                       <div class="grow border border-neutral-100 rounded-2 p-4">
                         <p class="text-3 text-neutral-80">退房</p>
-                        <p>{{ $formats.getLocalDateFormat(bookingDate.end) }}</p>
+                        <p>{{ $formats.getLocalDateFormat(bookingDateRange.end) }}</p>
                       </div>
                     </div>
 
@@ -83,14 +83,14 @@
                       <button class="rounded-full p-4 border border-neutral-40" @click="decrease">
                         <span class="material-symbols-outlined text-6">remove</span>
                       </button>
-                      <input type="number" v-model="peopleNum" class="w-[48px] mx-4 text-center text-5">
+                      <input type="number" v-model="selectPeopleNum" class="w-[48px] mx-4 text-center text-5">
                       <button class="rounded-full p-4 border border-neutral-40" @click="increase">
                         <span class="material-symbols-outlined text-6">add</span>
                       </button>
                     </div>
                   </div>
                   <p class="text-primary-100 text-6 font-bold">NT$ {{ roomDetail.price }}</p>
-                  <router-link :to="`/booking/${route.params.id}`" class="btn btn-primary">立即預訂</router-link>
+                  <router-link :to="`/booking/${route.params.id}`" @click="setPeopleNum" class="btn btn-primary">立即預訂</router-link>
                 </div>
               </div>
             </div>
@@ -102,11 +102,15 @@
 </template>
 
 <script setup lang="ts">
-// basic
-import { ref, onMounted, watchEffect } from "vue";
+// Basic
+import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 
-// swiper
+// Components
+import BookingDatePick from "@/components/widgets/BookingDatePick.vue";
+import roomInfo from "@/components/frontend/RoomInfo.vue";
+
+// Swiper
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -114,29 +118,30 @@ import "swiper/css/navigation";
 import { Pagination } from "swiper/modules";
 const modules = [Pagination];
 
-// bookingDate
-import BookingDatePick from "@/components/widgets/BookingDatePick.vue";
-import { useModalStore } from "@/stores/modalStore.js";
+// BookingDateRange
+import { useModalStore } from "@/stores/modalStore";
 const modalStore = useModalStore();
 const openModal = modalStore.openModal;
 
-// date and people
+// BookingDate and PeopleNum
 import { useOrderStore } from "@/stores/orderStore.js";
 const orderStore = useOrderStore();
-const { bookingDate, peopleNum } = storeToRefs(orderStore);
+const { bookingDateRange, selectPeopleNum } = storeToRefs(orderStore);
 const increase = orderStore.increase;
 const decrease = orderStore.decrease;
+const setPeopleNum = orderStore.setPeopleNum;
 
-// room
-import roomInfo from "@/components/frontend/RoomInfo.vue";
+// Room
 import { useRoomStore } from "@/stores/roomStore";
 const roomStore = useRoomStore();
 const { roomDetail } = storeToRefs(roomStore);
 const getFrontRoom = roomStore.getFrontRoom;
 
+// Route
 import { useRoute } from "vue-router";
 const route = useRoute();
 
+// Action
 onMounted(() => {
   getFrontRoom()
 })

@@ -6,18 +6,25 @@
 </template>
 
 <script setup lang="ts">
-// view
-import AdminHeader from "@/layouts/admin/AdminHeader.vue";
-import { RouterView } from "vue-router";
 import { onMounted } from "vue";
+import { RouterView } from "vue-router";
 
-// user
-import { useUserStore } from "@/stores/userStore"
+// Components
+import AdminHeader from "@/layouts/admin/AdminHeader.vue";
+
+// User
+import { useUserStore } from "@/stores/userStore";
 const userStore = useUserStore()
-const checkUser = userStore.checkUser
+const checkUser = userStore.checkUser;
+const getUser = userStore.getUser;
 
-onMounted(async() => {
-  await checkUser()
-})
+// onMounted(async () => {
+//   await checkUser();
+//   await getUser();
+// });
+onMounted(() => {
+  checkUser();
+  getUser();
+});
 
 </script>

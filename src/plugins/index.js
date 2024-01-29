@@ -32,7 +32,7 @@ import 'v-calendar/style.css';
 
 
 // mixins
-import { getNight, getLocalDateFormat, toThousands } from "@/mixins/format"
+import { getNight, getLocalDateFormat, toThousands, getTradDateFormat } from "@/mixins/format"
 
 
 export function registerPlugins(app) {
@@ -44,5 +44,5 @@ export function registerPlugins(app) {
     .component('VForm', Form)
     .component('ErrorMessage', ErrorMessage)
     .use(VCalendar, {})
-    .config.globalProperties.$formats = { getNight, getLocalDateFormat, toThousands };
+    .config.globalProperties.$formats = { getNight, getLocalDateFormat, toThousands, getTradDateFormat };
 }
