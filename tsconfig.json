@@ -8,4 +8,13 @@
       "path": "./tsconfig.app.json"
     }
   ],
+  "compilerOptions": {
+    "strict": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
 }
