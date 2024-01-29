@@ -7,7 +7,7 @@
 
     <select v-model="tempOrder.userInfo.address.zipcode" class="form-input">
       <option value="" selected>請選擇行政區</option>
-      <option v-for="district in districts" :key="district.zipcode" :value="district.name">{{district.name}}</option>
+      <option v-for="district in districts" :key="district.zipcode" :value="district.zip">{{district.name}}</option>
     </select>
 
     <input type="text" v-model="tempOrder.userInfo.address.detail" placeholder="請輸入詳細地址" class="form-input col-span-2">

@@ -1,83 +1,55 @@
-import { defineStore } from "pinia"
 import { ref } from 'vue'
-const { VITE_URL } = import.meta.env
+import { defineStore } from "pinia"
+import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
-// import { Toast, Alert } from '@/mixins/swal'
-import { useRoute } from 'vue-router'
+import { Toast, Alert } from '@/mixins/swal'
 
+const { VITE_URL } = import.meta.env
+import { useModalStore } from "@/stores/modalStore"
 
 export const useOrderStore = defineStore('order', () => {
   const route = useRoute()
+  const router = useRouter()
+  const modalStore = useModalStore()
 
-
-  // admin
-  const orderList = ref([])
-  const getOrders = () => {
-    const url = `${VITE_URL}/api/v1/admin/orders/`
-    axios.get(url)
-      .then(res => {
-        console.log('getOrder 訂單列表', res)
-        orderList.value = res.data.result
-      })
-      .catch(err => {
-        console.log(err)
-      })
+  // 日期
+  const bookingDateRange = ref({
+    start: new Date(),
+    end: new Date()
+  })
+  const resetDate = () => {
+    bookingDateRange.value = {
+      start: new Date(),
+      end: new Date()
+    }
+  }
+  const setBookingDate = () => {
+    localStorage.setItem('bookingDateRange', JSON.stringify(bookingDateRange.value))
+  }
+  const getBookingDate = () => {
+    const storageBookingDate = localStorage.getItem('bookingDateRange');
+    if (storageBookingDate) {
+      bookingDateRange.value = JSON.parse(storageBookingDate);
+    }
+    console.log(bookingDateRange.value)
   }
 
-
-  const editOrder = () => {
-    // const url = `${VITE_URL}/api/v1/admin/orders/${route.params.id}`
-    const url = `${VITE_URL}/api/v1/admin/orders/65ac8c5080ae3e636b421c46`
-    axios.put(url)
-      .then(res => {
-        console.log(res)
-
-      })
-      .catch(err => {
-        console.log(err)
-      })
+  // 人數
+  const selectPeopleNum = ref(0)
+  const increase = () => {
+    selectPeopleNum.value++
   }
-
-  const deleteOrder = (id : string) => {
-    // const url = `${VITE_URL}/api/v1/admin/orders/${route.params.id}`
-    const url = `${VITE_URL}/api/v1/admin/orders/${id}`
-    axios.delete(url)
-      .then(res => {
-        console.log('刪除成功', res)
-        getOrders()
-      })
-      .catch(err => {
-        console.log(err)
-      })
+  const decrease = () => {
+    selectPeopleNum.value--
   }
-
-  // front
-  const getFrontOrders = () => {
-    const url = `${VITE_URL}/api/v1/orders/`
-    axios.get(url)
-      .then(res => {
-        console.log(res)
-        console.log(res.data.result)
-        orderList.value = res.data.result
-        // console.log('取得所有訂單',orderList.value)
-      })
-      .catch(err => {
-        console.log('getFrontOrders 失敗', err)
-      })
+  const setPeopleNum = () => {
+    localStorage.setItem('selectPeopleNum', selectPeopleNum.value.toString())
   }
-
-  const order = ref({})
-  const getFrontOrder = () => {
-    // const url = `${VITE_URL}/api/v1/order/${route.params.id}`
-    const url = `${VITE_URL}/api/v1/orders/65ac8c5080ae3e636b421c46`
-    axios.get(url)
-      .then(res => {
-        console.log('getFrontOrder 取得單一資料', res)
-        order.value = res.data.reslut
-      })
-      .catch(err => {
-        console.log('getFrontOrder 失敗', err)
-      })
+  const getPeopleNum = () => {
+    const storagePeopleNum = localStorage.getItem('selectPeopleNum');
+    if (storagePeopleNum) {
+      selectPeopleNum.value = storagePeopleNum;
+    }
   }
 
   const tempOrder = ref(
@@ -91,26 +63,13 @@ export const useOrderStore = defineStore('order', () => {
         "phone": "",
         "email": "",
         "address": {
-          "zipcode": "",
+          "zipcode": 0,
           "detail": ""
         },
       }
     }
   )
-  const createOrder = () => {
-    // console.log(tempOrder.value)
-    tempOrder.value.roomId = route.params.id
-
-    const url = `${VITE_URL}/api/v1/orders/`
-    axios.post(url, tempOrder.value)
-      .then(res => {
-        console.log('createOrder 新增成功',res)
-        resetTempOrder()
-      })
-      .catch(err => {
-        console.log('createOrder 失敗',err)
-      })
-  }
+  // 訂單清空
   const resetTempOrder = () => {
     tempOrder.value = {
       "roomId": "",
@@ -129,9 +88,71 @@ export const useOrderStore = defineStore('order', () => {
     }
   }
 
+  // 前台- 新增訂單
+  const createOrder = () => {
+    console.log(tempOrder.value)
+
+    tempOrder.value.roomId = route.params.id
+    tempOrder.value.checkOutDate = (bookingDateRange.value.end).split('T')[0].split('-').join('/')
+    tempOrder.value.checkInDate = (bookingDateRange.value.start).split('T')[0].split('-').join('/')
+    tempOrder.value.peopleNum = selectPeopleNum.value
+    tempOrder.value.userInfo.address.zipcode = tempOrder.value.userInfo.address.zipcode * 1
+
+    const url = `${VITE_URL}/api/v1/orders/`
+    axios.post(url, tempOrder.value)
+      .then(res => {
+        console.log('createOrder 新增成功', res)
+        resetTempOrder()
+        Toast.fire({
+          title: '已建立訂單',
+          icon: 'success'
+        })
+        resetTempOrder()
+        router.push(`/booking-complete/${res.data.result._id}`)
+      })
+      .catch(err => {
+        console.log('createOrder 失敗', err)
+        Alert.fire({
+          title: '資料有誤，請稍後再試一次',
+          icon: 'error'
+        })
+      })
+  }
+
+  // 前台- 取得單一訂單
+  const order = ref({})
+  const getFrontOrder = () => {
+    console.log(route.params.id)
+    const url = `${VITE_URL}/api/v1/orders/${route.params.id}`
+    axios.get(url)
+      .then(res => {
+        console.log('getFrontOrder 取得單一資料', res)
+        order.value = res.data.result
+      })
+      .catch(err => {
+        console.log('getFrontOrder 失敗', err)
+      })
+  }
+
+  // 前台- 取得所有訂單列表
+  const orderList = ref([])
+  const getFrontOrders = () => {
+    const url = `${VITE_URL}/api/v1/orders/`
+    axios.get(url)
+      .then(res => {
+        console.log(res)
+        console.log(res.data.result)
+        orderList.value = res.data.result
+        console.log('取得所有訂單', orderList.value)
+      })
+      .catch(err => {
+        console.log('getFrontOrders 失敗', err)
+      })
+  }
+
+  // 前台- 取消訂單
   const deleteFrontOrder = () => {
-    // const url = `${VITE_URL}/api/v1/order/${route.params.id}`
-    const url = `${VITE_URL}/api/v1/orders/65ac8c5080ae3e636b421c46`
+    const url = `${VITE_URL}/api/v1/order/${route.params.id}`
     axios.delete(url)
       .then(res => {
         console.log(res)
@@ -143,87 +164,76 @@ export const useOrderStore = defineStore('order', () => {
 
 
 
-
-  // 日期格式
-  // "checkInDate": "",
-  // "checkOutDate": "",
-  // "peopleNum": 0,
-  
-  const bookingDate = ref({
-    start: new Date(),
-    end: new Date()
-  });
-
-  const setBookingDate = () => {
-    localStorage.setItem('bookingDate', JSON.parse(JSON.stringify(bookingDate.value)))
+  // 後台- 取得訂單列表
+  const getOrders = () => {
+    const url = `${VITE_URL}/api/v1/admin/orders/`
+    axios.get(url)
+      .then(res => {
+        console.log('getOrder 訂單列表', res)
+        orderList.value = res.data.result
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
-  const getBookingDate = () => {
-
+  // 後台- 編輯訂單
+  const editOrder = () => {
+    const url = `${VITE_URL}/api/v1/admin/orders/${route.params.id}`
+    axios.put(url)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
-
-  // 日期
-  // Flow
-  // 1. 點擊 roomDetail.vue 中日期 input，開啟日期元件
-  // 2. 點擊 bookingDatePick.vue 起迄日期，點擊確定日期，存取於 localStorage.setItem()，並關閉
-  // 3. roomDetail.vue input 確認後才能夠變動
-  // 4. 選取人數並送出後進入到下一頁
-
-  const resetDate = () => {
-    bookingDate.value = {
-      start: new Date(),
-      end: new Date()
-    }
-  }
-  const setItemDate = () => {
-    localStorage.setItem('bookingDate', JSON.stringify(bookingDate.value));
-  }
-  const getItemDate = () => {
-    const storedBookingDate = localStorage.getItem('bookingDate');
-    const stroedBookingNum = localStorage.getItem('peopleNum');
-    if (storedBookingDate) {
-      bookingDate.value = JSON.parse(storedBookingDate);
-    }
-    if (stroedBookingNum) {
-      peopleNum.value = Number('peopleNum')
-    }
-  }
-  
-
-  // 人數
-  const peopleNum = ref(0)
-  const increase = () => {
-    peopleNum.value++
-  }
-  const decrease = () => {
-    peopleNum.value--
+  // 後台- 刪除單一訂單
+  const deleteOrder = (id: string) => {
+    const url = `${VITE_URL}/api/v1/admin/orders/${id}`
+    axios.delete(url)
+      .then(res => {
+        console.log('刪除成功', res)
+        getOrders()
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
+  const test = () => {
+    console.log('123')
+    modalStore.isModalOpen = !modalStore.isModalOpen
+  }
 
   return {
-    // admin
-    orderList,
-    getOrders,
+    bookingDateRange,
+    resetDate,
+    setBookingDate,
+    getBookingDate,
+
+    selectPeopleNum,
+    increase,
+    decrease,
+    setPeopleNum,
+    getPeopleNum,
+
+    // 前台
     tempOrder,
+    resetTempOrder,
+    createOrder,
+    orderList,
+    getFrontOrder,
+    order,
+    getFrontOrders,
+    deleteFrontOrder,
+
+    // 後台
+    getOrders,
     editOrder,
     deleteOrder,
 
-    // front
-    getFrontOrders,
-    order,
-    getFrontOrder,
-    createOrder,
-    resetTempOrder,
-    deleteFrontOrder,
-
-    bookingDate,
-    resetDate,
-    setItemDate,
-    getItemDate,
-
-    peopleNum,
-    increase,
-    decrease
+    test
   }
 })

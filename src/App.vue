@@ -1,5 +1,6 @@
 <script setup>
 import { RouterView } from "vue-router";
+<<<<<<< HEAD
 
 // basic
 import { onMounted } from "vue";
@@ -14,6 +15,8 @@ onMounted(async () => {
   await checkUser();
   await getUser();
 });
+=======
+>>>>>>> upstream
 </script>
 
 <template>

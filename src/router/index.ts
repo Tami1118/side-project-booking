@@ -32,7 +32,8 @@ const routes = [
         meta: { title: '房型預約' }
       },
       {
-        path: 'booking-complete',
+        // path: 'booking-complete',
+        path: 'booking-complete/:id',
         name: 'booking-complete',
         component: () => import('../views/frontend/BookingComplete.vue'),
         meta: { title: '預約成功' }
@@ -44,9 +45,9 @@ const routes = [
         meta: { title: '個人資料' }
       },
       {
-        path: 'orders',
-        name: 'orders',
-        component: () => import('../views/frontend/OrderList.vue'),
+        path: 'user-order',
+        name: 'user-order',
+        component: () => import('../views/frontend/UserOrders.vue'),
         meta: { title: '訂單列表' }
       },
       {

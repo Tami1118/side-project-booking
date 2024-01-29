@@ -1,8 +1,8 @@
-import { defineStore } from "pinia"
-import { ref } from 'vue'
 const { VITE_URL } = import.meta.env
-import axios from 'axios'
+import { ref } from 'vue'
+import { defineStore } from "pinia"
 import { useRouter } from 'vue-router'
+import axios from 'axios'
 import { Toast, Alert } from '@/mixins/swal'
 
 export const useUserStore = defineStore('userStore', () => {

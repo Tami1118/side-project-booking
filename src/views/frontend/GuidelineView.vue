@@ -230,7 +230,7 @@
 
       <div aria-label="Date Picker">
         <h2 class="text-6 font-bold pb-2 mb-4 border-b">Vue DatePicker</h2>
-          <booking-date></booking-date>
+          <booking-date-pick></booking-date-pick>
       </div>
 
       <div aria-label="address list">
@@ -252,7 +252,7 @@
 </template>
 
 <script setup lang="ts">
-import BookingDate from '@/components/widgets/BookingDate.vue'
+import BookingDatePick from '@/components/widgets/BookingDatePick.vue'
 import CityForm from '@/components/widgets/CityForm.vue'
 import { ref, onMounted, watchEffect } from 'vue';
 
