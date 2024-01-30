@@ -170,8 +170,32 @@ export const useUserStore = defineStore('userStore', () => {
       })
   }
   const editUserInfo = () => {
+    let editUserDataNoPass = {
+      userId: "",
+      name: "",
+      phone: "",
+      birthday: "",
+      address: {
+        zipcode: 0,
+        detail: ""
+      }
+    }
+    editUserDataNoPass.userId = editUserData.value.userId
+    editUserDataNoPass.name = editUserData.value.name
+    editUserDataNoPass.phone = editUserData.value.phone
+    editUserDataNoPass.birthday = editUserData.value.birthday
+    console.log(editUserDataNoPass)
     const url = `${VITE_URL}/api/v1/user`
-    axios.put(url, editUserData.value)
+    axios.put(url,{
+      "userId": "65a2b3492ff1a89852fd4ffd",
+      "name": "kkk",
+      "phone": "0910123456",
+      "birthday": "1999/9/9",
+      "address": {
+        "zipcode": 802,
+        "detail": "文山路87號"
+      }
+    })
       .then(res => {
         console.log('修改資料 成功',res)
         userInfo.value = res.data.result
@@ -215,6 +239,7 @@ export const useUserStore = defineStore('userStore', () => {
 
     // edit
     editUserData,
+    
     newPassword2,
     showEditPassword,
     showEditUserInfo,

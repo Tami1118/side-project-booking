@@ -7,7 +7,7 @@
         id="user-name" 
         class="p-4 rounded-2" 
         placeholder="請輸入姓名"
-        v-model="editUserInfo.name"
+        v-model="editUserData.name"
       >
     </div>
     <div class="flex flex-col gap-2">
@@ -17,7 +17,7 @@
         id="user-phone" 
         class="p-4 rounded-2" 
         placeholder="請輸入手機號碼"
-        v-model="editUserInfo.phone"
+        v-model="editUserData.phone"
       >
     </div>
     <DateSelect/>
@@ -35,7 +35,7 @@ import { useUserStore } from '@/stores/userStore'
 
 const userStore = useUserStore()
 const { userInfo, editUserData  } = storeToRefs(userStore)
-const editUserInfo = userStore.editUserInfo
+
 
 
 
