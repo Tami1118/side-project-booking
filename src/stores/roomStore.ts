@@ -1,9 +1,10 @@
-import { defineStore } from "pinia"
 import { ref } from 'vue'
+import { defineStore } from "pinia"
 import axios from 'axios'
-const { VITE_URL } = import.meta.env
 // import { Toast, Alert } from '@/mixins/swal'
 import { useRoute } from 'vue-router'
+
+const { VITE_URL } = import.meta.env
 
 export const useRoomStore = defineStore('roomStore', () => {
   const route = useRoute()

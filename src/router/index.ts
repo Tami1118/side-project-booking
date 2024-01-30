@@ -32,15 +32,15 @@ const routes = [
         meta: { title: '房型預約' }
       },
       {
-        // path: 'booking-complete',
         path: 'booking-complete/:id',
+        // path: 'booking-complete',
         name: 'booking-complete',
         component: () => import('../views/frontend/BookingComplete.vue'),
         meta: { title: '預約成功' }
       },
       {
-        path: 'person',
-        name: 'person',
+        path: 'user',
+        name: 'user',
         component: () => import('../views/frontend/PersonView.vue'),
         meta: { title: '個人資料' }
       },
