@@ -70,7 +70,11 @@
 </template>
 
 <script setup lang="ts">
-// swiper
+// Basic
+import { onMounted } from "vue";
+import { storeToRefs } from "pinia";
+
+// Swiper
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
@@ -78,15 +82,13 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 const modules = [Pagination, Navigation];
 
-import { onMounted } from "vue";
-import { storeToRefs } from "pinia";
-
-// room
+// Room
 import { useRoomStore } from "@/stores/roomStore";
 const roomStore = useRoomStore();
-const getFrontRooms = roomStore.getFrontRooms;
 const { roomData } = storeToRefs(roomStore);
+const getFrontRooms = roomStore.getFrontRooms;
 
+// Action
 onMounted(() => {
   getFrontRooms();
 });

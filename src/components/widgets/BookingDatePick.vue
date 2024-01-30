@@ -77,7 +77,7 @@ const { bookingDateRange } = storeToRefs(orderStore);
 const resetDate = orderStore.resetDate;
 const setBookingDate = orderStore.setBookingDate;
 
-// datepicker style
+// DatePicker style option
 const { mapCurrent } = useScreens({
   xs: "0px",
   sm: "640px",

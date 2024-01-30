@@ -30,6 +30,14 @@ import VCalendar from 'v-calendar';
 import 'v-calendar/style.css';
 
 
+// Fontawesome
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+library.add(fas, fab, far);
+
 
 // mixins
 import { getNight, getLocalDateFormat, toThousands, getTradDateFormat } from "@/mixins/format"
@@ -44,5 +52,6 @@ export function registerPlugins(app) {
     .component('VForm', Form)
     .component('ErrorMessage', ErrorMessage)
     .use(VCalendar, {})
+    .component("font-awesome-icon", FontAwesomeIcon)
     .config.globalProperties.$formats = { getNight, getLocalDateFormat, toThousands, getTradDateFormat };
 }
