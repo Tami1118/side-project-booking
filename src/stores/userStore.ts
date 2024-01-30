@@ -47,6 +47,7 @@ export const useUserStore = defineStore('userStore', () => {
   // logout
   const logout = () => {
     document.cookie = `typescript=""`
+    userStatus.value = false
     router.push('/')
   }
   // signup
@@ -132,16 +133,18 @@ export const useUserStore = defineStore('userStore', () => {
   const newPassword2 = ref("");
   const showEditPassword = ref(false);
   const showEditUserInfo = ref(false);
+  const userStatus = ref(false)
   const getUser = () => {
     const url = `${VITE_URL}/api/v1/user`
     axios.get(url)
       .then(res => {
         console.log('getUser 成功', res)
         userInfo.value = res.data.result
+        userStatus.value = res.data.status
       })
       .catch(err => {
         console.log('getUser 失敗', err)
-        userInfo.value.state = false
+        
       })
   }
   const editUserPass = () => {
@@ -218,6 +221,7 @@ export const useUserStore = defineStore('userStore', () => {
     newPassword2,
     showEditPassword,
     showEditUserInfo,
+    userStatus,
     getUser,
     editUserPass,
     editUserInfo,

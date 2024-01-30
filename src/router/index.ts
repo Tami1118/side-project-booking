@@ -39,8 +39,8 @@ const routes = [
         meta: { title: '預約成功' }
       },
       {
-        path: 'person',
-        name: 'person',
+        path: 'user',
+        name: 'user',
         component: () => import('../views/frontend/PersonView.vue'),
         meta: { title: '個人資料' }
       },

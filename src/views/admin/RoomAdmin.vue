@@ -72,15 +72,8 @@ const deleteRoom = roomStore.deleteRoom;
 import { useUserStore } from "@/stores/userStore";
 const userStore = useUserStore();
 const { isChecked } = storeToRefs(userStore);
-<<<<<<< HEAD
 watch(isChecked, (n) => {
   if(n) getRooms()
-=======
-
-// Action
-watch(isChecked, (n) => {
-  if (n) getRooms();
->>>>>>> upstream
 });
 
 onMounted(() => {

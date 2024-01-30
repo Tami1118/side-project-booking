@@ -16,7 +16,7 @@
             <p>預定參考編號：{{ item._id }}</p>
             <h3 class="text-4 lg:text-6 font-bold">{{ item.roomId.name }}</h3>
             <div>
-              <p class="mb-2">住宿天數：1晚</p>
+            <p class="mb-2">住宿天數：1晚</p>
               <p>住宿人數：{{ item.peopleNum }}位</p>
             </div>
             <div>

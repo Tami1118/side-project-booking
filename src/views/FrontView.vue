@@ -7,10 +7,9 @@
 </template>
 
 <script setup lang="ts">
-// view
-import UserHeader from "@/layouts/frontend/UserHeader.vue";
-import UserFooter from "@/layouts/frontend/UserFooter.vue";
 import { RouterView } from "vue-router";
 
-
+// Components
+import UserHeader from "@/layouts/frontend/UserHeader.vue";
+import UserFooter from "@/layouts/frontend/UserFooter.vue";
 </script>
