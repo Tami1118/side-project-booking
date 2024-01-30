@@ -43,11 +43,7 @@
 
             <div class="hidden md:flex justify-between md:justify-end gap-4">
               <button class="btn" @click="resetDate">清除日期</button>
-<<<<<<< HEAD
-              <button class="btn btn-primary" @click="setItemDate(), isModalOpen = false">確定日期</button>
-=======
               <button class="btn btn-primary" @click="setBookingDate(), isModalOpen = false">確定日期</button>
->>>>>>> upstream
             </div>
           </div>
 

@@ -21,6 +21,10 @@ onMounted(() => {
 
 <template>
   <header class="sticky top-0 z-20">
+    <!-- 
+      待辦：
+      1. home and room 超過 vh-100 變化 background
+     -->
     <div class="bg-neutral-100">
       <div class="container mx-auto px-3 xl:px-0 py-4">
         <div class="flex items-center justify-between text-white">
@@ -30,7 +34,7 @@ onMounted(() => {
           <button @click="isMenu = !isMenu" class="lg:hidden">
             <font-awesome-icon icon="fa-solid fa-bars" class="text-6" />
           </button>
-          <div class="lg:block" :class="{ 'hidden': !isMenu }">
+          <div class="lg:block" :class="!isMenu ? 'hidden':''">
             <div class="max-lg:fixed top-0 right-0 max-lg:w-full max-lg:h-full z-20 bg-neutral-100 flex justify-center items-center px-5 lg:p-0">
               <div @click="isMenu = !isMenu" class="absolute top-0 right-0 p-5 group lg:hidden">
                 <button class="group-hover:text-primary-100"><font-awesome-icon icon="fa-solid fa-xmark" class="text-12" /></button>
@@ -41,7 +45,7 @@ onMounted(() => {
                 <li v-if="!userStatus" class="group"><router-link to="/login" @click="isMenu = false" class="block text-center p-4 group-hover:text-primary-100">會員登入</router-link></li>
                 <li v-else class="group hidden lg:block relative">
                   <router-link to="/user" @click="isMenu = false" class="block text-center p-4 group-hover:text-primary-100">
-                    <font-awesome-icon icon="fa-regular fa-circle-user" class="me-2 text-6" /> {{ userInfo.name }}
+                    <font-awesome-icon icon="fa-regular fa-circle-user" class="me-2" /> {{ userInfo.name }}
                   </router-link>
                   <ul class="hidden md:group-hover:flex flex-col absolute top-100 right-0 w-[260px] bg-white py-3 rounded-5 overflow-hidden">
                     <li><router-link to="/user" class="block py-4 px-8 text-nowrap hover:bg-primary-10 text-neutral-80 hover:text-primary-100">我的訂單</router-link></li>
