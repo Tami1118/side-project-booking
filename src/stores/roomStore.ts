@@ -1,15 +1,39 @@
 import { ref } from 'vue'
 import { defineStore } from "pinia"
 import axios from 'axios'
-// import { Toast, Alert } from '@/mixins/swal'
 import { useRoute } from 'vue-router'
 
 const { VITE_URL } = import.meta.env
+import type { Room } from "@/interfaces/room"
+import { Toast, Alert } from '@/mixins/swal'
+
 
 export const useRoomStore = defineStore('roomStore', () => {
   const route = useRoute()
   const showRoomModal = ref(false)
   const updateRoomType = ref("create")
+  const roomLayout = ref([
+    {
+      title: '市景',
+      isProvide: true,
+    },
+    {
+      title: '獨立衛浴',
+      isProvide: true,
+    },
+    {
+      title: '客廳',
+      isProvide: true,
+    },
+    {
+      title: '書房',
+      isProvide: true,
+    },
+    {
+      title: '樓層電梯',
+      isProvide: true,
+    },
+  ])
   const bedType = ref(["一張大床", "兩張大床", "三張大床"])
 
   // admin
@@ -145,16 +169,16 @@ export const useRoomStore = defineStore('roomStore', () => {
         getRooms()
       })
       .catch((err) => {
-        console.log('editRoomId 失敗',err)
+        console.log('editRoomId 失敗', err)
       })
   }
 
-  const deleteRoom = (id) => {
+  const deleteRoom = (id:string) => {
     console.log(id)
     const url = `${VITE_URL}/api/v1/admin/rooms/${id}`
     axios.delete(url)
       .then((res) => {
-        console.log('deleteRoom 已刪除房型',res)
+        console.log('deleteRoom 已刪除房型', res)
         getRooms()
       })
       .catch((err) => {
@@ -267,23 +291,21 @@ export const useRoomStore = defineStore('roomStore', () => {
         roomData.value = res.data.result
       })
       .catch((err) => {
-        console.log('getFrontRooms 失敗',err)
+        console.log('getFrontRooms 失敗', err)
       })
   }
 
   // front
-  const roomDetail = ref({})
-  const imageList = ref([])
+  const roomDetail = ref<Room | null>(null);
   const getFrontRoom = () => {
     const url = `${VITE_URL}/api/v1/rooms/${route.params.id}`
     axios.get(url)
       .then((res) => {
         console.log('getFrontRoom 取得房型資料', res)
         roomDetail.value = res.data.result
-        imageList.value = res.data.result.imageUrlList
       })
       .catch((err) => {
-        console.log('getFrontRoom 失敗',err)
+        console.log('getFrontRoom 失敗', err)
       })
   }
 
@@ -291,6 +313,7 @@ export const useRoomStore = defineStore('roomStore', () => {
   return {
     showRoomModal,
     updateRoomType,
+    roomLayout,
     bedType,
 
     // admin
@@ -305,7 +328,6 @@ export const useRoomStore = defineStore('roomStore', () => {
 
     // front
     roomDetail,
-    imageList,
     getFrontRooms,
     getFrontRoom,
   }

@@ -7,7 +7,23 @@ export default {
     "./src/views/**/*.{vue,js,ts,jsx,tsx, scss}",
   ],
   theme: {
+    letterSpacing: {
+      tighter: '-.05em',
+      tight: '-.025em',
+      normal: '0',
+      wide: '.02em',
+      wider: '.05em',
+      widest: '.1em',
+    },
     extend: {
+      borderRadius: {
+        2: '8px',
+        4: '16px',
+        5: '20px',
+      },
+      boxShadow: {
+        'input': '0 0 0 4px rgba(190, 156, 124, 0.10)',
+      },
       colors: {
         'primary': '#7B6651',
         'primary-100': '#BF9D7D',
@@ -35,11 +51,7 @@ export default {
         'neutral-40': '#ECECEC',
         'neutral-10': '#F9F9F9',
       },
-      borderRadius: {
-        2: '8px',
-        4: '16px',
-        5: '20px',
-      },
+
       fontSize: {
         '3':  '12px',
         '3h': '14px',
@@ -61,24 +73,24 @@ export default {
       fontFamily: {
         "noto-serif-tc": ['Noto Serif TC', 'serif', 'Comfortaa', 'sans-serif']
       },
-      boxShadow: {
-        'input': '0 0 0 4px rgba(190, 156, 124, 0.10)',
-      },
-      spacing: {
-        '18': '72px',
-      },
-      margin: {
-        '30': '120px',
-      },
-      padding: {
-        '30': '120px',
-      },
       fontWeight: {
         "700": "700"
       },
       gap: {
         '15': '60px',
         '18': '72px',
+        '30': '120px',
+      },
+      lineHeight: {
+        '1.2': '1.2',
+      },
+      padding: {
+        '30': '120px',
+      },
+      spacing: {
+        '18': '72px',
+      },
+      margin: {
         '30': '120px',
       },
     },

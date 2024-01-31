@@ -1,11 +1,19 @@
-body{
-  @apply font-noto-serif-tc text-neutral-100
+body {
+  @apply font-noto-serif-tc text-neutral-80
 }
 
-h1, h2, h3, h4, h5, h6, span, a, button {
-  @apply leading-[1.2] font-bold
+h1, h2, h3, h4, h5, h6 {
+  @apply leading-[1.2] font-bold tracking-[0.05rem]
+}
+
+span, a, button {
+  @apply leading-[1.2] font-bold tracking-[0.05rem]
+}
+
+ul, ol, li {
+  @apply leading-normal tracking-[0.02rem]
 }
 
 p{
-  @apply leading-[1.5]
+  @apply leading-normal tracking-[0.02rem]
 }

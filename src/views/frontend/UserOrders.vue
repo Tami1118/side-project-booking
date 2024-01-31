@@ -11,7 +11,7 @@
     </div>
     <div class="container mx-auto px-4 sm:px-0 py-10 lg:py-20">
       <div class="mb-10">
-        <router-link to="/person" class="py-4 px-6 text-white">個人資料</router-link>
+        <router-link to="/user" class="py-4 px-6 text-white">個人資料</router-link>
         <router-link to="/user-order" class="py-4 px-6 text-white">我的訂單</router-link>
       </div>
       <div class="flex flex-col lg:flex-row gap-10">
