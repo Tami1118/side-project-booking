@@ -6,6 +6,7 @@
 </template>
 
 <script setup lang="ts">
+// Basic
 import { onMounted } from "vue";
 import { RouterView } from "vue-router";
 
@@ -18,10 +19,7 @@ const userStore = useUserStore()
 const checkUser = userStore.checkUser;
 const getUser = userStore.getUser;
 
-// onMounted(async () => {
-//   await checkUser();
-//   await getUser();
-// });
+// Action
 onMounted(() => {
   checkUser();
   getUser();

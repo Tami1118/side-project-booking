@@ -13,6 +13,7 @@ const logout = userStore.logout
 
 const isMenu = ref(false);
 
+// Action
 onMounted(() => {
   checkUser()
   getUser()
