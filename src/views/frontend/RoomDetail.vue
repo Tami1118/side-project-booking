@@ -2,8 +2,7 @@
 // Basic
 import { ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
-import { getLocalDateFormat } from "@/mixins/format"
-import { toThousands } from "@/mixins/format";
+import { getLocalDateFormat, toThousands } from "@/mixins/format"
 
 // Components
 import RoomDetailImageSwiper from "@/components/frontend/RoomDetailImageSwiper.vue";
@@ -20,19 +19,41 @@ const roomStore = useRoomStore();
 const { roomDetail } = storeToRefs(roomStore);
 const getFrontRoom = roomStore.getFrontRoom;
 
+// TypeScript
+interface DateRangeInterface {
+  start: Date;
+  end: Date;
+}
+
 // CheckDate
-const reserveDateRange = ref({
+// import { useDateStore } from "@/stores/dateStore"
+// const dateStore = useDateStore()
+// const { nightNum } = storeToRefs(dateStore)
+
+const reserveDateRange = ref<DateRangeInterface>({
   start: new Date(),
   end: new Date()
 });
-const catchData = (data) => {
+const catchData = (data:DateRangeInterface) => {
   reserveDateRange.value = data;
 };
+
+// PeopleNum
+const reservePeopleNum = ref<number>(0)
+const catchPeople = (data:number) => {
+  reservePeopleNum.value = data
+  console.log(reservePeopleNum.value)
+}
 
 // Open/Close Modal
 import { useModalStore } from "@/stores/modalStore.js";
 const modalStore = useModalStore();
 const openModal = modalStore.openModal;
+
+// Route
+import { useRoute, useRouter } from "vue-router"
+const route = useRoute()
+const router = useRouter()
 
 // Action
 onMounted(() => {
@@ -94,10 +115,10 @@ onMounted(() => {
 
               <div>
                 <BookingDatePick @getReserveDate="catchData" />
-                <BookingPeople />
+                <BookingPeople @getPeopleNum="catchPeople" />
               </div>
               <p class="text-primary-100 text-6 font-bold">NT$ {{ toThousands(roomDetail.price) }}</p>
-              <!-- <router-link :to="`/booking/${route.params.id}`" @click="setPeopleNum" class="btn btn-primary">立即預訂</router-link> -->
+              <button @click="router.push(`/booking/${route.params.id}`)" class="btn btn-primary disabled:bg-neutral-40">立即預訂</button>
             </div>
           </div>
         </div>

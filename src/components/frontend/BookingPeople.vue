@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, defineEmits, watch } from "vue"
 import { storeToRefs } from "pinia";
 const peopleNum = ref<number>(2)
 
@@ -7,6 +7,14 @@ import { useRoomStore } from "@/stores/roomStore";
 const roomStore = useRoomStore()
 const { roomDetail } = storeToRefs(roomStore)
 
+const emit = defineEmits(["getPeopleNum"])
+const sendPeopleNum = () => {
+  emit("getPeopleNum", peopleNum.value)
+}
+
+watch(peopleNum, () => {
+  sendPeopleNum()
+})
 
 // const setPeopleNum = () => {
 //   localStorage.setItem('peopleNum.value', peopleNum.value.value.toString())
