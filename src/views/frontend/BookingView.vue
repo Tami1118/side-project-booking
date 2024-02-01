@@ -1,4 +1,3 @@
-
 <script setup>
 // Basis
 import { onMounted } from "vue";

@@ -26,9 +26,9 @@ interface DateRangeInterface {
 }
 
 // CheckDate
-// import { useDateStore } from "@/stores/dateStore"
-// const dateStore = useDateStore()
-// const { nightNum } = storeToRefs(dateStore)
+import { useDateStore } from "@/stores/dateStore"
+const dateStore = useDateStore()
+const { nightNum } = storeToRefs(dateStore)
 
 const reserveDateRange = ref<DateRangeInterface>({
   start: new Date(),
@@ -117,7 +117,7 @@ onMounted(() => {
                 <BookingDatePick @getReserveDate="catchData" />
                 <BookingPeople @getPeopleNum="catchPeople" />
               </div>
-              <p class="text-primary-100 text-6 font-bold">NT$ {{ toThousands(roomDetail.price) }}</p>
+              <p class="text-primary-100 text-6 font-bold">NT$ {{ toThousands(roomDetail.price * nightNum) }}</p>
               <button @click="router.push(`/booking/${route.params.id}`)" class="btn btn-primary disabled:bg-neutral-40">立即預訂</button>
             </div>
           </div>

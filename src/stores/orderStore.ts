@@ -3,6 +3,7 @@ import { defineStore } from "pinia"
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import { Toast, Alert } from '@/mixins/swal'
+import type { Date } from "@/interfaces/order"
 
 const { VITE_URL } = import.meta.env
 import { useModalStore } from "@/stores/modalStore"
