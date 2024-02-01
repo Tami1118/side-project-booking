@@ -21,7 +21,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <header class="sticky top-0 z-20">
+  <header class="sticky top-0 z-10">
     <!-- 
       待辦：
       1. home and room 超過 vh-100 變化 background

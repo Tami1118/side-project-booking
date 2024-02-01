@@ -1,3 +1,39 @@
+<script setup>
+// Basis
+import { onMounted } from "vue";
+import { storeToRefs } from "pinia";
+
+// Components
+import RoomInfoMain from "@/components/frontend/RoomInfoMain.vue";
+import CityForm from "@/components/widgets/CityForm.vue";
+
+// Room
+import { useRoomStore } from "@/stores/roomStore";
+const roomStore = useRoomStore();
+const { roomDetail } = storeToRefs(roomStore);
+const getFrontRoom = roomStore.getFrontRoom;
+
+// Order
+import { useOrderStore } from "@/stores/orderStore";
+const orderStore = useOrderStore();
+const { tempOrder, bookingDateRange, selectPeopleNum } = storeToRefs(orderStore);
+const getBookingDate = orderStore.getBookingDate;
+const getPeopleNum = orderStore.getPeopleNum;
+const createOrder = orderStore.createOrder;
+
+// Route
+import { useRoute } from "vue-router"
+const route = useRoute()
+
+// Action
+onMounted(() => {
+  getFrontRoom();
+  getBookingDate();
+  getPeopleNum();
+  console.log(route.params.id)
+});
+</script>
+
 <template>
   <div class="bg-primary-10">
     <div class="container mx-auto px-4 sm:px-0 py-10 lg:py-30">
@@ -102,38 +138,3 @@
   <!-- <bookingLoading /> -->
 </template>
 
-<script setup>
-// Basis
-import { onMounted } from "vue";
-import { storeToRefs } from "pinia";
-
-// Components
-import RoomInfoMain from "@/components/frontend/RoomInfoMain.vue";
-import CityForm from "@/components/widgets/CityForm.vue";
-
-// Room
-import { useRoomStore } from "@/stores/roomStore";
-const roomStore = useRoomStore();
-const { roomDetail } = storeToRefs(roomStore);
-const getFrontRoom = roomStore.getFrontRoom;
-
-// Order
-import { useOrderStore } from "@/stores/orderStore";
-const orderStore = useOrderStore();
-const { tempOrder, bookingDateRange, selectPeopleNum } = storeToRefs(orderStore);
-const getBookingDate = orderStore.getBookingDate;
-const getPeopleNum = orderStore.getPeopleNum;
-const createOrder = orderStore.createOrder;
-
-// Route
-import { useRoute } from "vue-router"
-const route = useRoute()
-
-// Action
-onMounted(() => {
-  getFrontRoom();
-  getBookingDate();
-  getPeopleNum();
-  console.log(route.params.id)
-});
-</script>
