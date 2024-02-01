@@ -10,9 +10,12 @@ const getNight = (range: number) => {
   return range / (1000 * 60 * 60 * 24)
 }
 
-// 標準格式 2024/1/1
+// 標準格式 2024/01/01
 const getLocalDateFormat = (date: Date) => {
-  return new Date(date).toLocaleDateString()
+  const year = date.getFullYear()
+  const month = (date.getMonth() + 1).toString().padStart(2, '0')
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${year}/${month}/${day}`
 }
 
 // 1月1日，星期一

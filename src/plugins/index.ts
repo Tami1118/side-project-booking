@@ -39,10 +39,6 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 library.add(fas, fab, far);
 
 
-// mixins
-import { getNight, getLocalDateFormat, toThousands, getTradDateFormat } from "@/mixins/format"
-
-
 export function registerPlugins(app) {
   app
     .use(createPinia())
@@ -53,5 +49,4 @@ export function registerPlugins(app) {
     .component('ErrorMessage', ErrorMessage)
     .use(VCalendar, {})
     .component("font-awesome-icon", FontAwesomeIcon)
-    .config.globalProperties.$formats = { getNight, getLocalDateFormat, toThousands, getTradDateFormat };
 }

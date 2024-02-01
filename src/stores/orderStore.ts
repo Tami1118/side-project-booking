@@ -12,46 +12,6 @@ export const useOrderStore = defineStore('order', () => {
   const router = useRouter()
   const modalStore = useModalStore()
 
-  // 日期
-  const bookingDateRange = ref({
-    start: new Date(),
-    end: new Date()
-  })
-  const resetDate = () => {
-    bookingDateRange.value = {
-      start: new Date(),
-      end: new Date()
-    }
-  }
-  const setBookingDate = () => {
-    localStorage.setItem('bookingDateRange', JSON.stringify(bookingDateRange.value))
-  }
-  const getBookingDate = () => {
-    const storageBookingDate = localStorage.getItem('bookingDateRange');
-    if (storageBookingDate) {
-      bookingDateRange.value = JSON.parse(storageBookingDate);
-    }
-    console.log(bookingDateRange.value)
-  }
-
-  // 人數
-  const selectPeopleNum = ref(0)
-  const increase = () => {
-    selectPeopleNum.value++
-  }
-  const decrease = () => {
-    selectPeopleNum.value--
-  }
-  const setPeopleNum = () => {
-    localStorage.setItem('selectPeopleNum', selectPeopleNum.value.toString())
-  }
-  const getPeopleNum = () => {
-    const storagePeopleNum = localStorage.getItem('selectPeopleNum');
-    if (storagePeopleNum) {
-      selectPeopleNum.value = storagePeopleNum;
-    }
-  }
-
   const tempOrder = ref(
     {
       "roomId": "",
@@ -92,10 +52,10 @@ export const useOrderStore = defineStore('order', () => {
   const createOrder = () => {
     console.log(tempOrder.value)
 
-    tempOrder.value.roomId = route.params.id
-    tempOrder.value.checkOutDate = (bookingDateRange.value.end).split('T')[0].split('-').join('/')
-    tempOrder.value.checkInDate = (bookingDateRange.value.start).split('T')[0].split('-').join('/')
-    tempOrder.value.peopleNum = selectPeopleNum.value
+    // tempOrder.value.roomId = route.params.id
+    // tempOrder.value.checkOutDate = (bookingDateRange.value.end).split('T')[0].split('-').join('/')
+    // tempOrder.value.checkInDate = (bookingDateRange.value.start).split('T')[0].split('-').join('/')
+    // tempOrder.value.peopleNum = selectPeopleNum.value
     tempOrder.value.userInfo.address.zipcode = tempOrder.value.userInfo.address.zipcode * 1
 
     const url = `${VITE_URL}/api/v1/orders/`
@@ -208,17 +168,6 @@ export const useOrderStore = defineStore('order', () => {
   }
 
   return {
-    bookingDateRange,
-    resetDate,
-    setBookingDate,
-    getBookingDate,
-
-    selectPeopleNum,
-    increase,
-    decrease,
-    setPeopleNum,
-    getPeopleNum,
-
     // 前台
     tempOrder,
     resetTempOrder,
