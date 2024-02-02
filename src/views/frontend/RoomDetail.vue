@@ -2,7 +2,7 @@
 // Basic
 import { ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
-import { getLocalDateFormat, toThousands } from "@/mixins/format"
+import { toThousands } from "@/mixins/format"
 
 // Components
 import RoomDetailImageSwiper from "@/components/frontend/RoomDetailImageSwiper.vue";
@@ -19,24 +19,10 @@ const roomStore = useRoomStore();
 const { roomDetail } = storeToRefs(roomStore);
 const getFrontRoom = roomStore.getFrontRoom;
 
-// TypeScript
-interface DateRangeInterface {
-  start: Date;
-  end: Date;
-}
-
 // CheckDate
 import { useDateStore } from "@/stores/dateStore"
 const dateStore = useDateStore()
-const { nightNum } = storeToRefs(dateStore)
-
-const reserveDateRange = ref<DateRangeInterface>({
-  start: new Date(),
-  end: new Date()
-});
-const catchData = (data:DateRangeInterface) => {
-  reserveDateRange.value = data;
-};
+const { nightNum, reserveDateRange, sameDate } = storeToRefs(dateStore)
 
 // PeopleNum
 const reservePeopleNum = ref<number>(0)
@@ -105,20 +91,20 @@ onMounted(() => {
               <div class="flex gap-3" @click="openModal()">
                 <div class="grow border border-neutral-100 rounded-2 p-4 font-500">
                   <p class="text-3">入住</p>
-                  <p class="text-black">{{ getLocalDateFormat(reserveDateRange.start) }}</p>
+                  <p class="text-black">{{ reserveDateRange.startDate }}</p>
                 </div>
                 <div class="grow border border-neutral-100 rounded-2 p-4 font-500">
                   <p class="text-3">退房</p>
-                  <p class="text-black">{{ getLocalDateFormat(reserveDateRange.end) }}</p>
+                  <p class="text-black">{{ reserveDateRange.endDate }}</p>
                 </div>
               </div>
 
               <div>
-                <BookingDatePick @getReserveDate="catchData" />
+                <BookingDatePick />
                 <BookingPeople @getPeopleNum="catchPeople" />
               </div>
               <p class="text-primary-100 text-6 font-bold">NT$ {{ toThousands(roomDetail.price * nightNum) }}</p>
-              <button @click="router.push(`/booking/${route.params.id}`)" class="btn btn-primary disabled:bg-neutral-40">立即預訂</button>
+              <button @click="router.push(`/booking/${route.params.id}`)" class="btn btn-primary disabled:bg-neutral-40" :disabled="sameDate">立即預訂</button>
             </div>
           </div>
         </div>

@@ -5,7 +5,7 @@ import { useRoute } from 'vue-router'
 
 const { VITE_URL } = import.meta.env
 import type { Room } from "@/interfaces/room"
-import { Toast, Alert } from '@/mixins/swal'
+// import { Toast, Alert } from '@/mixins/swal'
 
 
 export const useRoomStore = defineStore('roomStore', () => {
@@ -35,22 +35,8 @@ export const useRoomStore = defineStore('roomStore', () => {
     },
   ])
   const bedType = ref(["一張大床", "兩張大床", "三張大床"])
-
-  // admin
-  const roomData = ref([])
-  const getRooms = () => {
-    const url = `${VITE_URL}/api/v1/admin/rooms/`
-    axios.get(url)
-      .then((res) => {
-        console.log('getRooms 已取得房型列表', res)
-        roomData.value = res.data.result
-      })
-      .catch((err) => {
-        console.log('getRooms 失敗', err)
-      })
-  }
-
-  const roomDataTemp = ref({
+  const defaultRoom =
+  {
     "name": "",
     "description": "",
     "imageUrl": "",
@@ -143,7 +129,56 @@ export const useRoomStore = defineStore('roomStore', () => {
         "isProvide": true,
       },
     ],
-  })
+  }
+
+  // 前台-房型列表
+  const roomList = ref<Room[]>([])
+  const getFrontRooms = async () => {
+    try {
+      const url = `${VITE_URL}/api/v1/rooms/`
+      const res = await axios.get(url)
+      roomList.value = res.data.result
+      console.log('getFrontRooms 取得資料', roomList.value)
+    } catch (err) {
+      console.log('getFrontRooms 失敗', err)
+    }
+  }
+
+  // 前台-房型詳細資料
+  const roomDetail = ref({});
+  const getFrontRoom = async () => {
+    try {
+      const url = `${VITE_URL}/api/v1/rooms/${route.params.id}`
+      const res = await axios.get(url);
+      roomDetail.value = res.data.result
+      console.log('getFrontRoom 取得資料', roomDetail.value)
+    } catch (err) {
+      console.log('getFrontRoom 失敗', err)
+    }
+  }
+
+  // 後台-房型格式
+  const roomDataTemp = ref({ ...defaultRoom })
+  // 後台-清除格式
+  const resetRoomDataTemp = () => {
+    roomDataTemp.value = { ...defaultRoom }
+  }
+
+  // 後台-取得所有房型資料
+  const roomData = ref([])
+  const getRooms = () => {
+    const url = `${VITE_URL}/api/v1/admin/rooms/`
+    axios.get(url)
+      .then((res) => {
+        console.log('getRooms 已取得房型列表', res)
+        roomData.value = res.data.result
+      })
+      .catch((err) => {
+        console.log('getRooms 失敗', err)
+      })
+  }
+
+  // 後台-新增房型資料
   const createRoom = () => {
     // console.log('createRoom')
     const url = `${VITE_URL}/api/v1/admin/rooms/`
@@ -158,6 +193,7 @@ export const useRoomStore = defineStore('roomStore', () => {
       })
   }
 
+  // 後台-編輯房型資料
   const editRoomId = ref("")
   const editRoom = () => {
     console.log('editRoom', editRoomId.value)
@@ -173,7 +209,8 @@ export const useRoomStore = defineStore('roomStore', () => {
       })
   }
 
-  const deleteRoom = (id:string) => {
+  // 後台-刪除房型資料
+  const deleteRoom = (id: string) => {
     console.log(id)
     const url = `${VITE_URL}/api/v1/admin/rooms/${id}`
     axios.delete(url)
@@ -186,149 +223,26 @@ export const useRoomStore = defineStore('roomStore', () => {
       })
   }
 
-  const resetRoomDataTemp = () => {
-    roomDataTemp.value = {
-      "name": "",
-      "description": "",
-      "imageUrl": "",
-      "imageUrlList": ["", "", "", "", ""],
-      "areaInfo": "",
-      "bedInfo": "",
-      "maxPeople": 0,
-      "price": 0,
-      "facilityInfo": [
-        {
-          "title": "平面電視",
-          "isProvide": true,
-        },
-        {
-          "title": "吹風機",
-          "isProvide": true,
-        },
-        {
-          "title": "冰箱",
-          "isProvide": true,
-        },
-        {
-          "title": "熱水壺",
-          "isProvide": true,
-        },
-        {
-          "title": "檯燈",
-          "isProvide": true,
-        },
-        {
-          "title": "衣櫃",
-          "isProvide": true,
-        },
-        {
-          "title": "除濕機",
-          "isProvide": true,
-        },
-        {
-          "title": "浴缸",
-          "isProvide": true,
-        },
-        {
-          "title": "書桌",
-          "isProvide": true,
-        },
-        {
-          "title": "音響",
-          "isProvide": true,
-        },
-      ],
-      "amenityInfo": [
-        {
-          "title": "衛生紙",
-          "isProvide": true,
-        },
-        {
-          "title": "拖鞋",
-          "isProvide": true,
-        },
-        {
-          "title": "沐浴用品",
-          "isProvide": true,
-        },
-        {
-          "title": "清潔用品",
-          "isProvide": true,
-        },
-        {
-          "title": "刮鬍刀",
-          "isProvide": true,
-        },
-        {
-          "title": "吊衣架",
-          "isProvide": true,
-        },
-        {
-          "title": "浴巾",
-          "isProvide": true,
-        },
-        {
-          "title": "刷牙用品",
-          "isProvide": true,
-        },
-        {
-          "title": "罐裝水",
-          "isProvide": true,
-        },
-        {
-          "title": "梳子",
-          "isProvide": true,
-        },
-      ],
-    }
-  }
-
-  const getFrontRooms = () => {
-    const url = `${VITE_URL}/api/v1/rooms/`
-    axios.get(url)
-      .then((res) => {
-        console.log('getFrontRooms 取得列表資料', res)
-        roomData.value = res.data.result
-      })
-      .catch((err) => {
-        console.log('getFrontRooms 失敗', err)
-      })
-  }
-
-  // front
-  const roomDetail = ref<Room | null>(null);
-  const getFrontRoom = () => {
-    const url = `${VITE_URL}/api/v1/rooms/${route.params.id}`
-    axios.get(url)
-      .then((res) => {
-        console.log('getFrontRoom 取得房型資料', res)
-        roomDetail.value = res.data.result
-      })
-      .catch((err) => {
-        console.log('getFrontRoom 失敗', err)
-      })
-  }
-
-
   return {
     showRoomModal,
     updateRoomType,
     roomLayout,
     bedType,
 
-    // admin
+    // 前台
+    roomList,
+    getFrontRooms,
+    roomDetail,
+    getFrontRoom,
+
+    // 後台
+    roomDataTemp,
+    resetRoomDataTemp,
     roomData,
     getRooms,
-    roomDataTemp,
     createRoom,
-    resetRoomDataTemp,
     editRoomId,
     editRoom,
     deleteRoom,
-
-    // front
-    roomDetail,
-    getFrontRooms,
-    getFrontRoom,
   }
 })

@@ -15,16 +15,6 @@ const sendPeopleNum = () => {
 watch(peopleNum, () => {
   sendPeopleNum()
 })
-
-// const setPeopleNum = () => {
-//   localStorage.setItem('peopleNum.value', peopleNum.value.value.toString())
-// }
-// const getPeopleNum = () => {
-//   const storagePeopleNum = localStorage.getItem('peopleNum.value');
-//   if (storagePeopleNum) {
-//     peopleNum.value = storagePeopleNum;
-//   }
-// }
 </script>
 
 <template>

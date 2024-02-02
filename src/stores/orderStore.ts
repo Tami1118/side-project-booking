@@ -7,11 +7,13 @@ import type { Date } from "@/interfaces/order"
 
 const { VITE_URL } = import.meta.env
 import { useModalStore } from "@/stores/modalStore"
+import { useDateStore } from "@/stores/dateStore"
 
 export const useOrderStore = defineStore('order', () => {
   const route = useRoute()
   const router = useRouter()
   const modalStore = useModalStore()
+  const dateStore = useDateStore()
 
   const tempOrder = ref(
     {
@@ -53,9 +55,9 @@ export const useOrderStore = defineStore('order', () => {
   const createOrder = () => {
     console.log(tempOrder.value)
 
-    // tempOrder.value.roomId = route.params.id
-    // tempOrder.value.checkOutDate = (bookingDateRange.value.end).split('T')[0].split('-').join('/')
-    // tempOrder.value.checkInDate = (bookingDateRange.value.start).split('T')[0].split('-').join('/')
+    tempOrder.value.roomId = route.params.id
+    tempOrder.value.checkOutDate = dateStore.reserveDateRange.startDate
+    tempOrder.value.checkInDate = dateStore.reserveDateRange.endDate
     // tempOrder.value.peopleNum = selectPeopleNum.value
     tempOrder.value.userInfo.address.zipcode = tempOrder.value.userInfo.address.zipcode * 1
 
