@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const props = defineProps(["imageList"])
+</script>
+
 <template>
   <div class="flex gap-2 bg-white rounded-[16px] overflow-hidden">
     <div class="basis-6/12">
@@ -13,7 +17,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-const props = defineProps(["imageList"])
-</script>

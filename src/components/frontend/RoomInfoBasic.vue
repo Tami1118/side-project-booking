@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const props = defineProps(["info"])
+</script>
+
 <template>
   <div class="flex gap-3">
     <div class="p-4 w-[97px] h-[97px] border border-primary-40 rounded-2 bg-white flex flex-col items-start justify-center gap-2">
@@ -14,7 +18,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-const props = defineProps(["info"])
-</script>

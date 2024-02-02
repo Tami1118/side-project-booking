@@ -1,19 +1,13 @@
 <script setup lang="ts">
 // Basic
-import { ref, defineEmits } from "vue";
+import { ref } from "vue";
 import { storeToRefs } from "pinia";
-import { getLocalDateFormat } from "@/mixins/format"
 
-// CheckDate
+// BookingDate
 import { useDateStore } from "@/stores/dateStore"
 const dateStore = useDateStore()
-const { reserveDate, nightNum } = storeToRefs(dateStore)
+const { reserveDate, reserveDateRange, nightNum, sameDate } = storeToRefs(dateStore)
 const resetDate = dateStore.resetDate;
-
-const emit = defineEmits(["getReserveDate"])
-const sendReserveDate = () => {
-  emit('getReserveDate', reserveDate.value);
-};
 
 // Open/Close Modal
 import { useModalStore } from "@/stores/modalStore.js";
@@ -31,24 +25,24 @@ const titlePosition = mapCurrent({ md: "center", lg: "center" }, "left");
 </script>
 
 <template>
-  <div v-if="isModalOpen" @click.stop="closeModal()" class="fixed top-0 left-0 w-full h-full bg-neutral-100/50 backdrop-blur-sm z-50">
+  <div v-if="isModalOpen" class="fixed top-0 left-0 w-full h-full bg-neutral-100/50 backdrop-blur-sm z-50">
     <div class="container mx-auto h-full flex justify-center items-center">
-      <div class="w-full max-w-[740px]" @click.stop>
+      <div class="w-full max-w-[740px]">
         <div class="bg-white border border-neutral-40 rounded-5 overflow-hidden z-10">
           <div class="p-6 md:p-8 flex flex-col gap-10">
             <div class="hidden md:flex md:items-center">
               <div class="w-5/12">
                 <p class="text-6 font-bold">{{ nightNum }} 晚</p>
-                <p class="text-neutral-80">{{ getLocalDateFormat(reserveDate.end) }} - {{ getLocalDateFormat(reserveDate.start) }}</p>
+                <p class="text-neutral-80">{{ reserveDateRange.endDate }} - {{ reserveDateRange.startDate }}</p>
               </div>
               <div class="w-7/12 flex gap-2">
                 <div class="grow border border-neutral-100 rounded-2 p-4 font-500">
                   <p class="text-3">入住</p>
-                  <p class="text-neutral-100">{{ getLocalDateFormat(reserveDate.start) }}</p>
+                  <p class="text-neutral-100">{{ reserveDateRange.startDate }}</p>
                 </div>
                 <div class="grow border border-neutral-100 rounded-2 p-4 font-500">
                   <p class="text-3">退房</p>
-                  <p class="text-neutral-100">{{ getLocalDateFormat(reserveDate.end) }}</p>
+                  <p class="text-neutral-100">{{ reserveDateRange.endDate }}</p>
                 </div>
               </div>
             </div>
@@ -56,7 +50,7 @@ const titlePosition = mapCurrent({ md: "center", lg: "center" }, "left");
             <VDatePicker v-model.range="reserveDate" mode="date" :color="selectedColor" :columns="columns" :rows="rows" :title-position="titlePosition" :masks="{ title: 'YYYY 年 MMM' }" :min-date="new Date()" expanded="expanded" borderless />
             <div class="hidden md:flex justify-between md:justify-end gap-4">
               <button class="btn hover:bg-neutral-40" @click="resetDate()">清除日期</button>
-              <button class="btn btn-primary" @click="sendReserveDate(),closeModal()" :disabled="reserveDate.start === reserveDate.end">確定日期</button>
+              <button class="btn btn-primary" @click="closeModal()" :disabled="sameDate">確定日期</button>
             </div>
           </div>
         </div>

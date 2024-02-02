@@ -5,20 +5,25 @@ import { storeToRefs } from "pinia";
 
 // Components
 import RoomInfoMain from "@/components/frontend/RoomInfoMain.vue";
-import CityForm from "@/components/widgets/CityForm.vue";
+// import CityForm from "@/components/widgets/CityForm.vue";
 
 // Room
 import { useRoomStore } from "@/stores/roomStore";
 const roomStore = useRoomStore();
-const { roomDetail } = storeToRefs(roomStore);
+const { roomDetail, roomLayout } = storeToRefs(roomStore);
 const getFrontRoom = roomStore.getFrontRoom;
+const getFrontRooms = roomStore.getFrontRooms;
+
+// Booking
+import { useDateStore } from "@/stores/dateStore";
+const dateStore = useDateStore()
+const { reserveDateRange } = storeToRefs(dateStore)
 
 // Order
 import { useOrderStore } from "@/stores/orderStore";
 const orderStore = useOrderStore();
-const { tempOrder, bookingDateRange, selectPeopleNum } = storeToRefs(orderStore);
-const getBookingDate = orderStore.getBookingDate;
-const getPeopleNum = orderStore.getPeopleNum;
+// const { tempOrder } = storeToRefs(orderStore);
+// const getBookingDate = orderStore.getBookingDate;
 const createOrder = orderStore.createOrder;
 
 // Route
@@ -28,20 +33,18 @@ const route = useRoute()
 // Action
 onMounted(() => {
   getFrontRoom();
-  getBookingDate();
-  getPeopleNum();
-  console.log(route.params.id)
+  // getFrontRooms();
 });
 </script>
 
 <template>
-  <div class="bg-primary-10">
+  <div class="bg-primary-10" v-if="roomDetail">
     <div class="container mx-auto px-4 sm:px-0 py-10 lg:py-30">
       <div class="lg:flex lg:justify-between gap-18">
 
         <div class="basis-full lg:basis-7/12 mb-10 lg:mb-0">
           <router-link :to="`/room/${route.params.id}`" class="text-6 lg:text-8 mb-[42px] flex items-center">
-            <span class="material-icons text-6 lg:text-8 me-2">keyboard_arrow_left</span>確認訂房資訊
+            <font-awesome-icon icon="fa-solid fa-chevron-left" class="text-6 lg:text-8 me-2" />確認訂房資訊
           </router-link>
 
           <div>
@@ -56,15 +59,15 @@ onMounted(() => {
               <div class="flex items-center">
                 <div>
                   <h3 class="title-deco ps-4 text-4 mb-2">訂房日期</h3>
-                  <p class="mb-2">入住：{{ $formats.getTradDateFormat(bookingDateRange.start) }}</p>
-                  <p>退房：{{ $formats.getTradDateFormat(bookingDateRange.end) }}</p>
+                  <p class="mb-2">入住：{{ reserveDateRange.startDate }}</p>
+                  <p>退房：{{ reserveDateRange.endDate }}</p>
                 </div>
                 <router-link :to="`/room/${route.params.id}`" class="underline ms-auto hover:text-primary-100">編輯</router-link>
               </div>
               <div class="flex items-center">
                 <div>
                   <h3 class="title-deco ps-4 text-4 mb-2">房客人數</h3>
-                  <p>{{ selectPeopleNum }}人</p>
+                  <p>{{  }}人</p>
                 </div>
                 <router-link :to="`/room/${route.params.id}`" class="underline ms-auto hover:text-primary-100">編輯</router-link>
               </div>
@@ -72,7 +75,7 @@ onMounted(() => {
           </div>
 
           <!-- 訂房人資訊 -->
-          <div class="pb-10 mb-10 lg:pb-[47px] lg:mb-[47px] border-b border-neutral-60">
+          <!-- <div class="pb-10 mb-10 lg:pb-[47px] lg:mb-[47px] border-b border-neutral-60">
             <div class="flex mb-8 lg:mb-10">
               <h2 class="text-5 lg:text-7">訂房人資訊</h2>
               <button class="btn-text ms-auto underline">套用會員資料</button>
@@ -92,14 +95,14 @@ onMounted(() => {
               </div>
               <city-form></city-form>
             </div>
-          </div>
+          </div> -->
 
           <!-- 房間資訊 -->
           <div>
             <div class="mb-8 lg:mb-10">
               <h2 class="text-5 lg:text-7 text-black">房間資訊</h2>
             </div>
-            <RoomInfoMain />
+            <RoomInfoMain :info="roomDetail" :layout="roomLayout"/>
           </div>
         </div>
 
@@ -137,4 +140,6 @@ onMounted(() => {
 
   <!-- <bookingLoading /> -->
 </template>
+
+
 

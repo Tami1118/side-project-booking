@@ -1,3 +1,15 @@
+<script setup lang="ts">
+const props = defineProps(["images"])
+
+// Swiper
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Pagination, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+const modules = [Pagination, Navigation];
+</script>
+
 <template>
   <swiper class="room-list-swiper h-full"
           :pagination="{ clickable: true }"
@@ -17,20 +29,8 @@
       </div>
     </div>
 
-    <swiper-slide v-for="imgList in props.imageList" :key="imgList">
-      <img class="object-cover h-full w-full" :src="imgList" alt="room img">
+    <swiper-slide v-for="image in props.images" :key="image">
+      <img class="object-cover h-full w-full" :src="image" alt="room img">
     </swiper-slide>
   </swiper>
 </template>
-
-<script setup lang="ts">
-const props = defineProps(["imageList"]);
-
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Pagination, Navigation } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-const modules = [Pagination, Navigation];
-</script>
-

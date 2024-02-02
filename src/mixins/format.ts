@@ -1,15 +1,10 @@
-// money
+// currency
 // 千分位
 const toThousands = (price: number) => {
   return price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
 }
 
 // date
-// 住宿天數(晚)
-const getNight = (range: number) => {
-  return range / (1000 * 60 * 60 * 24)
-}
-
 // 標準格式 2024/01/01
 const getLocalDateFormat = (date: Date) => {
   const year = date.getFullYear()
@@ -20,17 +15,16 @@ const getLocalDateFormat = (date: Date) => {
 
 // 1月1日，星期一
 const getTradDateFormat = (data: Date) => {
-  const newDate = new Date(data).toISOString().split('T')[0].split('-')
-  return `${newDate[1]} 月${newDate[2]} 日`
+  const newDate = new Date(data);
+  const month = newDate.getMonth() + 1;
+  const day = newDate.getDate();
+  const dayOfWeek = newDate.toLocaleDateString('zh-TW', { weekday: 'long' });
+  return `${month} 月 ${day} 日，${dayOfWeek}`;
 }
 
 
 export {
-  // money
   toThousands,
-
-  // date
-  getNight,
   getLocalDateFormat,
   getTradDateFormat,
 }

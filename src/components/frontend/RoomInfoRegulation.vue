@@ -1,9 +1,3 @@
-<template>
-  <ul class="list-decimal ps-0 ms-6">
-    <li v-for="item in bookingRegulation" :key="item" class="text-3h lg:text-4 font-500">{{ item }}</li>
-  </ul>
-</template>
-
 <script setup lang="ts">
 const bookingRegulation: string[] = [
   "入住時間為下午3點，退房時間為上午12點。",
@@ -18,3 +12,10 @@ const bookingRegulation: string[] = [
   "為了確保所有客人的安全，請勿在走廊或公共區域大聲喧嘩，並遵守酒店的其他規定。",
 ] 
 </script>
+
+<template>
+  <ul class="list-decimal ps-0 ms-6">
+    <li v-for="item in bookingRegulation" :key="item" class="text-3h lg:text-4 font-500">{{ item }}</li>
+  </ul>
+</template>
+
