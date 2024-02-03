@@ -1,19 +1,56 @@
-const { VITE_URL } = import.meta.env
-import { ref } from 'vue'
-import { defineStore } from "pinia"
-import { useRouter } from 'vue-router'
-import axios from 'axios'
-import { Toast, Alert } from '@/mixins/swal'
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
+import { Toast, Alert } from '@/mixins/swal';
+
+const VITE_URL = import.meta.env.VITE_URL as string;
+
+interface LoginData {
+  email: string;
+  password: string;
+}
+interface UserInfo {
+  [key: string]: any;
+}
+interface SignupData {
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+  birthday: string;
+  address: Address;
+}
+interface Address {
+  zipcode: number;
+  detail: string;
+  city: string;
+  county: string;
+}
+interface Birthdate {
+  year: number;
+  month: number;
+  day: number;
+}
+interface EditUserData {
+  userId: string;
+  name: string;
+  phone: string;
+  birthday: string;
+  address: {
+    zipcode: number;
+    detail: string;
+  };
+  oldPassword: string;
+  newPassword: string;
+}
 
 export const useUserStore = defineStore('userStore', () => {
   const router = useRouter()
 
   // login
-  const loginData = ref({
-    email: "",
-    password: "",
-  })
-  const userInfo = ref({})
+  const loginData = ref<LoginData>({ email: '', password: '' });
+  const userInfo = ref<UserInfo>({});
   const login = () => {
     // console.log(loginData.value)
     const url = `${VITE_URL}/api/v1/user/login`
@@ -51,32 +88,35 @@ export const useUserStore = defineStore('userStore', () => {
     router.push('/')
   }
   // signup
-  const signupStep = ref(1)
-  const signupData = ref({
-    "name": "",
-    "email": "",
-    "password": "",
-    "phone": "",
-    "birthday": "1900/01/01",
-    "address": {
-      "zipcode": 802,
-      "detail": "456",
-    }
-  })
-  const passwordConfirm = ref("")
-  const birthdate = ref({
+  const signupStep = ref<number>(1);
+  const signupData = ref<SignupData>({
+    name: '',
+    email: '',
+    password: '',
+    phone: '',
+    birthday: '',
+    address: {
+      zipcode: 0,
+      detail: '',
+      city: '',
+      county: '',
+    },
+  });
+  const passwordConfirm = ref<string>('');
+  const birthdate = ref<Birthdate>({
     year: new Date().getFullYear(),
     month: 1,
-    day: 1
+    day: 1,
   });
-  const selectedCity = ref(null)
-  const selectedDistrict = ref(null)
-  const selectedZip = ref(null)
-  const detailedAddress = ref("")
+  const selectedCity = ref<string>('');
+  const selectedDistrict = ref<string>('');
+  const selectedZip = ref<number>(0);
+  const detailedAddress = ref<string>('');
   const signup = () => {
-
     signupData.value.address.zipcode = selectedZip.value
-    signupData.value.address.detail = `${selectedCity.value}${selectedDistrict.value}${detailedAddress.value}`
+    signupData.value.address.city = selectedCity.value
+    signupData.value.address.county = selectedDistrict.value
+    signupData.value.address.detail = detailedAddress.value
     signupData.value.birthday = `${birthdate.value.year}/${birthdate.value.month}/${birthdate.value.day}`
     console.log(signupData.value.address, signupData.value.birthday)
     const url = `${VITE_URL}/api/v1/user/signup`
@@ -92,9 +132,10 @@ export const useUserStore = defineStore('userStore', () => {
           "address": {
             "zipcode": 0,
             "detail": "",
+            "city": "",
+            "county": "",
           }
         }
-        alert('註冊成功')
         router.push('/')
       })
       .catch(err => {
@@ -103,7 +144,7 @@ export const useUserStore = defineStore('userStore', () => {
       })
   }
   // check
-  const isChecked = ref(false)
+  const isChecked = ref<boolean>(false);
   const checkUser = async () => {
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)typescript\s*=\s*([^;]*).*$)|^.*$/, "$1");
     axios.defaults.headers.common["Authorization"] = token;
@@ -118,7 +159,7 @@ export const useUserStore = defineStore('userStore', () => {
       })
   }
   // edit
-  const editUserData = ref({
+  const editUserData = ref<EditUserData>({
     userId: "",
     name: "",
     phone: "",
@@ -129,11 +170,11 @@ export const useUserStore = defineStore('userStore', () => {
     },
     oldPassword: "",
     newPassword: ""
-  })
-  const newPassword2 = ref("");
-  const showEditPassword = ref(false);
-  const showEditUserInfo = ref(false);
-  const userStatus = ref(false)
+  });
+  const newPassword2 = ref<string>('');
+  const showEditPassword = ref<boolean>(false);
+  const showEditUserInfo = ref<boolean>(false);
+  const userStatus = ref<boolean>(false);
   const getUser = () => {
     const url = `${VITE_URL}/api/v1/user`
     axios.get(url)
@@ -160,7 +201,7 @@ export const useUserStore = defineStore('userStore', () => {
         showEditPassword.value = false
         Toast.fire({
           icon: 'success',
-          title: '修改資料成功'
+          title: '修改資料成功',
         })
 
       })
@@ -173,12 +214,29 @@ export const useUserStore = defineStore('userStore', () => {
       })
   }
   const editUserInfo = () => {
+    const editUserDataNoPass = {
+      userId: "",
+      name: "",
+      phone: "",
+      birthday: "",
+      address: {
+        zipcode: 0,
+        detail: "",
+      }
+    }
+    editUserDataNoPass.userId = editUserData.value.userId
+    editUserDataNoPass.name = editUserData.value.name
+    editUserDataNoPass.phone = editUserData.value.phone
+    editUserDataNoPass.birthday = `${birthdate.value.year}/${birthdate.value.month}/${birthdate.value.day}`
+    editUserDataNoPass.address.zipcode = selectedZip.value
+    editUserDataNoPass.address.detail = `${selectedCity.value}${selectedDistrict.value}${detailedAddress.value}`
+    console.log(editUserDataNoPass)
     const url = `${VITE_URL}/api/v1/user`
-    axios.put(url, editUserData.value)
+    axios.put(url, editUserDataNoPass)
       .then(res => {
         console.log('修改資料 成功',res)
         userInfo.value = res.data.result
-        showEditPassword.value = false
+        showEditUserInfo.value = false
         Toast.fire({
           icon: 'success',
           title: '修改資料成功'
@@ -186,7 +244,7 @@ export const useUserStore = defineStore('userStore', () => {
 
       })
       .catch(err => {
-        console.log('login 失敗',err)
+        console.log('修改資料失敗',err)
         Alert.fire({
           icon: 'error',
           title: '修改資料失敗'
@@ -218,6 +276,7 @@ export const useUserStore = defineStore('userStore', () => {
 
     // edit
     editUserData,
+    
     newPassword2,
     showEditPassword,
     showEditUserInfo,

@@ -47,7 +47,7 @@
             <button class="btn btn-secondary border border-primary-100 w-fit" @click="showEditUserInfo = true">編輯</button>
           </div>
           <div v-if="showEditUserInfo">
-            <button class="btn bg-neutral-40 text-neutral-60 w-full lg:w-fit">儲存設定</button>
+            <button class="btn bg-neutral-40 text-neutral-60 w-full lg:w-fit" @click="editUserInfo()">儲存設定</button>
           </div>
         </div>
       </div>
@@ -65,6 +65,7 @@ import { useUserStore } from '@/stores/userStore'
 const userStore = useUserStore()
 const { userInfo, showEditUserInfo } = storeToRefs(userStore)
 const getUer = userStore.getUser
+const editUserInfo = userStore.editUserInfo
 
 
 onMounted (() => {
