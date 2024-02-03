@@ -2,7 +2,7 @@
 // Basic
 import { ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
-import { toThousands } from "@/mixins/format"
+import { toThousands } from "@/mixins/format";
 
 // Components
 import RoomDetailImageSwiper from "@/components/frontend/RoomDetailImageSwiper.vue";
@@ -16,7 +16,7 @@ import BookingPeople from "@/components/frontend/BookingPeople.vue";
 // Room
 import { useRoomStore } from "@/stores/roomStore";
 const roomStore = useRoomStore();
-const { roomDetail } = storeToRefs(roomStore);
+const { roomDetail, roomLayout } = storeToRefs(roomStore);
 const getFrontRoom = roomStore.getFrontRoom;
 
 // CheckDate
@@ -64,14 +64,13 @@ onMounted(() => {
     <div class="container mx-auto px-4 sm:px-0 py-10 lg:py-30">
       <div class="lg:flex lg:content-between gap-18">
 
-        <!-- 客房詳細資訊 -->
         <div class="basis-full lg:basis-7/12">
           <div class="flex flex-col gap-6 lg:gap-20">
             <div>
               <h1 class="text-8 lg:text-12 text-black font-bold mb-4">{{ roomDetail.name }}</h1>
               <p class="text-3h lg:text-4 font-500">{{ roomDetail.description }}</p>
             </div>
-            <RoomInfoMain />
+            <RoomInfoMain :info="roomDetail" :layout="roomLayout" />
             <div>
               <RoomInfoTitle title="訂房須知" />
               <RoomInfoRegulation />
@@ -79,7 +78,6 @@ onMounted(() => {
           </div>
         </div>
 
-        <!-- 預定房型 -->
         <div class="hidden lg:block lg:basis-5/12 z-1">
           <div class="sticky top-[120px] rounded-5 bg-white p-10">
             <div class="flex flex-col gap-10">
