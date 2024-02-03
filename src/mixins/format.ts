@@ -22,9 +22,23 @@ const getTradDateFormat = (data: Date) => {
   return `${month} 月 ${day} 日，${dayOfWeek}`;
 }
 
+const getNightNum = (start, end) => {
+  const startDate: Date = new Date(start)
+  const endDate: Date = new Date(end)
+
+  // 設定午夜，確保跨足整天
+  startDate.setHours(0, 0, 0, 0)
+  endDate.setHours(0, 0, 0, 0)
+
+  // 計算夜晚數，包含開始及結束
+  const rangeDate = endDate.getTime() - startDate.getTime()
+  return Math.ceil(rangeDate / (1000 * 60 * 60 * 24))
+}
+
 
 export {
   toThousands,
   getLocalDateFormat,
   getTradDateFormat,
+  getNightNum
 }
