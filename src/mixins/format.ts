@@ -36,7 +36,7 @@ const getNightNum = (start, end) => {
 }
 
 
-export {
+export default {
   toThousands,
   getLocalDateFormat,
   getTradDateFormat,

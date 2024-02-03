@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { getTradDateFormat, getNightNum } from '@/mixins/format';
-import RoomInfoProvide from '@/components/frontend/RoomInfoProvide.vue';
+// import { getTradDateFormat } from '@/mixins/format';
+// import RoomInfoProvide from '';
 const props = defineProps(["order"])
 </script>
 
@@ -18,8 +18,8 @@ const props = defineProps(["order"])
           <p>住宿人數：{{ props.order.peopleNum }} 位</p>
         </div>
         <div>
-          <div class="title-deco ps-4 mb-2">入住：{{ getTradDateFormat(props.order.checkInDate) }}，15:00 可入住</div>
-          <div class="title-deco ps-4">退房：{{ getTradDateFormat(props.order.checkOutDate) }}，12:00 前退房</div>
+          <div class="title-deco ps-4 mb-2">入住：{{ $format.getTradDateFormat(props.order.checkInDate) }}，15:00 可入住</div>
+          <div class="title-deco ps-4">退房：{{ $format.getTradDateFormat(props.order.checkOutDate) }}，12:00 前退房</div>
         </div>
         <div>NT$ {{ props.order.roomId.price }}</div>
       </div>
