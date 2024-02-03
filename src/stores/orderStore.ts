@@ -5,8 +5,8 @@ import axios from 'axios'
 
 const { VITE_URL } = import.meta.env
 import type { Order } from "@/interfaces/order"
+import type { User } from "@/interfaces/user"
 import { Toast, Alert } from '@/mixins/swal'
-
 
 import { useModalStore } from "@/stores/modalStore"
 import { useDateStore } from "@/stores/dateStore"
@@ -18,7 +18,6 @@ export const useOrderStore = defineStore('order', () => {
   const dateStore = useDateStore()
 
   const showOrderModal = ref<boolean>(false)
-
 
   const defaultOrder = {
     "roomId": "",
@@ -41,37 +40,46 @@ export const useOrderStore = defineStore('order', () => {
   const resetTempOrder = () => {
     tempOrder.value = { ...defaultOrder }
   }
-
+  const userInfo = ref<User>({})
+  const selectDistrict = ref<string>("")
+  const addressDetail = ref<string>("")
 
   // 前台- 新增訂單
   const createOrder = () => {
+    const orderForm = {
+      roomId: route.params.id,
+      userInfo: {
+        name: userInfo.value.name,
+        phone: userInfo.value.phone,
+        email: userInfo.value.email,
+        address: {
+          zipcode: parseInt(selectDistrict.value),
+          detail: addressDetail.value
+        }
+      }
+    }
+    tempOrder.value = orderForm
     console.log(tempOrder.value)
 
-    tempOrder.value.roomId = route.params.id
-    tempOrder.value.checkOutDate = dateStore.reserveDateRange.startDate
-    tempOrder.value.checkInDate = dateStore.reserveDateRange.endDate
-    // tempOrder.value.peopleNum = selectPeopleNum.value
-    tempOrder.value.userInfo.address.zipcode = tempOrder.value.userInfo.address.zipcode * 1
-
-    const url = `${VITE_URL}/api/v1/orders/`
-    axios.post(url, tempOrder.value)
-      .then(res => {
-        console.log('createOrder 新增成功', res)
-        resetTempOrder()
-        Toast.fire({
-          title: '已建立訂單',
-          icon: 'success'
-        })
-        resetTempOrder()
-        router.push(`/booking-complete/${res.data.result._id}`)
-      })
-      .catch(err => {
-        console.log('createOrder 失敗', err)
-        Alert.fire({
-          title: '資料有誤，請稍後再試一次',
-          icon: 'error'
-        })
-      })
+    // const url = `${VITE_URL}/api/v1/orders/`
+    // axios.post(url, tempOrder.value)
+    //   .then(res => {
+    //     console.log('createOrder 新增成功', res)
+    //     resetTempOrder()
+    //     Toast.fire({
+    //       title: '已建立訂單',
+    //       icon: 'success'
+    //     })
+    //     resetTempOrder()
+    //     router.push(`/booking-complete/${res.data.result._id}`)
+    //   })
+    //   .catch(err => {
+    //     console.log('createOrder 失敗', err)
+    //     Alert.fire({
+    //       title: '資料有誤，請稍後再試一次',
+    //       icon: 'error'
+    //     })
+    //   })
   }
 
   // 前台- 取得單一訂單
@@ -157,23 +165,15 @@ export const useOrderStore = defineStore('order', () => {
       })
   }
 
-  const tempTest = ref({
-    name: ''
-  })
-  const orderT = ref({
-    name: ''
-  })
-  const orderTest = computed(() => {
-    orderT.value.name = tempTest.value.name
-  })
-  const test = () => {
-    console.log(tempTest.value)
-  }
-
   return {
     showOrderModal,
-    // 前台
+    
     tempOrder,
+    userInfo,
+    selectDistrict,
+    addressDetail,
+
+    // 前台
     createOrder,
     orderList,
     getFrontOrder,
@@ -185,8 +185,5 @@ export const useOrderStore = defineStore('order', () => {
     getOrders,
     editOrder,
     deleteOrder,
-
-    tempTest,
-    test
   }
 })

@@ -1,4 +1,4 @@
-import type { Address } from "@/interfaces/Address"
+import type { Address } from "@/interfaces/country"
 
 export interface User {
   name: string;

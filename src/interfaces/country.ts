@@ -8,7 +8,7 @@ export interface CityData{
 }
 
 export interface District {
-  zip: string,
+  zip: number | string,
   name: string
 }
 
