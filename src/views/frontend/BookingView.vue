@@ -2,19 +2,17 @@
 // Basis
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
+import { getTradDateFormat } from "@/mixins/format";
 
 // Components
-import RoomInfoTitle from "@/components/frontend/RoomInfoTitle.vue";
 import RoomInfoMain from "@/components/frontend/RoomInfoMain.vue";
 import BookingForm from "@/components/frontend/BookingForm.vue";
-// import CityForm from "@/components/widgets/CityForm.vue";
 
 // Room
 import { useRoomStore } from "@/stores/roomStore";
 const roomStore = useRoomStore();
 const { roomDetail, roomLayout } = storeToRefs(roomStore);
 const getFrontRoom = roomStore.getFrontRoom;
-const getFrontRooms = roomStore.getFrontRooms;
 
 // Booking
 import { useDateStore } from "@/stores/dateStore";
@@ -24,10 +22,7 @@ const { reserveDateRange } = storeToRefs(dateStore)
 // Order
 import { useOrderStore } from "@/stores/orderStore";
 const orderStore = useOrderStore();
-const { tempTest } = storeToRefs(orderStore);
-const test = orderStore.test;
 const createOrder = orderStore.createOrder;
-
 
 
 // Route
@@ -37,7 +32,6 @@ const route = useRoute()
 // Action
 onMounted(() => {
   getFrontRoom();
-  // getFrontRooms();
 });
 </script>
 
@@ -51,9 +45,6 @@ onMounted(() => {
             <font-awesome-icon icon="fa-solid fa-chevron-left" class="text-6 lg:text-8 me-2" />確認訂房資訊
           </router-link>
 
-          <input type="text" v-model="tempTest.name" class="form-input">
-          <button class="btn btn-primary" @click="test">取得tempTest資料</button>
-
           <div>
             <h2 class="text-5 lg:text-7 mb-8 lg:mb-10">訂房資訊</h2>
             <div class="flex flex-col gap-6 pb-10 mb-10 lg:pb-[47px] lg:mb-[47px] border-b border-neutral-60">
@@ -66,8 +57,8 @@ onMounted(() => {
               <div class="flex items-center">
                 <div>
                   <h3 class="title-deco ps-4 text-4 mb-2">訂房日期</h3>
-                  <p class="mb-2">入住：{{ reserveDateRange.startDate }}</p>
-                  <p>退房：{{ reserveDateRange.endDate }}</p>
+                  <p class="mb-2">入住：{{ getTradDateFormat(reserveDateRange.startDate) }}</p>
+                  <p>退房：{{ getTradDateFormat(reserveDateRange.endDate) }}</p>
                 </div>
                 <router-link :to="`/room/${route.params.id}`" class="underline ms-auto hover:text-primary-100">編輯</router-link>
               </div>
@@ -82,14 +73,19 @@ onMounted(() => {
           </div>
 
           <!-- 訂房人資訊 -->
-          <BookingForm />
+          <div class="pb-10 mb-10 lg:pb-[47px] lg:mb-[47px] border-b border-neutral-60">
+            <div class="flex mb-8 lg:mb-10">
+              <h2 class="text-5 lg:text-7">訂房人資訊</h2>
+              <button class="btn-text ms-auto underline">套用會員資料</button>
+            </div>
+            <BookingForm />
+          </div>
 
           <!-- 房間資訊 -->
           <div>
             <div class="mb-8 lg:mb-10">
               <h2 class="text-5 lg:text-7 text-black">房間資訊</h2>
             </div>
-
             <div class="flex flex-col gap-6">
               <RoomInfoMain :info="roomDetail" :layout="roomLayout" />
             </div>

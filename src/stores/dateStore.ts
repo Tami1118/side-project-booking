@@ -48,6 +48,20 @@ export const useDateStore = defineStore('dateStore', () => {
     return reserveDateRange.value.startDate === reserveDateRange.value.endDate
   })
 
+  // 儲存本地端reserveDate
+  const setStorageDate = () => {
+    localStorage.setItem('reserveDate', JSON.stringify(reserveDate.value))
+  }
+  // 取得本地端reserveDate
+  const getStorageDate = () => {
+    const bookingDate = localStorage.getItem('reserveDate')
+    return bookingDate
+  }
+  // 刪除本地端所有資料
+  const cleanStorageDate = () => {
+    localStorage.clear()
+  }
+
   // 計算夜晚數
   const nightNum = computed<number>(() => {
     const startDate: Date = new Date(reserveDate.value.start)
@@ -68,5 +82,8 @@ export const useDateStore = defineStore('dateStore', () => {
     reserveDateRange,
     sameDate,
     nightNum,
+    setStorageDate,
+    getStorageDate,
+    cleanStorageDate
   }
 })

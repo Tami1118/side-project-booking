@@ -28,7 +28,9 @@ const { nightNum, reserveDateRange, sameDate } = storeToRefs(dateStore)
 const reservePeopleNum = ref<number>(0)
 const catchPeople = (data:number) => {
   reservePeopleNum.value = data
-  console.log(reservePeopleNum.value)
+}
+const setPeopleNum = () => {
+  localStorage.setItem('reservePeopleNum', reservePeopleNum.value.toString())
 }
 
 // Open/Close Modal
@@ -103,6 +105,7 @@ onMounted(() => {
               </div>
               <p class="text-primary-100 text-6 font-bold">NT$ {{ toThousands(roomDetail.price * nightNum) }}</p>
               <button @click="router.push(`/booking/${route.params.id}`)" class="btn btn-primary disabled:bg-neutral-40" :disabled="sameDate">立即預訂</button>
+              <button @click="setPeopleNum">人數</button>
             </div>
           </div>
         </div>

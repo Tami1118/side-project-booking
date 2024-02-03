@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { ref, watch, computed, onMounted, defineEmits } from "vue";
+import { ref, watch, computed, onMounted } from "vue";
+import { storeToRefs } from "pinia";
 import axios from "axios";
-import type { CityData } from "@/interfaces/address"
 
-const emits = defineEmits(["emitDistrict","emitAddressDetail"]);
+import type { CityData, District } from "@/interfaces/country";
 
-const selectCity = ref<string>("")
-const selectDistrict = ref<string>("")
-const addressDetail = ref<string>("")
+// Order
+import { useOrderStore } from "@/stores/orderStore"
+const orderStore = useOrderStore()
+const { selectDistrict, addressDetail } = storeToRefs(orderStore)
 
 // 台灣縣市API
 const taiwanCities = ref<CityData | null>(null);
@@ -23,7 +24,7 @@ const getTaiwanCity = async () => {
 }
 
 // 縣市列表
-const cities = computed<string[] | null>(() => {
+const cities = computed(() => {
   if (taiwanCities.value) {
     return taiwanCities.value.map((item) => item.name);
   } else {
@@ -31,8 +32,8 @@ const cities = computed<string[] | null>(() => {
   }
 });
 
-// // 行政區列表
-const districts = computed<string[] | null>(() => {
+// 行政區列表
+const districts = computed<District[] | null>(() => {
   if (taiwanCities.value) {
     const city = taiwanCities.value.find((item) => item.name === selectCity.value);
     return city ? city.districts : [];
@@ -42,11 +43,8 @@ const districts = computed<string[] | null>(() => {
 });
 
 // 縣市變動時，行政區隨縣市列表變動，預設為 ""
+const selectCity = ref<string>("")
 watch(selectCity, () => { selectDistrict.value = "" })
-
-// 子層傳輸至父層
-watch(selectDistrict, () => { emits('emitDistrict', selectDistrict.value) })
-watch(addressDetail, () => { emits('emitAddressDetail', addressDetail.value) })
 
 onMounted(() => {
   getTaiwanCity();
@@ -54,6 +52,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <label for="userAddress">地址</label>
   <div class="grid grid-cols-2 gap-2" v-if="taiwanCities">
     <select v-model="selectCity" class="form-input">
       <option value="" selected>請選擇縣市</option>
@@ -62,9 +61,9 @@ onMounted(() => {
 
     <select v-model="selectDistrict" class="form-input">
       <option value="" selected>請選擇行政區</option>
-      <option v-for="district in districts" :key="district.zipcode" :value="district.zip">{{ district.name }}</option>
+      <option v-for="district in districts" :key="district.zip" :value="district.zip">{{ district.name }}</option>
     </select>
-
+    
     <input type="text" v-model="addressDetail" placeholder="請輸入詳細地址" class="form-input col-span-2">
   </div>
 </template>
