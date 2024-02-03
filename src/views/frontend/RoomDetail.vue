@@ -2,7 +2,7 @@
 // Basic
 import { ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
-import { toThousands } from "@/mixins/format";
+// import { toThousands } from "@/mixins/format";
 
 // Components
 import RoomDetailImageSwiper from "@/components/frontend/RoomDetailImageSwiper.vue";
@@ -103,7 +103,7 @@ onMounted(() => {
                 <BookingDatePick />
                 <BookingPeople @getPeopleNum="catchPeople" />
               </div>
-              <p class="text-primary-100 text-6 font-bold">NT$ {{ toThousands(roomDetail.price * nightNum) }}</p>
+              <p class="text-primary-100 text-6 font-bold">NT$ {{ $format.toThousands(roomDetail.price * nightNum) }}</p>
               <button @click="router.push(`/booking/${route.params.id}`)" class="btn btn-primary disabled:bg-neutral-40" :disabled="sameDate">立即預訂</button>
               <button @click="setPeopleNum">人數</button>
             </div>

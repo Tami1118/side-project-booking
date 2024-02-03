@@ -57,8 +57,8 @@ onMounted(() => {
               <div class="flex items-center">
                 <div>
                   <h3 class="title-deco ps-4 text-4 mb-2">訂房日期</h3>
-                  <p class="mb-2">入住：{{ getTradDateFormat(reserveDateRange.startDate) }}</p>
-                  <p>退房：{{ getTradDateFormat(reserveDateRange.endDate) }}</p>
+                  <p class="mb-2">入住：{{ $format.getTradDateFormat(reserveDateRange.startDate) }}</p>
+                  <p>退房：{{ $format.getTradDateFormat(reserveDateRange.endDate) }}</p>
                 </div>
                 <router-link :to="`/room/${route.params.id}`" class="underline ms-auto hover:text-primary-100">編輯</router-link>
               </div>

@@ -23,7 +23,7 @@ const getTradDateFormat = (data: Date) => {
 }
 
 
-export {
+export default {
   toThousands,
   getLocalDateFormat,
   getTradDateFormat,

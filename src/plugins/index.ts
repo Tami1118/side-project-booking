@@ -38,8 +38,10 @@ import { far } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 library.add(fas, fab, far);
 
+import format from '../mixins/format';
 
 export function registerPlugins(app) {
+  app.config.globalProperties.$format = format;
   app
     .use(createPinia())
     .use(router)
