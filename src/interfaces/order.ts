@@ -1,17 +1,11 @@
+import type { User } from "@/interfaces/user"
+
 export interface Order {
   roomId: string;
-  checkInDate: string;
-  checkOutDate: string;
+  checkInDate: Date | string;
+  checkOutDate: Date | string;
   peopleNum: number;
-  userInfo: {
-    address: {
-      zipcode: number;
-      detail: string;
-    },
-    name: string;
-    phone: string;
-    email: string;
-  }
+  userInfo: User;
 }
 
 export interface Date {

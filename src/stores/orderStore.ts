@@ -1,11 +1,13 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { defineStore } from "pinia"
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
-import { Toast, Alert } from '@/mixins/swal'
-import type { Date } from "@/interfaces/order"
 
 const { VITE_URL } = import.meta.env
+import type { Order } from "@/interfaces/order"
+import { Toast, Alert } from '@/mixins/swal'
+
+
 import { useModalStore } from "@/stores/modalStore"
 import { useDateStore } from "@/stores/dateStore"
 
@@ -15,41 +17,31 @@ export const useOrderStore = defineStore('order', () => {
   const modalStore = useModalStore()
   const dateStore = useDateStore()
 
-  const tempOrder = ref(
-    {
-      "roomId": "",
-      "checkInDate": "",
-      "checkOutDate": "",
-      "peopleNum": 0,
-      "userInfo": {
-        "name": "",
-        "phone": "",
-        "email": "",
-        "address": {
-          "zipcode": 0,
-          "detail": ""
-        },
-      }
+  const showOrderModal = ref<boolean>(false)
+
+
+  const defaultOrder = {
+    "roomId": "",
+    "checkInDate": "",
+    "checkOutDate": "",
+    "peopleNum": 0,
+    "userInfo": {
+      "name": "",
+      "phone": "",
+      "email": "",
+      "address": {
+        "zipcode": 0,
+        "detail": ""
+      },
     }
-  )
-  // 訂單清空
-  const resetTempOrder = () => {
-    tempOrder.value = {
-      "roomId": "",
-      "checkInDate": "",
-      "checkOutDate": "",
-      "peopleNum": 0,
-      "userInfo": {
-        "name": "",
-        "phone": "",
-        "email": "",
-        "address": {
-          "zipcode": 0,
-          "detail": ""
-        },
-      }
-    }
+
   }
+  // 前台-訂單格式
+  const tempOrder = ref<Order>({ ...defaultOrder })
+  const resetTempOrder = () => {
+    tempOrder.value = { ...defaultOrder }
+  }
+
 
   // 前台- 新增訂單
   const createOrder = () => {
@@ -165,15 +157,23 @@ export const useOrderStore = defineStore('order', () => {
       })
   }
 
+  const tempTest = ref({
+    name: ''
+  })
+  const orderT = ref({
+    name: ''
+  })
+  const orderTest = computed(() => {
+    orderT.value.name = tempTest.value.name
+  })
   const test = () => {
-    console.log('123')
-    modalStore.isModalOpen = !modalStore.isModalOpen
+    console.log(tempTest.value)
   }
 
   return {
+    showOrderModal,
     // 前台
     tempOrder,
-    resetTempOrder,
     createOrder,
     orderList,
     getFrontOrder,
@@ -186,6 +186,7 @@ export const useOrderStore = defineStore('order', () => {
     editOrder,
     deleteOrder,
 
+    tempTest,
     test
   }
 })

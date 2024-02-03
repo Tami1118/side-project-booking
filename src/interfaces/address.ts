@@ -1,3 +1,8 @@
+export interface Address {
+  zipcode: number,
+  detail: string,
+}
+
 export interface CityData{
   cities: City[]
 }
@@ -10,10 +15,4 @@ export interface District {
 export interface City {
   district: District[],
   name: string
-}
-
-export interface AddressData {
-  city: string,
-  zipcode: number,
-  detail: string
 }

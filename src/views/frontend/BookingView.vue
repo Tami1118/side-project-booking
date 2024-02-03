@@ -24,8 +24,8 @@ const { reserveDateRange } = storeToRefs(dateStore)
 // Order
 import { useOrderStore } from "@/stores/orderStore";
 const orderStore = useOrderStore();
-// const { tempOrder } = storeToRefs(orderStore);
-// const getBookingDate = orderStore.getBookingDate;
+const { tempTest } = storeToRefs(orderStore);
+const test = orderStore.test;
 const createOrder = orderStore.createOrder;
 
 
@@ -50,6 +50,9 @@ onMounted(() => {
           <router-link :to="`/room/${route.params.id}`" class="text-6 lg:text-8 mb-[42px] flex items-center">
             <font-awesome-icon icon="fa-solid fa-chevron-left" class="text-6 lg:text-8 me-2" />確認訂房資訊
           </router-link>
+
+          <input type="text" v-model="tempTest.name" class="form-input">
+          <button class="btn btn-primary" @click="test">取得tempTest資料</button>
 
           <div>
             <h2 class="text-5 lg:text-7 mb-8 lg:mb-10">訂房資訊</h2>
@@ -86,7 +89,7 @@ onMounted(() => {
             <div class="mb-8 lg:mb-10">
               <h2 class="text-5 lg:text-7 text-black">房間資訊</h2>
             </div>
-            
+
             <div class="flex flex-col gap-6">
               <RoomInfoMain :info="roomDetail" :layout="roomLayout" />
             </div>

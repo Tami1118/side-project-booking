@@ -1,18 +1,9 @@
 <script setup lang="ts">
 import {ref} from "vue"
-import CityForm from "../widgets/CityForm.vue";
+import type { User } from "@/interfaces/user"
+import AddressFrom from "@/components/widgets/AddressForm.vue"
 
-interface UserData {
-  name: string,
-  phone: string,
-  email: string
-}
-
-const userInfo = ref<UserData>({
-  name: "",
-  phone: "",
-  email: ""
-})
+const userInfo = ref<User>({})
 
 </script>
 
@@ -36,7 +27,7 @@ const userInfo = ref<UserData>({
         <input type="email" class="form-input" v-model="userInfo.email">
       </div>
       <div>
-        <CityForm />
+        <AddressForm : : :/>
       </div>
     </div>
   </div>

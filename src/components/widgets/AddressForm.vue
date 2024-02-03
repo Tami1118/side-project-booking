@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, watch, computed, onMounted, defineEmits } from "vue";
 import axios from "axios";
-import type { CityData } from "@/interfaces/city"
+import type { CityData } from "@/interfaces/address"
 
-const emits = defineEmits();
+const emits = defineEmits(["emitDistrict","emitAddressDetail"]);
 
 const selectCity = ref<string>("")
 const selectDistrict = ref<string>("")
@@ -45,9 +45,8 @@ const districts = computed<string[] | null>(() => {
 watch(selectCity, () => { selectDistrict.value = "" })
 
 // 子層傳輸至父層
-watch(selectCity, () => { emits('update:city', selectCity.value) })
-watch(selectDistrict, () => { emits('update:district', selectDistrict.value) })
-watch(addressDetail, () => { emits('update:addressDetail', addressDetail.value) })
+watch(selectDistrict, () => { emits('emitDistrict', selectDistrict.value) })
+watch(addressDetail, () => { emits('emitAddressDetail', addressDetail.value) })
 
 onMounted(() => {
   getTaiwanCity();
@@ -55,8 +54,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="grid grid-cols-2 gap-2">
-    <select v-model="selectCity" class="form-input" v-if="cities">
+  <div class="grid grid-cols-2 gap-2" v-if="taiwanCities">
+    <select v-model="selectCity" class="form-input">
       <option value="" selected>請選擇縣市</option>
       <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
     </select>
