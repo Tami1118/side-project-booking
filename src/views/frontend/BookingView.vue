@@ -4,7 +4,9 @@ import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 
 // Components
+import RoomInfoTitle from "@/components/frontend/RoomInfoTitle.vue";
 import RoomInfoMain from "@/components/frontend/RoomInfoMain.vue";
+import BookingForm from "@/components/frontend/BookingForm.vue";
 // import CityForm from "@/components/widgets/CityForm.vue";
 
 // Room
@@ -25,6 +27,8 @@ const orderStore = useOrderStore();
 // const { tempOrder } = storeToRefs(orderStore);
 // const getBookingDate = orderStore.getBookingDate;
 const createOrder = orderStore.createOrder;
+
+
 
 // Route
 import { useRoute } from "vue-router"
@@ -67,7 +71,7 @@ onMounted(() => {
               <div class="flex items-center">
                 <div>
                   <h3 class="title-deco ps-4 text-4 mb-2">房客人數</h3>
-                  <p>{{  }}人</p>
+                  <p>{{ }}人</p>
                 </div>
                 <router-link :to="`/room/${route.params.id}`" class="underline ms-auto hover:text-primary-100">編輯</router-link>
               </div>
@@ -75,34 +79,17 @@ onMounted(() => {
           </div>
 
           <!-- 訂房人資訊 -->
-          <!-- <div class="pb-10 mb-10 lg:pb-[47px] lg:mb-[47px] border-b border-neutral-60">
-            <div class="flex mb-8 lg:mb-10">
-              <h2 class="text-5 lg:text-7">訂房人資訊</h2>
-              <button class="btn-text ms-auto underline">套用會員資料</button>
-            </div>
-            <div class="flex flex-col gap-4">
-              <div>
-                <label for="userName">姓名</label>
-                <input type="text" class="form-input" v-model="tempOrder.userInfo.name">
-              </div>
-              <div>
-                <label for="userPhone">聯絡電話</label>
-                <input type="tel" class="form-input" v-model="tempOrder.userInfo.phone">
-              </div>
-              <div>
-                <label for="userEmail">電子信箱</label>
-                <input type="email" class="form-input" v-model="tempOrder.userInfo.email">
-              </div>
-              <city-form></city-form>
-            </div>
-          </div> -->
+          <BookingForm />
 
           <!-- 房間資訊 -->
           <div>
             <div class="mb-8 lg:mb-10">
               <h2 class="text-5 lg:text-7 text-black">房間資訊</h2>
             </div>
-            <RoomInfoMain :info="roomDetail" :layout="roomLayout"/>
+            
+            <div class="flex flex-col gap-6">
+              <RoomInfoMain :info="roomDetail" :layout="roomLayout" />
+            </div>
           </div>
         </div>
 

@@ -17,3 +17,9 @@ ul, ol, li {
 p{
   @apply leading-normal tracking-[0.02rem]
 }
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}

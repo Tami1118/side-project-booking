@@ -17,7 +17,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://gist.githubusercontent.com/abc873693',
+        target: 'https://gist.githubusercontent.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },

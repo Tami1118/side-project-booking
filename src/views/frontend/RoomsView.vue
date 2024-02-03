@@ -5,12 +5,11 @@
         <h2 class="mb-10 lg:mb-20 text-8 lg:text-12 text-primary-100 order-1">各種房型，任您挑選</h2>
         <p class="mb-2 lg:mb-4 text-3h lg:text-5 font-bold">房型選擇</p>
       </div>
-      <div class="flex flex-col gap-12" v-if="roomList.length">
+      <div class="flex flex-col gap-12" v-if="roomList">
         <div v-for="item in roomList" :key="item._id" class="flex flex-wrap lg:flex-row rounded-[24px] overflow-hidden bg-white duration-300">
           <div class="w-full lg:w-7/12">
             <div class="h-[200px] lg:h-[464px]">
               <RoomImageSwiper :images="item.imageUrlList" />
-              <!-- <RoomDetailImageSwiper :images="item.imageUrlList"></RoomDetailImageSwiper> -->
             </div>
           </div>
           <div class="w-full lg:w-5/12 p-4 lg:p-10 flex flex-col gap-6 lg:gap-10">
@@ -41,7 +40,6 @@ import { toThousands } from "@/mixins/format";
 
 // Components
 import RoomImageSwiper from "@/components/frontend/RoomImageSwiper.vue";
-// import RoomDetailImageSwiper from "@/components/frontend/RoomDetailImageSwiper.vue";
 import RoomInfoBasic from "@/components/frontend/RoomInfoBasic.vue";
 
 // Room

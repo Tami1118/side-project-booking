@@ -10,8 +10,8 @@ import type { Room } from "@/interfaces/room"
 
 export const useRoomStore = defineStore('roomStore', () => {
   const route = useRoute()
-  const showRoomModal = ref(false)
-  const updateRoomType = ref("create")
+  const showRoomModal = ref<boolean>(false)
+  const updateRoomType = ref<string>("create")
   const roomLayout = ref([
     {
       title: '市景',
@@ -132,7 +132,7 @@ export const useRoomStore = defineStore('roomStore', () => {
   }
 
   // 前台-房型列表
-  const roomList = ref<Room[]>([])
+  const roomList = ref<null|Room[]>(null)
   const getFrontRooms = async () => {
     try {
       const url = `${VITE_URL}/api/v1/rooms/`
@@ -145,7 +145,7 @@ export const useRoomStore = defineStore('roomStore', () => {
   }
 
   // 前台-房型詳細資料
-  const roomDetail = ref({});
+  const roomDetail = ref<null|Room>(null);
   const getFrontRoom = async () => {
     try {
       const url = `${VITE_URL}/api/v1/rooms/${route.params.id}`
@@ -155,6 +155,13 @@ export const useRoomStore = defineStore('roomStore', () => {
     } catch (err) {
       console.log('getFrontRoom 失敗', err)
     }
+  }
+
+  const getTaiwan = () => {
+    const url = "/api/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json";
+    axios.get(url).then(res => {
+      console.log('取得縣市資料',res)
+    })
   }
 
   // 後台-房型格式
@@ -244,5 +251,7 @@ export const useRoomStore = defineStore('roomStore', () => {
     editRoomId,
     editRoom,
     deleteRoom,
+
+    getTaiwan
   }
 })
