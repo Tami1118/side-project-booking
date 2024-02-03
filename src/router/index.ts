@@ -41,7 +41,7 @@ const routes = [
       {
         path: 'user',
         name: 'user',
-        component: () => import('../views/frontend/PersonView.vue'),
+        component: () => import('../views/frontend/UserInfo.vue'),
         meta: { title: '個人資料' }
       },
       {

@@ -23,7 +23,6 @@
     <DateSelect/>
     <CitySelect/>
   </div>
-  {{ editUserData }}
 </template>
 
 <script setup lang="ts">
@@ -34,7 +33,7 @@ import { storeToRefs } from'pinia'
 import { useUserStore } from '@/stores/userStore'
 
 const userStore = useUserStore()
-const { userInfo, editUserData  } = storeToRefs(userStore)
+const { userInfo, editUserData, birthdate, detailedAddress, selectedCity, selectedDistrict  } = storeToRefs(userStore)
 
 
 
