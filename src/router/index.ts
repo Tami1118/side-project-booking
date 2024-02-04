@@ -19,21 +19,18 @@ const routes = [
       },
       {
         path: 'room/:id',
-        // path: 'room-detail',
         name: 'room-detail',
         component: () => import('../views/frontend/RoomDetail.vue'),
         meta: { title: '房型詳細資訊' }
       },
       {
         path: 'booking/:id',
-        // path: 'booking',
         name: 'booking',
         component: () => import('../views/frontend/BookingView.vue'),
         meta: { title: '房型預約' }
       },
       {
         path: 'booking-complete/:id',
-        // path: 'booking-complete',
         name: 'booking-complete',
         component: () => import('../views/frontend/BookingComplete.vue'),
         meta: { title: '預約成功' }

@@ -41,7 +41,6 @@ library.add(fas, fab, far);
 import format from '../mixins/format';
 
 export function registerPlugins(app) {
-  app.config.globalProperties.$format = format;
   app
     .use(createPinia())
     .use(router)
@@ -51,4 +50,5 @@ export function registerPlugins(app) {
     .component('ErrorMessage', ErrorMessage)
     .use(VCalendar, {})
     .component("font-awesome-icon", FontAwesomeIcon)
+    .config.globalProperties.$format = format;
 }
