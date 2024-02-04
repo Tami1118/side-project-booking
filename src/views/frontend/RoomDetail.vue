@@ -22,7 +22,7 @@ const getFrontRoom = roomStore.getFrontRoom;
 import { useDateStore } from "@/stores/dateStore"
 const dateStore = useDateStore()
 const { nightNum, reserveDateRange, sameDate } = storeToRefs(dateStore)
-
+const setStorageDate = dateStore.setStorageDate;
 
 // Order
 import { useOrderStore } from "@/stores/orderStore"
@@ -115,7 +115,7 @@ onMounted(() => {
                 </div>
               </div>
               <!-- <p class="text-primary-100 text-6 font-bold">NT$ {{ $format.toThousands(roomDetail.price * nightNum) }}</p> -->
-              <button @click="setStoragePeople(), router.push(`/booking/${route.params.id}`)" class="btn btn-primary disabled:bg-neutral-40" :disabled="sameDate">立即預訂</button>
+              <button @click="setStoragePeople(), setStorageDate(), router.push(`/booking/${route.params.id}`)" class="btn btn-primary disabled:bg-neutral-40" :disabled="sameDate">立即預訂</button>
               <!-- <button @click="setPeopleNum">人數</button> -->
             </div>
           </div>

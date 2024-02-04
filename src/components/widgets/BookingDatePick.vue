@@ -51,7 +51,7 @@ const titlePosition = mapCurrent({ md: "center", lg: "center" }, "left");
             <VDatePicker v-model.range="reserveDate" mode="date" :color="selectedColor" :columns="columns" :rows="rows" :title-position="titlePosition" :masks="{ title: 'YYYY 年 MMM' }" :min-date="new Date()" expanded="expanded" borderless />
             <div class="hidden md:flex justify-between md:justify-end gap-4">
               <button class="btn hover:bg-neutral-40" @click="resetDate()">清除日期</button>
-              <button class="btn btn-primary" @click="closeModal(), setStorageDate()" :disabled="sameDate">確定日期</button>
+              <button class="btn btn-primary" @click="closeModal(),setStorageDate()" :disabled="sameDate">確定日期</button>
             </div>
           </div>
         </div>
