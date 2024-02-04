@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import { Toast, Alert } from '@/mixins/swal';
+import { Toast, Alert, Swal } from '@/mixins/swal';
 
 const VITE_URL = import.meta.env.VITE_URL as string;
 
@@ -51,6 +51,7 @@ export const useUserStore = defineStore('userStore', () => {
   // login
   const loginData = ref<LoginData>({ email: '', password: '' });
   const userInfo = ref<UserInfo>({});
+  const rememberMe =  ref<boolean>(false);
   const login = () => {
     // console.log(loginData.value)
     const url = `${VITE_URL}/api/v1/user/login`
@@ -175,7 +176,7 @@ export const useUserStore = defineStore('userStore', () => {
   const showEditPassword = ref<boolean>(false);
   const showEditUserInfo = ref<boolean>(false);
   const userStatus = ref<boolean>(false);
-  const getUser = () => {
+  const getUser = async () => {
     const url = `${VITE_URL}/api/v1/user`
     axios.get(url)
       .then(res => {
@@ -188,7 +189,7 @@ export const useUserStore = defineStore('userStore', () => {
         
       })
   }
-  const editUserPass = () => {
+  const editUserPass = async () => {
     if (editUserData.value.newPassword !== newPassword2.value) {
       alert("密碼不一致");
       return;
@@ -203,7 +204,19 @@ export const useUserStore = defineStore('userStore', () => {
           icon: 'success',
           title: '修改資料成功',
         })
-
+        editUserData.value = {
+          userId: "",
+          name: "",
+          phone: "",
+          birthday: "",
+          address: {
+            zipcode: 0,
+            detail: ""
+          },
+          oldPassword: "",
+          newPassword: ""
+        }
+        newPassword2.value = ""
       })
       .catch(err => {
         console.log('login 失敗',err)
@@ -213,7 +226,7 @@ export const useUserStore = defineStore('userStore', () => {
         })
       })
   }
-  const editUserInfo = () => {
+  const editUserInfo = async () => {
     const editUserDataNoPass = {
       userId: "",
       name: "",
@@ -252,10 +265,87 @@ export const useUserStore = defineStore('userStore', () => {
       })
   }
 
+  // forgot
+  const verifyEmail = async(email) => {
+    Swal.fire({
+      title: "請輸入您的Email",
+      input: "text",
+      inputAttributes: {
+        autocapitalize: "off"
+    },
+    confirmButtonText: "送出",
+    showLoaderOnConfirm: true,
+    preConfirm: async (email) => {
+      console.log(email)
+      generateEmailCode(email)
+
+    },
+    allowOutsideClick: () => !Swal.isLoading()
+  })
+  }
+  const generateEmailCode =async (email) => {
+    const url = `${VITE_URL}/api/v1/verify/generateEmailCode`
+    axios.post(url, email)
+    .then(res => {
+      console.log('已將驗證信發送到您的信箱', res)
+      Swal.fire({
+        title: "已將驗證信發送到您的信箱",
+        text: "請設定新密碼",
+        icon: "success",
+        preConfirm: () => {
+          Swal.fire({
+            title: "請輸入新密碼及驗證碼",
+            html: `
+            <label for="swal-input1">請輸入驗證碼</label>
+            <input id="swal-input1" class="swal2-input">
+            <label for="swal-input2">請輸入新密碼</label>
+            <input id="swal-input2" class="swal2-input" type="password">
+          `,
+            inputAttributes: {
+              autocapitalize: "off"
+            },
+            confirmButtonText: "送出",
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+              const code = document.getElementById("swal-input1") as HTMLInputElement
+              const newPassword = document.getElementById("swal-input2") as HTMLInputElement
+              console.log(newPassword.value, code.value)
+
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+          })
+        }
+      })
+    })
+    .catch(err => {
+      console.log('checkUser 驗證失敗', err)
+      Swal.fire({
+        title: "驗證失敗，請確認Email",
+        text: err.response.data.message,
+        icon: "error"
+      })
+    })
+  }
+
+
+
+  const forgotPassword = async () => {
+    const url = `${VITE_URL}/api/v1/user/forgot`
+    axios.get(url, {})
+      .then(res => {
+        console.log('checkUser 驗證成功', res)
+        isChecked.value = true
+      })
+      .catch(err => {
+        console.log('checkUser 驗證失敗', err)
+      })
+  }
+
   return {
     // login
     loginData,
     userInfo,
+    rememberMe,
     login,
     logout,
 
@@ -276,7 +366,6 @@ export const useUserStore = defineStore('userStore', () => {
 
     // edit
     editUserData,
-    
     newPassword2,
     showEditPassword,
     showEditUserInfo,
@@ -284,5 +373,9 @@ export const useUserStore = defineStore('userStore', () => {
     getUser,
     editUserPass,
     editUserInfo,
+
+    // forgot
+    verifyEmail,
+    forgotPassword,
   }
 })

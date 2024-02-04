@@ -50,11 +50,11 @@
                 <ErrorMessage class="invalid-feedback text-red-600" name="密碼"/>
               </div>
               <div class="flex justify-between items-center">
-                <div>
-                  <input type="checkbox" id="remember" class="p-4 rounded-2 me-2">
+                <div class="flex items-center">
+                  <input type="checkbox" id="remember" class="p-4 rounded-2 me-2" v-model="rememberMe">
                   <label for="remember" class="font-bold text-3h md:text-4 text-white">記住帳號</label>
                 </div>
-                <a href="#" class="block btn-text text-3h md:text-4 underline decoration-1">忘記密碼</a>
+                <span class="block btn-text text-3h md:text-4 underline decoration-1" @click="verifyEmail()">忘記密碼</span>
               </div>
             </div>
             <button type="submit" class="btn-primary font-bold btn text-center mt-10">
@@ -79,12 +79,37 @@
 <script setup lang="ts">
 import UserHeader from "@/layouts/frontend/UserHeader.vue";
 import BgWave from '@/components/widgets/BgWave.vue'
-import { storeToRefs } from'pinia' 
-import { useUserStore } from '@/stores/userStore'
+import { watch, onMounted } from "vue";
+import { storeToRefs } from'pinia';
+import { useUserStore } from '@/stores/userStore';
 
 const userStore = useUserStore()
-const { loginData } = storeToRefs(userStore)
+const { loginData, rememberMe } = storeToRefs(userStore)
 const login = userStore.login
+const verifyEmail = userStore.verifyEmail
 
-console.log(loginData)
+watch(rememberMe, (value) => {
+  console.log(value)
+  if (value) {
+    localStorage.setItem('rememberMe_email', JSON.stringify(loginData.value.email))
+    localStorage.setItem('rememberMe', JSON.stringify(true))
+  } else {
+    localStorage.setItem('rememberMe', JSON.stringify(false))
+  }
+})
+watch(loginData, () => {
+  localStorage.setItem('rememberMe_email', JSON.stringify(loginData.value.email))
+}, {deep: true})
+onMounted(() => {
+  const rememberMeValue = localStorage.getItem('rememberMe');
+  if (rememberMeValue !== null) {
+    rememberMe.value = JSON.parse(rememberMeValue);
+  }
+  if (rememberMe.value) {
+    const rememberMeEmail = localStorage.getItem('rememberMe_email');
+    if (rememberMeEmail !== null) {
+      loginData.value.email = JSON.parse(rememberMeEmail);
+    }
+  }
+})
 </script>

@@ -51,10 +51,10 @@
                 >
               </div>
               <div class="flex flex-col gap-2">
-                <label for="user-password" class="font-bold text-white">確認密碼</label>
+                <label for="user-password2" class="font-bold text-white">確認密碼</label>
                 <input 
                   type="password" 
-                  id="user-password" 
+                  id="user-password2" 
                   class="p-4 rounded-2" 
                   placeholder="請再輸入一次密碼"
                   v-model="passwordConfirm"
