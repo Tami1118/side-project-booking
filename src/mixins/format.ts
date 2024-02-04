@@ -1,6 +1,6 @@
 // currency
 // 千分位
-const toThousands = (price: number) => {
+const toThousands = (price: number | string) => {
   return price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
 }
 
@@ -30,7 +30,7 @@ const getTradDateSecondary = (data: Date) => {
   return `${month} 月 ${day} 日${dayOfWeek}`;
 }
 
-const getNightNum = (start, end) => {
+const getNightNum = (start:Date|string, end:Date|string) => {
   const startDate: Date = new Date(start)
   const endDate: Date = new Date(end)
 

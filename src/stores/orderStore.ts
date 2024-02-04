@@ -7,7 +7,7 @@ const { VITE_URL } = import.meta.env;
 import format from "@/mixins/format";
 import { Toast, Alert } from "@/mixins/swal"
 
-import type { Order } from "@/interfaces/order";
+import type { Order, Orders } from "@/interfaces/order";
 import type { Date } from "@/interfaces/order";
 
 interface User {
@@ -113,7 +113,7 @@ export const useOrderStore = defineStore('order', () => {
   // })
 
   // 前台- 取得所有訂單列表
-  const orderList = ref<Order[]>([])
+  const orderList = ref<Orders[]|null>(null)
   const getFrontOrders = async () => {
     try {
       const url = `${VITE_URL}/api/v1/orders/`

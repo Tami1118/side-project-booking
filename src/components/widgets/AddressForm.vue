@@ -1,9 +1,10 @@
 <script setup lang="ts">
+
 import { ref, watch, computed, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import axios from "axios";
 
-import type { CityData, District } from "@/interfaces/country";
+import type { City, District } from "@/interfaces/country";
 
 // Order
 import { useOrderStore } from "@/stores/orderStore"
@@ -11,7 +12,7 @@ const orderStore = useOrderStore()
 const { selectDistrict, addressDetail } = storeToRefs(orderStore)
 
 // 台灣縣市API
-const taiwanCities = ref<CityData | null>(null);
+const taiwanCities = ref<null | City[]>(null);
 const getTaiwanCity = async () => {
   try {
     const url = "/api/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json";
@@ -33,10 +34,10 @@ const cities = computed(() => {
 });
 
 // 行政區列表
-const districts = computed<District[] | null>(() => {
+const districts = computed<District[]>(() => {
   if (taiwanCities.value) {
     const city = taiwanCities.value.find((item) => item.name === selectCity.value);
-    return city ? city.districts : [];
+    return city ? city.district : [];
   } else {
     return []
   }

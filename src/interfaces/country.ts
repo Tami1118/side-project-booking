@@ -1,5 +1,5 @@
 export interface Address {
-  zipcode: number,
+  zipcode: number | string,
   detail: string,
 }
 

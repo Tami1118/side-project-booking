@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Basic
-import { ref, onMounted } from "vue";
+import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 
 // Components
@@ -10,7 +10,7 @@ import RoomInfoTitle from "@/components/frontend/RoomInfoTitle.vue";
 import RoomInfoMain from "@/components/frontend/RoomInfoMain.vue";
 import RoomInfoRegulation from "@/components/frontend/RoomInfoRegulation.vue";
 import BookingDatePick from "@/components/widgets/BookingDatePick.vue";
-import BookingPeople from "@/components/frontend/BookingPeople.vue";
+// import BookingPeople from "@/components/frontend/BookingPeople.vue";
 
 // Room
 import { useRoomStore } from "@/stores/roomStore";

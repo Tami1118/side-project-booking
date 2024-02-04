@@ -145,7 +145,7 @@ export const useRoomStore = defineStore('roomStore', () => {
   }
 
   // 前台-房型詳細資料
-  const roomDetail = ref<null|Room>(null);
+  const roomDetail = ref<Room|null>();
   const getFrontRoom = async () => {
     try {
       const url = `${VITE_URL}/api/v1/rooms/${route.params.id}`
@@ -172,16 +172,16 @@ export const useRoomStore = defineStore('roomStore', () => {
   }
 
   // 後台-取得所有房型資料
-  interface Room {
-    _id: string;
-    name: string;
-    price: number;
-    maxPeople: number;
-    imageUrl: string;
-    description: string;
-    bedInfo: string;
-    areaInfo: string;
-  }
+  // interface Room {
+  //   _id: string;
+  //   name: string;
+  //   price: number;
+  //   maxPeople: number;
+  //   imageUrl: string;
+  //   description: string;
+  //   bedInfo: string;
+  //   areaInfo: string;
+  // }
   const roomData = ref<Room[]>([]);
   const getRooms = () => {
     const url = `${VITE_URL}/api/v1/admin/rooms/`

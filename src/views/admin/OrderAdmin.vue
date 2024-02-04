@@ -16,11 +16,11 @@
       </thead>
       <tbody>
         <tr v-for="item in orderList" :key="item._id" class="border-b border-neutral-40">
-          <td class="p-2">{{ $format.getLocalDateFormat(item.createdAt) }}</td>
+          <td class="p-2">{{ item.createdAt }}</td>
           <td class="p-2">{{ item.userInfo.name }}</td>
           <td class="p-2">{{ item.roomId.name }}</td>
-          <td class="p-2">{{ $format.getLocalDateFormat(item.checkInDate) }}</td>
-          <td class="p-2">{{ $format.getLocalDateFormat(item.checkOutDate) }}</td>
+          <td class="p-2">{{ item.checkInDate }}</td>
+          <td class="p-2">{{ item.checkOutDate }}</td>
           <td class="p-2">
             <div class="flex gap-2">
               <button class="p-3 btn-primary" @click="tempOrder = JSON.parse(JSON.stringify(item))">編輯</button>
@@ -33,7 +33,7 @@
       <tfoot>
         <tr>
           <td colspan="6" class="text-end border-y border-neutral-40">
-            共 {{ orderList.length }} 筆資料
+            共 {{ orderList?.length }} 筆資料
           </td>
         </tr>
       </tfoot>

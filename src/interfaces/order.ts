@@ -8,6 +8,18 @@ export interface Order {
   userInfo: User;
 }
 
+export interface Orders {
+  _id: string,
+  createdAt: string | Date;
+  roomId: {
+    name: string;
+  };
+  checkInDate: string;
+  checkOutDate: string;
+  peopleNum: number;
+  userInfo: User;
+}
+
 export interface Date {
   start: string | Date;
   end: string | Date;

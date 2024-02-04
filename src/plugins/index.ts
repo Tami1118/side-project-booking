@@ -2,6 +2,7 @@ import { createPinia } from 'pinia'
 import router from '../router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import * as rules from "@vee-validate/rules";
 
 // VeeValidate
 // 引入 VeeValidate 元件跟功能
@@ -15,7 +16,7 @@ import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
 
 // 使用 Object.keys 將 AllRules 轉為陣列並使用 forEach 迴圈將驗證規則加入 VeeValidate
 Object.keys(AllRules).forEach((rule) => {
-  defineRule(rule, AllRules[rule]);
+  defineRule(rule, (rules as Record<string, any>)[rule]);
 });
 // 將當前 VeeValidate 的語系設定為繁體中文
 configure({
