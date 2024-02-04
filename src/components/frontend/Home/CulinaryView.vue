@@ -9,7 +9,6 @@
       <div class="grid grid-cols-4">
         <div class="col">
           <div class="rounded-2">
-            <img class="w-full" src="../../assets/images/desktop/food1.png" alt="">
             <!-- 01/11 -->
           </div>
         </div>
