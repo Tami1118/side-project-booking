@@ -47,7 +47,7 @@
             </div>
             <div>
               <span class="mb-2">WEB</span>
-              <a class="hover:text-primary-100 text-3h lg:text-4" href="www.elhhexschool.com.tw">www.elhhexschool.com.tw</a>
+              <a class="hover:text-primary-100 text-3h lg:text-4" href="/">www.elhhexschool.com.tw</a>
             </div>
           </div>
         </div>

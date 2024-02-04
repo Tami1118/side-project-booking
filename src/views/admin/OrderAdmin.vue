@@ -1,3 +1,24 @@
+<script setup lang="ts">
+import { watch } from "vue";
+import { storeToRefs } from "pinia";
+
+// order
+import { useOrderStore } from "@/stores/orderStore.js";
+const orderStore = useOrderStore();
+const getOrders = orderStore.getOrders;
+const deleteOrder = orderStore.deleteOrder;
+const { orderList, tempOrder } = storeToRefs(orderStore);
+
+// user
+import { useUserStore } from '@/stores/userStore'
+const userStore = useUserStore()
+const { isChecked } = storeToRefs(userStore);
+
+watch(isChecked, (n) => {
+  if (n) getOrders();
+})
+</script>
+
 <template>
   <div class="container mx-auto px-4 xl:px-0 py-10 lg:py-20">
     <div class="flex justify-between items-center mb-6">
@@ -99,25 +120,3 @@
 
   <!-- <RoomModal v-if="showRoomModal" /> -->
 </template>
-
-<script setup lang="ts">
-import { watch } from "vue";
-import { storeToRefs } from "pinia";
-
-// order
-import { useOrderStore } from "@/stores/orderStore.js";
-const orderStore = useOrderStore();
-const getOrders = orderStore.getOrders;
-const deleteOrder = orderStore.deleteOrder;
-const { orderList, tempOrder } = storeToRefs(orderStore);
-
-// user
-import { useUserStore } from '@/stores/userStore'
-const userStore = useUserStore()
-const { isChecked } = storeToRefs(userStore);
-
-watch(isChecked, (n) => {
-  if (n) getOrders();
-})
-
-</script>

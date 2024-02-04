@@ -21,7 +21,7 @@ const getFrontRoom = roomStore.getFrontRoom;
 // CheckDate
 import { useDateStore } from "@/stores/dateStore"
 const dateStore = useDateStore()
-const { nightNum, reserveDateRange, sameDate } = storeToRefs(dateStore)
+const { reserveDateRange, sameDate } = storeToRefs(dateStore)
 const setStorageDate = dateStore.setStorageDate;
 
 // Order
