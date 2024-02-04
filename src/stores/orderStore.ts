@@ -107,25 +107,32 @@ export const useOrderStore = defineStore('order', () => {
   }
 
   // const totalPrice = computed(async () => {
-    // const nightNum = await format.getNightNum(order.value.checkInDate, order.value.checkOutDate)
-    // return nightNum
-    // return roomId.value.price
+  // const nightNum = await format.getNightNum(order.value.checkInDate, order.value.checkOutDate)
+  // return nightNum
+  // return roomId.value.price
   // })
 
   // 前台- 取得所有訂單列表
   const orderList = ref<Order[]>([])
   const getFrontOrders = async () => {
-    const url = `${VITE_URL}/api/v1/orders/`
-    axios.get(url)
-      .then(res => {
-        console.log(res)
-        console.log(res.data.result)
-        orderList.value = res.data.result
-        console.log('取得所有訂單', orderList.value)
-      })
-      .catch(err => {
-        console.log('getFrontOrders 失敗', err)
-      })
+    try {
+      const url = `${VITE_URL}/api/v1/orders/`
+      const res = await axios.get(url)
+      orderList.value = res.data.result
+      console.log('取得所有訂單', orderList.value)
+    } catch (err) {
+      console.log('getFrontOrders 失敗', err)
+    }
+    // axios.get(url)
+    //   .then(res => {
+    //     console.log(res)
+    //     console.log(res.data.result)
+    //     orderList.value = res.data.result
+    //     console.log('取得所有訂單', orderList.value)
+    //   })
+    //   .catch(err => {
+    //     console.log('getFrontOrders 失敗', err)
+    //   })
   }
 
   // 前台- 取消訂單

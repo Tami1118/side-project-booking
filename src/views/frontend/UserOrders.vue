@@ -54,30 +54,39 @@ const getfeatureOrderList = () => {
   // return featureOrder.value
 }
 
+// const testOrder = ref({})
+// const getTestOrderList = () => {
+//   const today = new Date().setHours(15, 0, 0, 0)
+//   const isStatus = orderList.value.filter(order => order.status === 0)
+//   const filterList = isStatus.filter(order => new Date(order.checkInDate).getTime() > today)
+//   const sortList = filterList.sort((a, b) => new Date(a.checkInDate) - new Date(b.checkInDate))
+//   testOrder.value = sortList[0]
+//   console.log('測試取得訂單2',testOrder.value)
+//   // return featureOrder.value
+// }
+
 
 // User
-import { useUserStore } from "@/stores/userStore"
-const userStore = useUserStore()
-const { isChecked } = storeToRefs(userStore);
+// import { useUserStore } from "@/stores/userStore"
+// const userStore = useUserStore()
+// const { isChecked } = storeToRefs(userStore);
 
 // watch(orderList, (n) => {
 //   if (n) getfeatureOrderList()
+//   getTestOrderList()
 // });
 
-// onMounted(async () => {
-  // await getFrontOrders();
-  // getfeatureOrderList()
-// })
+onMounted(async () => {
+  await getFrontOrders();
+  getfeatureOrderList()
+})
 
-watch(isChecked, async (n) => {
-  if (n) {
-    await getFrontOrders()
-    getfeatureOrderList()
-  }
-});
-
-
-
+// watch(isChecked, async (n) => {
+//   if (n) {
+//     await getFrontOrders()
+//     getfeatureOrderList()
+//   }
+// });
 
 </script>
 
@@ -103,14 +112,14 @@ watch(isChecked, async (n) => {
 
       <div class="flex flex-col lg:flex-row gap-10">
         <div class="basis-full lg:basis-7/12 bg-white rounded-[20px] p-4 lg:p-10 flex flex-col gap-6 lg:gap-10 h-fit duration-300">
-          {{ featureOrder }}
+          <!-- {{ featureOrder }} -->
           <div v-if="!orderList" class="flex flex-col justify-center items-center py-12">
             <h2 class="mb-6 lg:mb-10 text-4 lg:text-6 me-auto">即將來的行程</h2>
             <p class="text-primary-100 lg:text-6 font-bold mb-6">尚未有即將到來的訂單</p>
             <router-link to="/room" class="btn btn-primary">訂房去</router-link>
           </div>
           <div v-else>
-            <OrderRoomDetail :order="featureOrderList[0]" />
+            <OrderRoomDetail :order="featureOrder[0]" />
           </div>
         </div>
 
@@ -120,7 +129,7 @@ watch(isChecked, async (n) => {
             <p class="text-primary-100 lg:text-6 font-bold">尚未有歷史記錄</p>
           </div>
           <div v-else>
-            <OrderRoomHistory :order-list="featureOrderList" />
+            <OrderRoomHistory :order-list="featureOrder" />
             <OrderRoomHistory class="text-neutral-60 mt-6 lg:mt-10" :order-list="historyOrderList" />
             <button class="btn btn-secondary mt-10 w-full">查看更多</button>
           </div>

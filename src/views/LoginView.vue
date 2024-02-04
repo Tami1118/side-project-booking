@@ -1,5 +1,5 @@
 <template>
-  <UserHeader/>
+  <LoginHeader />
   <div class="grid grid-cols-1 md:grid-cols-2 bg-neutral-100 h-screen">
     <div class="col hidden md:block">
       <img class="h-screen w-full object-cover object-center overflow-hidden" src="../assets/images/desktop/register.png" />
@@ -77,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import UserHeader from "@/layouts/frontend/UserHeader.vue";
+import LoginHeader from "@/layouts/frontend/LoginHeader.vue";
 import BgWave from '@/components/widgets/BgWave.vue'
 import { watch, onMounted } from "vue";
 import { storeToRefs } from'pinia';

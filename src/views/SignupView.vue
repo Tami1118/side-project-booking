@@ -1,12 +1,12 @@
 <template>
-  <UserHeader/>
+  <LoginHeader />
   <div class="grid grid-cols-1 md:grid-cols-2 bg-neutral-100 h-screen">
     <div class="col hidden md:block">
       <img class="h-screen w-full object-cover object-center overflow-hidden" src="../assets/images/desktop/register.png" />
-    </div>   
+    </div>
     <div class="col relative overflow-hidden">
       <div class="absolute top-0 left-0 pt-8 md:pt-18">
-        <BgWave/>
+        <BgWave />
       </div>
       <div class="h-full flex justify-center items-center px-5 lg:px-0">
         <div class="basis-full lg:basis-1/2 flex flex-col gap-10 duration-300">
@@ -26,43 +26,25 @@
               <div class="">填寫基本資料</div>
             </div>
           </div>
-          
+
           <!-- step1 -->
           <div v-if="signupStep === 1">
             <div class="flex flex-col gap-4">
               <div class="flex flex-col gap-2">
                 <label for="user-email-signup" class="font-bold text-white">電子信箱</label>
-                <input 
-                  type="email" 
-                  id="user-email-signup" 
-                  class="p-4 rounded-2" 
-                  placeholder="請輸入電子信箱"
-                  v-model="signupData.email"
-                >
+                <input type="email" id="user-email-signup" class="p-4 rounded-2" placeholder="請輸入電子信箱" v-model="signupData.email">
               </div>
               <div class="flex flex-col gap-2">
                 <label for="user-password" class="font-bold text-white">密碼</label>
-                <input 
-                  type="password"  
-                  id="user-password" 
-                  class="p-4 rounded-2" 
-                  placeholder="請輸入密碼"
-                  v-model="signupData.password"
-                >
+                <input type="password" id="user-password" class="p-4 rounded-2" placeholder="請輸入密碼" v-model="signupData.password">
               </div>
               <div class="flex flex-col gap-2">
                 <label for="user-password2" class="font-bold text-white">確認密碼</label>
-                <input 
-                  type="password" 
-                  id="user-password2" 
-                  class="p-4 rounded-2" 
-                  placeholder="請再輸入一次密碼"
-                  v-model="passwordConfirm"
-                >
+                <input type="password" id="user-password2" class="p-4 rounded-2" placeholder="請再輸入一次密碼" v-model="passwordConfirm">
               </div>
-  
-  
-  
+
+
+
             </div>
             <div class="btn-primary font-bold btn text-center mt-10" @click="signupStep = 2">
               下一步
@@ -73,29 +55,17 @@
             <div class="flex flex-col gap-4">
               <div class="flex flex-col gap-2">
                 <label for="user-name" class="font-bold text-white">姓名</label>
-                <input 
-                  type="text"  
-                  id="user-name" 
-                  class="p-4 rounded-2" 
-                  placeholder="請輸入姓名"
-                  v-model="signupData.name"
-                >
+                <input type="text" id="user-name" class="p-4 rounded-2" placeholder="請輸入姓名" v-model="signupData.name">
               </div>
               <div class="flex flex-col gap-2">
                 <label for="user-phone" class="font-bold text-white">手機號碼</label>
-                <input 
-                  type="phone"  
-                  id="user-phone" 
-                  class="p-4 rounded-2" 
-                  placeholder="請輸入手機號碼"
-                  v-model="signupData.phone"
-                >
+                <input type="phone" id="user-phone" class="p-4 rounded-2" placeholder="請輸入手機號碼" v-model="signupData.phone">
               </div>
 
-              <DateSelect/>
-              <CitySelect/>
-  
-  
+              <DateSelect />
+              <CitySelect />
+
+
             </div>
             <div class="btn-primary font-bold btn text-center mt-10" @click="signup()">
               完成註冊
@@ -116,11 +86,11 @@
 </template>
 
 <script setup lang="ts">
-import UserHeader from "@/layouts/frontend/UserHeader.vue"
+import LoginHeader from "@/layouts/frontend/LoginHeader.vue";
 import BgWave from '@/components/widgets/BgWave.vue'
 import DateSelect from '@/components/widgets/DateSelect.vue'
 import CitySelect from '@/components/widgets/CitySelect.vue'
-import { storeToRefs } from'pinia' 
+import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/stores/userStore'
 
 const userStore = useUserStore()
