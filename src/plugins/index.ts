@@ -40,7 +40,7 @@ library.add(fas, fab, far);
 
 import format from '../mixins/format';
 
-export function registerPlugins(app) {
+export function registerPlugins(app:any) {
   app
     .use(createPinia())
     .use(router)

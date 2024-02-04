@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { defineStore } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
@@ -194,7 +194,7 @@ export const useOrderStore = defineStore('order', () => {
   }
   // 取得本地端reserveDate
   const getStorageData = () => {
-    const getDate = localStorage.getItem('storageDate')
+    const getDate:any = localStorage.getItem('storageDate')
     const date = JSON.parse(getDate)
     const people = localStorage.getItem('storagePeople')
     console.log(date, people)

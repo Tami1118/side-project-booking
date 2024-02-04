@@ -16,11 +16,11 @@
       </thead>
       <tbody>
         <tr v-for="item in orderList" :key="item._id" class="border-b border-neutral-40">
-          <td class="p-2">{{ dataFormat(item.createdAt) }}</td>
+          <td class="p-2">{{ $format.getLocalDateFormat(item.createdAt) }}</td>
           <td class="p-2">{{ item.userInfo.name }}</td>
           <td class="p-2">{{ item.roomId.name }}</td>
-          <td class="p-2">{{ dataFormat(item.checkInDate) }}</td>
-          <td class="p-2">{{ dataFormat(item.checkOutDate) }}</td>
+          <td class="p-2">{{ $format.getLocalDateFormat(item.checkInDate) }}</td>
+          <td class="p-2">{{ $format.getLocalDateFormat(item.checkOutDate) }}</td>
           <td class="p-2">
             <div class="flex gap-2">
               <button class="p-3 btn-primary" @click="tempOrder = JSON.parse(JSON.stringify(item))">編輯</button>
@@ -120,7 +120,4 @@ watch(isChecked, (n) => {
   if (n) getOrders();
 })
 
-const dataFormat = (data) => {
-  return data.split("T")[0];
-};
 </script>

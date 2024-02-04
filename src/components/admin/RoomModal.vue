@@ -105,7 +105,7 @@
                 <div>
                   <p class="font-bold mb-2">房內設備</p>
                   <div class="grid grid-cols-3 border border-neutral-40 p-4 rounded-2">
-                    <div v-for="item in roomDataTemp.facilityInfo" :key="item" class="flex items-center">
+                    <div v-for="item in roomDataTemp.facilityInfo" :key="item.title" class="flex items-center">
                       <input type="checkbox"
                              class="w-[16px]"
                              :value="item.title"
@@ -120,7 +120,7 @@
                 <div>
                   <p class="font-bold mb-2">備品提供</p>
                   <div class="grid grid-cols-3 border border-neutral-40 p-4 rounded-2">
-                    <div v-for="item in roomDataTemp.amenityInfo" :key="item" class="flex items-center">
+                    <div v-for="item in roomDataTemp.amenityInfo" :key="item.title" class="flex items-center">
                       <input type="checkbox"
                              class="w-[16px]"
                              :value="item.title"

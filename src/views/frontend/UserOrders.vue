@@ -1,6 +1,6 @@
 
 <script setup>
-import { ref, watch, onMounted, computed } from "vue"
+import { ref, onMounted, computed } from "vue"
 import { storeToRefs } from "pinia"
 
 // Components
@@ -19,13 +19,13 @@ const getFrontOrders = orderStore.getFrontOrders;
 // 1. 預設：顯示即將到來訂單最近一筆訂單
 // 2. 點擊右邊歷史訂單顯示於此
 // 3. 尚未過期顯示取消訂單，已過期則 disabled
-const featureOrderList = computed(() => {
-  const today = new Date().setHours(15, 0, 0, 0)
-  const isStatus = orderList.value.filter(order => order.status === 0)
-  const filterList = isStatus.filter(order => new Date(order.checkInDate).getTime() > today)
-  const sortList = filterList.sort((a, b) => new Date(a.checkInDate) - new Date(b.checkInDate))
-  return sortList
-})
+// const featureOrderList = computed(() => {
+//   const today = new Date().setHours(15, 0, 0, 0)
+//   const isStatus = orderList.value.filter(order => order.status === 0)
+//   const filterList = isStatus.filter(order => new Date(order.checkInDate).getTime() > today)
+//   const sortList = filterList.sort((a, b) => new Date(a.checkInDate) - new Date(b.checkInDate))
+//   return sortList
+// })
 
 // (右邊) 歷史訂單
 // 1. 訂單排序
