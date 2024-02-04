@@ -1,6 +1,6 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
-// import { getLocalDateFormat } from "@/mixins/format";
+import format from "@/mixins/format";
 
 // TypeScript
 interface BookingDateType {
@@ -35,8 +35,8 @@ export const useDateStore = defineStore('dateStore', () => {
 
   // 日期格式轉換 2024/01/01
   const reserveDateRange = computed<{startDate: string, endDate: string}>(() => {
-    const startDate = getLocalDateFormat(reserveDate.value.start)
-    const endDate = getLocalDateFormat(reserveDate.value.end)
+    const startDate = format.getLocalDateFormat(reserveDate.value.start)
+    const endDate = format.getLocalDateFormat(reserveDate.value.end)
     return {
       startDate,
       endDate      

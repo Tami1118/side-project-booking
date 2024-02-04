@@ -22,6 +22,14 @@ const getTradDateFormat = (data: Date) => {
   return `${month} 月 ${day} 日，${dayOfWeek}`;
 }
 
+const getTradDateSecondary = (data: Date) => {
+  const newDate = new Date(data);
+  const month = newDate.getMonth() + 1;
+  const day = newDate.getDate();
+  const dayOfWeek = newDate.toLocaleDateString('zh-TW', { weekday: 'long' });
+  return `${month} 月 ${day} 日${dayOfWeek}`;
+}
+
 const getNightNum = (start, end) => {
   const startDate: Date = new Date(start)
   const endDate: Date = new Date(end)
@@ -35,10 +43,10 @@ const getNightNum = (start, end) => {
   return Math.ceil(rangeDate / (1000 * 60 * 60 * 24))
 }
 
-
 export default {
   toThousands,
   getLocalDateFormat,
+  getTradDateSecondary,
   getTradDateFormat,
   getNightNum
 }

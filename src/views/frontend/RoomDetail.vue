@@ -2,7 +2,6 @@
 // Basic
 import { ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
-// import { toThousands } from "@/mixins/format";
 
 // Components
 import RoomDetailImageSwiper from "@/components/frontend/RoomDetailImageSwiper.vue";
@@ -25,12 +24,9 @@ const dateStore = useDateStore()
 const { nightNum, reserveDateRange, sameDate } = storeToRefs(dateStore)
 
 // PeopleNum
-const reservePeopleNum = ref<number>(0)
-const catchPeople = (data:number) => {
-  reservePeopleNum.value = data
-}
+const peopleNum = ref<number>(2)
 const setPeopleNum = () => {
-  localStorage.setItem('reservePeopleNum', reservePeopleNum.value.toString())
+  localStorage.setItem('peopleNum', peopleNum.value.toString())
 }
 
 // Open/Close Modal
@@ -101,11 +97,25 @@ onMounted(() => {
 
               <div>
                 <BookingDatePick />
-                <BookingPeople @getPeopleNum="catchPeople" />
+                <div class="flex items-center">
+                  <p>人數</p>
+                  <div class="ms-auto">
+                    <div>
+                      <button class="group rounded-full w-[56px] aspect-square p-4 border border-neutral-40 hover:bg-primary-100 active:bg-primary disabled:bg-neutral-10" @click="peopleNum--" :disabled="peopleNum === 1">
+                        <font-awesome-icon icon="fa-solid fa-minus" class="group-hover:text-white group-active:text-white group-disabled:text-black" />
+                      </button>
+                      <input type="number" v-model="peopleNum" class="w-[48px] mx-4 text-center text-5 bg-white" disabled>
+                      <button class="group rounded-full w-[56px] aspect-square p-4 border border-neutral-40 hover:bg-primary-100 active:bg-primary disabled:bg-neutral-10" @click="peopleNum++" :disabled="peopleNum === roomDetail?.maxPeople">
+                        <font-awesome-icon icon="fa-solid fa-plus" class="group-hover:text-white group-active:text-white group-disabled:text-black" />
+                      </button>
+                    </div>
+                    <p v-if="peopleNum === roomDetail?.maxPeople" class="text-alert-120 text-center">房間最多{{ roomDetail?.maxPeople }} 人</p>
+                  </div>
+                </div>
               </div>
-              <p class="text-primary-100 text-6 font-bold">NT$ {{ $format.toThousands(roomDetail.price * nightNum) }}</p>
-              <button @click="router.push(`/booking/${route.params.id}`)" class="btn btn-primary disabled:bg-neutral-40" :disabled="sameDate">立即預訂</button>
-              <button @click="setPeopleNum">人數</button>
+              <!-- <p class="text-primary-100 text-6 font-bold">NT$ {{ $format.toThousands(roomDetail.price * nightNum) }}</p> -->
+              <button @click="setPeopleNum(), router.push(`/booking/${route.params.id}`)" class="btn btn-primary disabled:bg-neutral-40" :disabled="sameDate">立即預訂</button>
+              <!-- <button @click="setPeopleNum">人數</button> -->
             </div>
           </div>
         </div>

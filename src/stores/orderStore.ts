@@ -33,7 +33,6 @@ export const useOrderStore = defineStore('order', () => {
         "detail": ""
       },
     }
-
   }
   // 前台-訂單格式
   const tempOrder = ref<Order>({ ...defaultOrder })
