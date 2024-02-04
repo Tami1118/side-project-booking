@@ -60,14 +60,19 @@ import { useUserStore } from "@/stores/userStore"
 const userStore = useUserStore()
 const { isChecked } = storeToRefs(userStore);
 
-watch(isChecked, (n) => {
-  if (n) getFrontOrders()
+watch(isChecked, async (n) => {
+  if (n) {
+    await getFrontOrders()
+    getfeatureOrderList()
+  }
 });
 
-onMounted(async () => {
-  if (isChecked) await getFrontOrders();
-  await getfeatureOrderList()
-})
+// onMounted(() => {
+//   if (isChecked) {
+//     getFrontOrders();
+//   }
+//   getfeatureOrderList()
+// })
 
 
 </script>
