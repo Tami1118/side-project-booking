@@ -41,14 +41,24 @@ const districts = computed(() => {
 
 
 const updateCity = () => {
-  selectedDistrict.value = districts.value.length > 0 ? districts.value[0].name : null;
+  selectedDistrict.value = districts.value.length > 0 ? districts.value[0].name ?? '' : '';
 };
 const updateZip = () => {
   console.log(selectedZip.value, selectedCity.value, selectedDistrict.value)
   const city = taiwanCities.find(c => c.name === selectedCity.value);
-  const district = city?.districts.find(d => d.name === selectedDistrict.value);
-  selectedZip.value = district ? Number(district.zip) : NaN;
-  console.log(selectedZip.value)
+if (city) {
+    const district = city.districts.find(d => d.name === selectedDistrict.value);
+    if (district) {
+        selectedZip.value = Number(district.zip);
+    } else {
+        // 如果没有找到匹配的区县，可以根据需要设置 selectedZip 的值
+        selectedZip.value = NaN; // 或者设置为合理的默认值
+    }
+} else {
+    // 如果没有找到匹配的城市，也可以设置 selectedZip 的值
+    selectedZip.value = NaN; // 或者设置为合理的默认值
+}
+console.log(selectedZip.value);
 };
 
 

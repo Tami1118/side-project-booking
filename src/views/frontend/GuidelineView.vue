@@ -253,25 +253,4 @@
 
 <script setup lang="ts">
 import BookingDatePick from '@/components/widgets/BookingDatePick.vue'
-// import CityForm from '@/components/widgets/CityForm.vue'
-import { ref, onMounted, watchEffect } from 'vue';
-
-const date = ref();
-
-onMounted(() => {
-  const startDate = new Date();
-  const endDate = new Date(new Date().setDate(startDate.getDate() + 2));
-  date.value = [startDate, endDate];
-
-  watchEffect(() => {
-    console.log(date.value)
-  })
-})
 </script>
-
-<style lang="scss">
-.svg-icon {
-  fill: #BF9D7D;
-}
-</style>
-

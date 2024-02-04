@@ -33,7 +33,7 @@ import { storeToRefs } from'pinia'
 import { useUserStore } from '@/stores/userStore'
 
 const userStore = useUserStore()
-const { userInfo, editUserData, birthdate, detailedAddress, selectedCity, selectedDistrict  } = storeToRefs(userStore)
+const { userInfo, editUserData  } = storeToRefs(userStore)
 
 
 
@@ -42,7 +42,6 @@ const { userInfo, editUserData, birthdate, detailedAddress, selectedCity, select
 onMounted (() => {
   console.log('userInfo',userInfo.value)
   editUserData.value.userId = userInfo.value._id
-  editUserData.value.email = userInfo.value.email
   editUserData.value.name = userInfo.value.name
   editUserData.value.phone = userInfo.value.phone
   editUserData.value.birthday = userInfo.value.birthday
