@@ -55,6 +55,7 @@ const updateZip = () => {
 watch(selectedDistrict, updateZip);
 
 onMounted(() => {
+  console.log(123131321321)
   if (route.fullPath === '/user') {
     console.log(userInfo.value)
     selectedZip.value = userInfo.value.address.zipcode;
@@ -71,7 +72,11 @@ onMounted(() => {
     detailedAddress.value = userInfo.value.address.detail.replace(selectedCity.value, "");
     detailedAddress.value = detailedAddress.value.replace(selectedDistrict.value, "");
   } else {
-    // updateCity();
+    console.log(taiwanCities[0])
+    selectedCity.value = taiwanCities[0].name;
+    selectedDistrict.value =  taiwanCities[0].districts[0].name;
+
   }
 });
+console.log(123131321321)
 </script>

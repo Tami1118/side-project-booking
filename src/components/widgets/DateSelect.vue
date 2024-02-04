@@ -27,7 +27,8 @@ const { birthdate, userInfo } = storeToRefs(userStore)
 onMounted (() => {
   console.log('birthdate',birthdate.value)
   console.log('userInfo',userInfo.value)
-  let match = userInfo.value.birthday.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  const birthdayStr = userInfo.value?.birthday ?? '';
+  let match = birthdayStr.match(/^(\d{4})-(\d{2})-(\d{2})/);
 
   if (match) {
     birthdate.value.year = parseInt(match[1]);
@@ -36,7 +37,7 @@ onMounted (() => {
 
     console.log(birthdate.value);
   }
-  })
+})
 
 
 // 月份對應之天數
