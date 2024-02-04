@@ -23,11 +23,12 @@ import { useDateStore } from "@/stores/dateStore"
 const dateStore = useDateStore()
 const { nightNum, reserveDateRange, sameDate } = storeToRefs(dateStore)
 
-// PeopleNum
-const peopleNum = ref<number>(2)
-const setPeopleNum = () => {
-  localStorage.setItem('peopleNum', peopleNum.value.toString())
-}
+
+// Order
+import { useOrderStore } from "@/stores/orderStore"
+const orderStore = useOrderStore()
+const { peopleNum } = storeToRefs(orderStore)
+const setStoragePeople = orderStore.setStoragePeople
 
 // Open/Close Modal
 import { useModalStore } from "@/stores/modalStore.js";
@@ -114,7 +115,7 @@ onMounted(() => {
                 </div>
               </div>
               <!-- <p class="text-primary-100 text-6 font-bold">NT$ {{ $format.toThousands(roomDetail.price * nightNum) }}</p> -->
-              <button @click="setPeopleNum(), router.push(`/booking/${route.params.id}`)" class="btn btn-primary disabled:bg-neutral-40" :disabled="sameDate">立即預訂</button>
+              <button @click="setStoragePeople(), router.push(`/booking/${route.params.id}`)" class="btn btn-primary disabled:bg-neutral-40" :disabled="sameDate">立即預訂</button>
               <!-- <button @click="setPeopleNum">人數</button> -->
             </div>
           </div>

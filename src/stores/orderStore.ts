@@ -1,24 +1,25 @@
-import { ref, computed } from 'vue'
-import { defineStore } from "pinia"
-import { useRoute, useRouter } from 'vue-router'
-import axios from 'axios'
+import { ref, computed } from 'vue';
+import { defineStore } from "pinia";
+import { useRoute, useRouter } from "vue-router";
+import axios from "axios";
 
-const { VITE_URL } = import.meta.env
-import type { Order } from "@/interfaces/order"
-import type { User } from "@/interfaces/user"
-import { Toast, Alert } from '@/mixins/swal'
+const { VITE_URL } = import.meta.env;
+import format from "@/mixins/format";
+import { Toast, Alert } from "@/mixins/swal"
 
-import { useModalStore } from "@/stores/modalStore"
-import { useDateStore } from "@/stores/dateStore"
+import type { Order } from "@/interfaces/order";
+import type { Date } from "@/interfaces/order";
+
+interface User {
+  name: string,
+  phone: string,
+  email: string,
+}
 
 export const useOrderStore = defineStore('order', () => {
   const route = useRoute()
   const router = useRouter()
-  const modalStore = useModalStore()
-  const dateStore = useDateStore()
-
   const showOrderModal = ref<boolean>(false)
-
   const defaultOrder = {
     "roomId": "",
     "checkInDate": "",
@@ -34,19 +35,22 @@ export const useOrderStore = defineStore('order', () => {
       },
     }
   }
+
   // 前台-訂單格式
-  const tempOrder = ref<Order>({ ...defaultOrder })
-  const resetTempOrder = () => {
-    tempOrder.value = { ...defaultOrder }
-  }
-  const userInfo = ref<User>({})
+  const bookingDate = ref({ start: '', end: '' }) // 補typescript
+  const peopleNum = ref<number>(2)
+  const userInfo = ref<User>({ name: '', phone: '', email: '' })
   const selectDistrict = ref<string>("")
   const addressDetail = ref<string>("")
+  const tempOrder = ref<Order>({ ...defaultOrder })
 
   // 前台- 新增訂單
-  const createOrder = () => {
+  const createOrder = async () => {
     const orderForm = {
       roomId: route.params.id,
+      checkInDate: format.getLocalDateFormat(new Date(bookingDate.value.start)),
+      checkOutDate: format.getLocalDateFormat(new Date(bookingDate.value.end)),
+      peopleNum: peopleNum.value,
       userInfo: {
         name: userInfo.value.name,
         phone: userInfo.value.phone,
@@ -57,47 +61,59 @@ export const useOrderStore = defineStore('order', () => {
         }
       }
     }
-    tempOrder.value = orderForm
-    console.log(tempOrder.value)
 
-    // const url = `${VITE_URL}/api/v1/orders/`
-    // axios.post(url, tempOrder.value)
-    //   .then(res => {
-    //     console.log('createOrder 新增成功', res)
-    //     resetTempOrder()
-    //     Toast.fire({
-    //       title: '已建立訂單',
-    //       icon: 'success'
-    //     })
-    //     resetTempOrder()
-    //     router.push(`/booking-complete/${res.data.result._id}`)
-    //   })
-    //   .catch(err => {
-    //     console.log('createOrder 失敗', err)
-    //     Alert.fire({
-    //       title: '資料有誤，請稍後再試一次',
-    //       icon: 'error'
-    //     })
-    //   })
+    try {
+      const url = `${VITE_URL}/api/v1/orders/`
+      const res = await axios.post(url, orderForm)
+      console.log('createOrder 新增成功', res)
+      resetTempOrder()
+      cleanStorageData()
+      router.push(`/booking-complete/${res.data.result._id}`)
+      resetTempOrder()
+      Toast.fire({
+        title: '已建立訂單',
+        icon: 'success'
+      })
+    } catch (err) {
+      console.log('createOrder 失敗', err)
+      Alert.fire({
+        title: '資料有誤，請稍後再試一次',
+        icon: 'error'
+      })
+    }
+  }
+
+  // 清空格式
+  const resetTempOrder = () => {
+    tempOrder.value = { ...defaultOrder }
   }
 
   // 前台- 取得單一訂單
-  const order = ref({})
-  const getFrontOrder = () => {
-    console.log(route.params.id)
-    const url = `${VITE_URL}/api/v1/orders/${route.params.id}`
-    axios.get(url)
-      .then(res => {
-        console.log('getFrontOrder 取得單一資料', res)
-        order.value = res.data.result
-      })
-      .catch(err => {
-        console.log('getFrontOrder 失敗', err)
-      })
+  const order = ref()
+  const roomId = ref({})
+  const totalPrice = ref<number>(0)
+  const getFrontOrder = async () => {
+    try {
+      const url = `${VITE_URL}/api/v1/orders/${route.params.id}`
+      const res = await axios.get(url)
+      order.value = res.data.result
+      userInfo.value = res.data.result.userInfo
+      roomId.value = res.data.result.roomId
+      totalPrice.value = format.getNightNum(order.value.checkInDate, order.value.checkOutDate) * order.value.roomId.price
+      console.log('getFrontOrder 取得資料', order.value)
+    } catch (err) {
+      console.log('getFrontOrder 失敗', err)
+    }
   }
 
+  // const totalPrice = computed(async () => {
+    // const nightNum = await format.getNightNum(order.value.checkInDate, order.value.checkOutDate)
+    // return nightNum
+    // return roomId.value.price
+  // })
+
   // 前台- 取得所有訂單列表
-  const orderList = ref([])
+  const orderList = ref<Order[]>([])
   const getFrontOrders = () => {
     const url = `${VITE_URL}/api/v1/orders/`
     axios.get(url)
@@ -164,25 +180,56 @@ export const useOrderStore = defineStore('order', () => {
       })
   }
 
+
+  // 本地端儲存日期
+  const setStoragePeople = () => {
+    localStorage.setItem('storagePeople', peopleNum.value.toString())
+  }
+  // 取得本地端reserveDate
+  const getStorageData = () => {
+    const getDate = localStorage.getItem('storageDate')
+    const date = JSON.parse(getDate)
+    const people = localStorage.getItem('storagePeople')
+    console.log(date, people)
+    if (date && people) {
+      bookingDate.value = date
+      peopleNum.value = Number(people)
+    }
+    console.log(bookingDate.value, peopleNum.value)
+  }
+  // 刪除本地端所有資料
+  const cleanStorageData = () => {
+    localStorage.clear()
+  }
+
   return {
     showOrderModal,
-    
-    tempOrder,
+
+    bookingDate,
+    peopleNum,
     userInfo,
     selectDistrict,
     addressDetail,
+    tempOrder,
 
     // 前台
     createOrder,
     orderList,
     getFrontOrder,
     order,
+    roomId,
     getFrontOrders,
+    totalPrice,
     deleteFrontOrder,
 
     // 後台
     getOrders,
     editOrder,
     deleteOrder,
+
+    // Storage
+    setStoragePeople,
+    getStorageData,
+    cleanStorageData,
   }
 })

@@ -34,12 +34,12 @@ export const useDateStore = defineStore('dateStore', () => {
   }
 
   // 日期格式轉換 2024/01/01
-  const reserveDateRange = computed<{startDate: string, endDate: string}>(() => {
+  const reserveDateRange = computed<{ startDate: string, endDate: string }>(() => {
     const startDate = format.getLocalDateFormat(reserveDate.value.start)
     const endDate = format.getLocalDateFormat(reserveDate.value.end)
     return {
       startDate,
-      endDate      
+      endDate
     }
   })
 
@@ -47,20 +47,6 @@ export const useDateStore = defineStore('dateStore', () => {
   const sameDate = computed<boolean>(() => {
     return reserveDateRange.value.startDate === reserveDateRange.value.endDate
   })
-
-  // 儲存本地端reserveDate
-  const setStorageDate = () => {
-    localStorage.setItem('reserveDate', JSON.stringify(reserveDate.value))
-  }
-  // 取得本地端reserveDate
-  const getStorageDate = () => {
-    const bookingDate = localStorage.getItem('reserveDate')
-    return bookingDate
-  }
-  // 刪除本地端所有資料
-  const cleanStorageDate = () => {
-    localStorage.clear()
-  }
 
   // 計算夜晚數
   const nightNum = computed<number>(() => {
@@ -76,14 +62,18 @@ export const useDateStore = defineStore('dateStore', () => {
     return Math.ceil(rangeDate / (1000 * 60 * 60 * 24))
   })
 
+  // 儲存本地端reserveDate
+  const setStorageDate = () => {
+    localStorage.setItem('storageDate', JSON.stringify(reserveDate.value))
+  }
+
   return {
     reserveDate,
     resetDate,
     reserveDateRange,
     sameDate,
     nightNum,
+
     setStorageDate,
-    getStorageDate,
-    cleanStorageDate
   }
 })

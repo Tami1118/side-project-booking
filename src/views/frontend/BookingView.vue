@@ -13,6 +13,7 @@ const roomStore = useRoomStore();
 const { roomDetail, roomLayout } = storeToRefs(roomStore);
 const getFrontRoom = roomStore.getFrontRoom;
 
+
 // Booking
 import { useDateStore } from "@/stores/dateStore";
 const dateStore = useDateStore()
@@ -21,7 +22,9 @@ const { reserveDateRange } = storeToRefs(dateStore)
 // Order
 import { useOrderStore } from "@/stores/orderStore";
 const orderStore = useOrderStore();
+const { peopleNum, bookingDate } = storeToRefs(orderStore)
 const createOrder = orderStore.createOrder;
+const getStorageData = orderStore.getStorageData
 
 // Route
 import { useRoute } from "vue-router"
@@ -30,12 +33,13 @@ const route = useRoute()
 // Action
 onMounted(() => {
   getFrontRoom();
+  getStorageData();
 });
 </script>
 
 <template>
   <div class="bg-primary-10" v-if="roomDetail">
-    <div class="container mx-auto px-4 sm:px-0 py-10 lg:py-30">
+    <div class="container mx-auto px-4 xl:px-0 py-10 lg:py-30">
       <div class="lg:flex lg:justify-between gap-18">
 
         <div class="basis-full lg:basis-7/12 mb-10 lg:mb-0">
@@ -55,15 +59,15 @@ onMounted(() => {
               <div class="flex items-center">
                 <div>
                   <h3 class="title-deco ps-4 text-4 mb-2">訂房日期</h3>
-                  <p class="mb-2">入住：{{ $format.getTradDateFormat(reserveDateRange.startDate) }}</p>
-                  <p>退房：{{ $format.getTradDateFormat(reserveDateRange.endDate) }}</p>
+                  <p class="mb-2">入住：{{ $format.getTradDateFormat(bookingDate.start) }}</p>
+                  <p>退房：{{ $format.getTradDateFormat(bookingDate.end) }}</p>
                 </div>
                 <router-link :to="`/room/${route.params.id}`" class="underline ms-auto hover:text-primary-100">編輯</router-link>
               </div>
               <div class="flex items-center">
                 <div>
                   <h3 class="title-deco ps-4 text-4 mb-2">房客人數</h3>
-                  <p>{{ }}人</p>
+                  <p>{{ peopleNum }}人</p>
                 </div>
                 <router-link :to="`/room/${route.params.id}`" class="underline ms-auto hover:text-primary-100">編輯</router-link>
               </div>
