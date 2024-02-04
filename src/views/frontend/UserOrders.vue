@@ -15,7 +15,7 @@ const getFrontOrders = orderStore.getFrontOrders;
 
 
 
-// (左邊) 即將到來訂單
+// (左邊) 即將到來訂單(第一筆)
 // 1. 預設：顯示即將到來訂單最近一筆訂單
 // 2. 點擊右邊歷史訂單顯示於此
 // 3. 尚未過期顯示取消訂單，已過期則 disabled
@@ -26,7 +26,6 @@ const featureOrderList = computed(() => {
   const sortList = filterList.sort((a, b) => new Date(a.checkInDate) - new Date(b.checkInDate))
   return sortList
 })
-
 
 // (右邊) 歷史訂單
 // 1. 訂單排序
@@ -44,17 +43,16 @@ const historyOrderList = computed(() => {
 })
 
 
-
-
-// Test
-// const feaOrderList = () => {
-
-// }
-// const hisOrderList = () => {
-
-// }
-
-
+const featureOrder = ref([])
+const getfeatureOrderList = () => {
+  const today = new Date().setHours(15, 0, 0, 0)
+  const isStatus = orderList.value.filter(order => order.status === 0)
+  const filterList = isStatus.filter(order => new Date(order.checkInDate).getTime() > today)
+  const sortList = filterList.sort((a, b) => new Date(a.checkInDate) - new Date(b.checkInDate))
+  featureOrder.value = sortList
+  console.log('測試取得訂單',featureOrder.value)
+  // return featureOrder.value
+}
 
 
 // User
@@ -68,6 +66,7 @@ watch(isChecked, (n) => {
 
 onMounted(async () => {
   if (isChecked) await getFrontOrders();
+  await getfeatureOrderList()
 })
 
 
