@@ -9,7 +9,6 @@
             <!-- logo -->
             <router-link to="/" class="flex flex-col max-w-[196px] mb-10">
               <img src="/svg/logo-white.svg" alt="享樂酒店 Logo">
-              <img src="/svg/logo-white-en.svg" alt="享樂酒店 Logo">
             </router-link>
 
             <!-- media -->
@@ -61,9 +60,3 @@
     </div>
   </div>
 </template>
-
-<style lang="scss">
-span {
-  display: block;
-}
-</style>
