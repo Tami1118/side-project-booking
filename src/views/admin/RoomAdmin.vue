@@ -17,9 +17,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in roomData" :key="item.id" class="border-b border-neutral-40">
+        <tr v-for="item in roomData" :key="item._id" class="border-b border-neutral-40">
           <td class="p-2">
-            <img class="w-[80px] h-[80px] object-cover rounded-2" :src="item.imageUrl" :alt="item.name">
+            <img v-if="item.imageUrl" class="w-[80px] h-[80px] object-cover rounded-2" :src="item.imageUrl" :alt="item.name">
           </td>
           <td class="p-2">{{ item.name }}</td>
           <td class="p-2 text-center">{{ item.bedInfo }}</td>
@@ -50,6 +50,7 @@
       </tfoot>
     </table>
   </div>
+  {{ roomData[0] }}
   <RoomModal v-if="showRoomModal" />
 </template>
 

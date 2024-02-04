@@ -172,7 +172,17 @@ export const useRoomStore = defineStore('roomStore', () => {
   }
 
   // 後台-取得所有房型資料
-  const roomData = ref([])
+  interface Room {
+    _id: string;
+    name: string;
+    price: number;
+    maxPeople: number;
+    imageUrl: string;
+    description: string;
+    bedInfo: string;
+    areaInfo: string;
+  }
+  const roomData = ref<Room[]>([]);
   const getRooms = () => {
     const url = `${VITE_URL}/api/v1/admin/rooms/`
     axios.get(url)

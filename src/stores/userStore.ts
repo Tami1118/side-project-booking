@@ -266,24 +266,24 @@ export const useUserStore = defineStore('userStore', () => {
   }
 
   // forgot
-  const verifyEmail = async(email) => {
-    Swal.fire({
-      title: "請輸入您的Email",
-      input: "text",
-      inputAttributes: {
-        autocapitalize: "off"
-    },
-    confirmButtonText: "送出",
-    showLoaderOnConfirm: true,
-    preConfirm: async (email) => {
-      console.log(email)
-      generateEmailCode(email)
+  const verifyEmail = async () => {
+      Swal.fire({
+        title: "請輸入您的Email",
+        input: "text",
+        inputAttributes: {
+          autocapitalize: "off"
+      },
+      confirmButtonText: "送出",
+      showLoaderOnConfirm: true,
+      preConfirm: async (email: string) => {
+        console.log(email)
+        generateEmailCode(email)
 
-    },
-    allowOutsideClick: () => !Swal.isLoading()
-  })
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    })
   }
-  const generateEmailCode =async (email) => {
+  const generateEmailCode = async (email: string) => {
     const url = `${VITE_URL}/api/v1/verify/generateEmailCode`
     axios.post(url, email)
     .then(res => {

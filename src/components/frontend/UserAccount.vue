@@ -74,7 +74,6 @@ const editUserPass = userStore.editUserPass
 
 const handleData = () => {
   editUserData.value.userId = userInfo.value._id
-  editUserData.value.email = userInfo.value.email
   editUserData.value.name = userInfo.value.name
   editUserData.value.phone = userInfo.value.phone
   editUserData.value.birthday = userInfo.value.birthday
