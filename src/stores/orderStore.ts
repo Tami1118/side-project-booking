@@ -114,7 +114,7 @@ export const useOrderStore = defineStore('order', () => {
 
   // 前台- 取得所有訂單列表
   const orderList = ref<Order[]>([])
-  const getFrontOrders = () => {
+  const getFrontOrders = async () => {
     const url = `${VITE_URL}/api/v1/orders/`
     axios.get(url)
       .then(res => {

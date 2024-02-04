@@ -60,14 +60,23 @@ import { useUserStore } from "@/stores/userStore"
 const userStore = useUserStore()
 const { isChecked } = storeToRefs(userStore);
 
-watch(isChecked, (n) => {
-  if (n) getFrontOrders()
+// watch(orderList, (n) => {
+//   if (n) getfeatureOrderList()
+// });
+
+// onMounted(async () => {
+  // await getFrontOrders();
+  // getfeatureOrderList()
+// })
+
+watch(isChecked, async (n) => {
+  if (n) {
+    await getFrontOrders()
+    getfeatureOrderList()
+  }
 });
 
-onMounted(async () => {
-  if (isChecked) await getFrontOrders();
-  await getfeatureOrderList()
-})
+
 
 
 </script>
@@ -94,6 +103,7 @@ onMounted(async () => {
 
       <div class="flex flex-col lg:flex-row gap-10">
         <div class="basis-full lg:basis-7/12 bg-white rounded-[20px] p-4 lg:p-10 flex flex-col gap-6 lg:gap-10 h-fit duration-300">
+          {{ featureOrder }}
           <div v-if="!orderList" class="flex flex-col justify-center items-center py-12">
             <h2 class="mb-6 lg:mb-10 text-4 lg:text-6 me-auto">即將來的行程</h2>
             <p class="text-primary-100 lg:text-6 font-bold mb-6">尚未有即將到來的訂單</p>
