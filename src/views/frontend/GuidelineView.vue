@@ -235,7 +235,7 @@
 
       <div aria-label="address list">
         <h2 class="text-6 font-bold pb-2 mb-4 border-b">Address Select</h2>
-        <city-form></city-form>
+        <!-- <city-form></city-form> -->
       </div>
     </div>
     <!--
@@ -253,7 +253,7 @@
 
 <script setup lang="ts">
 import BookingDatePick from '@/components/widgets/BookingDatePick.vue'
-import CityForm from '@/components/widgets/CityForm.vue'
+// import CityForm from '@/components/widgets/CityForm.vue'
 import { ref, onMounted, watchEffect } from 'vue';
 
 const date = ref();
