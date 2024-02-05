@@ -1,8 +1,4 @@
 <script setup>
-import { ref } from "vue";
-import { banner } from "@/stores/homeStore"
-const bannerData = ref(banner)
-
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -11,6 +7,10 @@ const modules = [Pagination, Autoplay]
 const pagination = {
   clickable: true,
 }
+
+import { ref } from "vue";
+import { banner } from "@/stores/homeStore"
+const bannerData = ref(banner)
 </script>
 
 <template>

@@ -2,7 +2,7 @@
   <div class="bg-neutral">
     <div class="pt-20 pb-40">
       <div class="about-bg">
-        <div class="container mx-auto ps-10 pe-5 lg:p-0 flex justify-end">
+        <div class="container mx-auto ps-10 pe-5 xl:p-0 flex justify-end">
           <div class="translate-y-[80px] max-w-[1044px] about-content border border-white bg-gradient-to-b from-neutral-100/80 to-primary-100/80 backdrop-blur text-white p-6 lg:p-10">
             <div class="flex gap-10 items-center mb-10 lg:mb-20">
               <h2 class="text-8 lg:text-12 text-nowrap">關於<br>我們</h2>

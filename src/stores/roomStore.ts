@@ -157,11 +157,15 @@ export const useRoomStore = defineStore('roomStore', () => {
     }
   }
 
-  const getTaiwan = () => {
-    const url = "/api/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json";
-    axios.get(url).then(res => {
-      console.log('取得縣市資料',res)
-    })
+  // 取得縣市資料
+  const getTaiwan = async () => {
+    try {
+      const url = "/api/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json";
+      const res = await axios.get(url)
+      console.log('取得縣市資料', res)
+    } catch (err) {
+      console.log('getTailwan 失敗', err)
+    }
   }
 
   // 後台-房型格式
@@ -172,27 +176,16 @@ export const useRoomStore = defineStore('roomStore', () => {
   }
 
   // 後台-取得所有房型資料
-  // interface Room {
-  //   _id: string;
-  //   name: string;
-  //   price: number;
-  //   maxPeople: number;
-  //   imageUrl: string;
-  //   description: string;
-  //   bedInfo: string;
-  //   areaInfo: string;
-  // }
   const roomData = ref<Room[]>([]);
-  const getRooms = () => {
-    const url = `${VITE_URL}/api/v1/admin/rooms/`
-    axios.get(url)
-      .then((res) => {
-        console.log('getRooms 已取得房型列表', res)
-        roomData.value = res.data.result
-      })
-      .catch((err) => {
-        console.log('getRooms 失敗', err)
-      })
+  const getRooms = async () => {
+    try {
+      const url = `${VITE_URL}/api/v1/admin/rooms/`
+      const res = await axios.get(url)
+      roomData.value = res.data.result
+      console.log('getRooms 成功取得資料', roomData.value)
+    } catch (err) {
+      console.log('getRooms 失敗', err)
+    }
   }
 
   // 後台-新增房型資料
