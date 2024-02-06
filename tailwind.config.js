@@ -86,6 +86,8 @@ export default {
       },
       padding: {
         '30': '120px',
+        '40': '160px',
+        '50': '200px',
       },
       spacing: {
         '18': '72px',

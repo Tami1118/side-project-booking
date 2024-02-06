@@ -2,8 +2,8 @@
 import BannerView from "@/components/frontend/Home/BannerView.vue"
 import NewsView from "@/components/frontend/Home/NewsView.vue"
 import AboutView from "@/components/frontend/Home/AboutView.vue"
-import CulinaryView from "@/components/frontend/Home/CulinaryView.vue"
 import RoomView from "@/components/frontend/Home/RoomView.vue"
+import CulinaryView from "@/components/frontend/Home/CulinaryView.vue"
 import TrafictionView from "@/components/frontend/Home/TrafictionView.vue"
 </script>
 
@@ -12,8 +12,8 @@ import TrafictionView from "@/components/frontend/Home/TrafictionView.vue"
     <BannerView />
     <NewsView />
     <AboutView />
-    <CulinaryView />
     <RoomView />
+    <CulinaryView />
     <TrafictionView />
   </div>
 </template>

@@ -15,9 +15,14 @@ const bannerData = ref(banner)
 
 <template>
   <!-- lg: vw 1920  vh 1080  重寬調整(font-size, width, padding-x)
-       sm: vw 375   vh 812   重高調整(font-size, height, margin-y)
-   -->
-  <Swiper class="home-banner" :loop="true" :pagination="pagination" :modules="modules" :autoplay="{delay: 2000,disableOnInteraction: false}">
+       sm: vw 375   vh 812   重高調整(font-size, height, margin-y) -->
+  <Swiper class="home-banner"
+          :pagination="pagination"
+          :modules="modules"
+          :autoplay="{
+            delay: 2000,
+            disableOnInteraction: false}"
+          :loop="true">
     <SwiperSlide v-for="(item, key) in bannerData" :key="key">
       <div class="bg-neutral-100/60 text-white absolute top-0 left-0 w-full h-full px-5 lg:px-[4.166vw]">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-[4.926vh] lg:gap-0 h-full pt-[13.793vh]">
@@ -31,7 +36,7 @@ const bannerData = ref(banner)
           <div class="w-full lg:max-w-[48.125vw]">
             <div class="py-[4.926vh] lg:py-[8.888vh] rounded-[40px] lg:rounded-[80px] border-t-2 border-r-2 border-white bg-gradient-to-b from-white/0 to-primary-10/30 backdrop-blur-sm text-white ms-[10.133vw] lg:ms-auto">
               <div class="-translate-x-[10.133vw] lg:-translate-x-[2.5vw] w-fit">
-                <h2 class="text-12 lg:text-[5.208vw] font-bold mb-[2.22vh] sm:text-nowrap">高雄 <br>豪華住宿之選</h2>
+                <h2 class="text-12 lg:text-[5.208vw] font-bold mb-[2.22vh] sm:text-nowrap">高雄<br>豪華住宿之選</h2>
                 <p class="mb-[4.926vh] lg:mb-[5.555vh] lg:text-[1.6667vw]">我們致力於為您提供無與倫比的奢華體驗與優質服務</p>
                 <RouterLink to="/room" class="group rounded-2 bg-white p-5 lg:p-10 flex w-full items-center justify-end lg:text-6 font-bold text-neutral hover:bg-primary-100 hover:text-white duration-500">
                   立即訂房<span class="block ms-4 w-[80px] lg:w-[150px] group-hover:w-[60px] lg:group-hover:w-[120px] h-[1px] bg-neutral group-hover:bg-white duration-500"></span>

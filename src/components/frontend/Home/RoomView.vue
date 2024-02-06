@@ -28,7 +28,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="bg-neutral-100" v-if="roomList">
+  <div class="bg-neutral-100 overflow-hidden" v-if="roomList">
     <div class="container mx-auto py-20 lg:py-30 px-4 xl:px-0">
       <Swiper :navigation="navigation" :spaceBetween="30" :modules="modules" class="home-food-swiper">
         <SwiperSlide v-for="room in roomList" :key="room._id">
@@ -64,8 +64,6 @@ onMounted(async () => {
             <font-awesome-icon icon="fa-solid fa-arrow-right" class="text-primary-100" />
           </div>
         </div>
-
-
       </Swiper>
     </div>
   </div>

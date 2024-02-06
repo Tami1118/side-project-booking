@@ -1,9 +1,9 @@
 <template>
   <div class="bg-neutral">
-    <div class="pt-20 pb-40">
+    <div class="pt-20 lg:pt-30 pb-40 lg:pb-50">
       <div class="about-bg">
         <div class="container mx-auto ps-10 pe-5 xl:p-0 flex justify-end">
-          <div class="translate-y-[80px] max-w-[1044px] about-content border border-white bg-gradient-to-b from-neutral-100/80 to-primary-100/80 backdrop-blur text-white p-6 lg:p-10">
+          <div class="translate-y-[80px] max-w-[1044px] about-rounded border border-white bg-gradient-to-b from-neutral-100/80 to-primary-100/80 backdrop-blur text-white p-6 lg:p-10">
             <div class="flex gap-10 items-center mb-10 lg:mb-20">
               <h2 class="text-8 lg:text-12 text-nowrap">關於<br>我們</h2>
               <span class="block h-[2px] w-[160px] bg-white"></span>
@@ -25,10 +25,13 @@
 
 <style>
 .about-bg {
-  background: url("https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=2825&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D") no-repeat center / cover;
+  background-image: url("https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=2825&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
-.about-content {
+.about-rounded {
   border-radius: 40px 40px 0 40px;
 }
 </style>
