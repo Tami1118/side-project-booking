@@ -1,5 +1,6 @@
 <template>
   <div class="bg-primary-10">
+    <RoomsSwiper />
     <section class="container mx-auto px-4 py-10 lg:py-[168px]">
       <div class="flex flex-col">
         <h2 class="mb-10 lg:mb-20 text-8 lg:text-12 text-primary-100 order-1">各種房型，任您挑選</h2>
@@ -21,9 +22,9 @@
             <span class="block w-full h-[2px] bg-gradient-to-r from-primary-100"></span>
             <div class="py-[13.5px] flex justify-between items-center">
               <p class="text-primary-100 text-4 lg:text-6 font-bold">NT$ {{ item.price }}</p>
-              <router-link :to="`/room/${item._id}`">
+              <RouterLink :to="`/room/${item._id}`">
                 <span class="material-icons text-primary-100 text-6 block">arrow_forward</span>
-              </router-link>
+              </RouterLink>
             </div>
           </div>
         </div>
@@ -38,6 +39,7 @@ import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 
 // Components
+import RoomsSwiper from "@/components/frontend/RoomsSwiper.vue";
 import RoomImageSwiper from "@/components/frontend/RoomImageSwiper.vue";
 import RoomInfoBasic from "@/components/frontend/RoomInfoBasic.vue";
 
