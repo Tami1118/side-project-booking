@@ -7,11 +7,16 @@ import { storeToRefs } from "pinia";
 import { useUserStore } from "@/stores/userStore";
 const userStore = useUserStore();
 const { userStatus, userInfo } = storeToRefs(userStore);
-const checkUser = userStore.checkUser
-const getUser = userStore.getUser
-const logout = userStore.logout
+const checkUser = userStore.checkUser;
+const getUser = userStore.getUser;
+const logout = userStore.logout;
 
 const isMenu = ref(false);
+
+// Route
+// import { useRoute } from "vue-router";
+// const route = useRoute();
+// const pathName = route.path;
 
 // Action
 onMounted(() => {
@@ -21,12 +26,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <header class="sticky top-0 z-10">
+  <header class="fixed top-0 left-0 w-full z-10">
     <!-- 
       待辦：
       1. home and room 超過 vh-100 變化 background
      -->
-    <div class="bg-neutral-100">
+    <div>
       <div class="container mx-auto px-3 xl:px-0 py-4">
         <div class="flex items-center justify-between text-white">
           <router-link to="/" class="max-w-[109px] lg:max-w-[196px] duration-200">
@@ -36,7 +41,7 @@ onMounted(() => {
             <font-awesome-icon icon="fa-solid fa-bars" class="text-6" />
           </button>
           <div class="lg:block" :class="!isMenu ? 'hidden':''">
-            <div class="max-lg:fixed top-0 right-0 max-lg:w-full max-lg:h-full z-20 bg-neutral-100 flex justify-center items-center px-5 lg:p-0">
+            <div :class="{'bg-neutral': isMenu}" class="max-lg:fixed top-0 right-0 max-lg:w-full max-lg:h-full z-20 flex justify-center items-center px-5 lg:p-0">
               <div @click="isMenu = !isMenu" class="absolute top-0 right-0 p-5 group lg:hidden">
                 <button class="group-hover:text-primary-100"><font-awesome-icon icon="fa-solid fa-xmark" class="text-12" /></button>
               </div>

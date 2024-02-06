@@ -1,3 +1,4 @@
+// pagination
 .home-banner,
 .room-list-swiper,
 .home-room-swiper-content {
@@ -16,11 +17,29 @@
   }
 }
 
-.room-list-swiper {
+// navigation
+.room-list-swiper,
+.home-food-swiper {
   .swiper-button-next:after,
   .swiper-button-prev:after,
   .swiper-rtl .swiper-button-prev:after,
   .swiper-rtl .swiper-button-next:after {
     content: '';
+  }
+}
+
+.home-food-swiper {
+  
+  &-navigation{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    // display: flex;
+    justify-content: flex-end;
+    margin-bottom: 40px;
+    margin-right: 40px;
+  }
+  .swiper-button-prev{
+    order: 1;
   }
 }

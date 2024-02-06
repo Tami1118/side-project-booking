@@ -1,7 +1,8 @@
 <script setup>
+// Swiper
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
-import 'swiper/css/pagination';
+import 'swiper/css/mousewheel';
 
 import { ref } from "vue"
 import { supplyInfo } from "@/stores/homeStore"
