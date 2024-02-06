@@ -29,37 +29,105 @@
 
           <!-- step1 -->
           <div v-if="signupStep === 1">
-            <div class="flex flex-col gap-4">
-              <div class="flex flex-col gap-2">
-                <label for="user-email-signup" class="font-bold text-white">電子信箱</label>
-                <input type="email" id="user-email-signup" class="p-4 rounded-2" placeholder="請輸入電子信箱" v-model="signupData.email">
-              </div>
-              <div class="flex flex-col gap-2">
-                <label for="user-password" class="font-bold text-white">密碼</label>
-                <input type="password" id="user-password" class="p-4 rounded-2" placeholder="請輸入密碼" v-model="signupData.password">
-              </div>
-              <div class="flex flex-col gap-2">
-                <label for="user-password2" class="font-bold text-white">確認密碼</label>
-                <input type="password" id="user-password2" class="p-4 rounded-2" placeholder="請再輸入一次密碼" v-model="passwordConfirm">
-              </div>
+            <VForm  v-slot="{ errors }"
+              @submit="signupStep = 2">
+              <div class="flex flex-col gap-4">
+                <div class="flex flex-col gap-2">
+                  <label for="email" class="font-bold text-white">
+                    電子信箱
+                  </label>
+                  <VField
+                    name="email"
+                    id="email"
+                    type="email"
+                    rules="required|email"
+                    class="p-4 rounded-2"
+                    :class="{ 'is-invalid': errors['email'] }"
+                    placeholder="請輸入電子信箱"
+                    v-model="signupData.email"
+                  />
+                  <ErrorMessage class="invalid-feedback text-red-600" name="email"/>
+                </div>
 
 
+                <div class="flex flex-col gap-2">
+                  <label for="password" class="font-bold text-white">
+                    密碼
+                  </label>
+                  <VField
+                    name="密碼"
+                    id="password"
+                    type="password"
+                    rules="required|min:8"
+                    class="p-4 rounded-2"
+                    :class="{ 'is-invalid': errors['密碼'] }"
+                    placeholder="請輸入密碼"
+                    v-model="signupData.password"
+                    ref="password"
+                  />
+                  <ErrorMessage class="invalid-feedback text-red-600" name="密碼"/>
+                </div>
 
-            </div>
-            <div class="btn-primary font-bold btn text-center mt-10" @click="signupStep = 2">
-              下一步
-            </div>
+                <div class="flex flex-col gap-2">
+                  <label for="password2" class="font-bold text-white">
+                    確認密碼
+                  </label>
+                  <VField
+                    name="確認密碼"
+                    id="password2"
+                    type="password"
+                    rules="required|min:8|confirmed:@密碼"
+                    class="p-4 rounded-2"
+                    :class="{ 'is-invalid': errors['確認密碼'] }"
+                    placeholder="請再輸入一次密碼"
+                    v-model="passwordConfirm"
+                    data-vv-as="password"
+                  />
+                  <ErrorMessage class="invalid-feedback text-red-600" name="確認密碼"/>
+                </div>
+              </div>
+              <button 
+                class="btn-primary font-bold btn text-center mt-10" type="submit"
+              >
+                下一步
+              </button>
+            </VForm>
           </div>
           <!-- step2 -->
           <div v-if="signupStep === 2">
+            <VForm  v-slot="{ errors }"
+              @submit="signup()">
             <div class="flex flex-col gap-4">
               <div class="flex flex-col gap-2">
                 <label for="user-name" class="font-bold text-white">姓名</label>
-                <input type="text" id="user-name" class="p-4 rounded-2" placeholder="請輸入姓名" v-model="signupData.name">
+
+                <VField 
+                  name="姓名"
+                  type="text" 
+                  id="user-name" 
+                  rules="required|min:2"
+                  class="p-4 rounded-2" 
+                  :class="{ 'is-invalid': errors['姓名'] }"
+                  placeholder="請輸入姓名" 
+                  v-model="signupData.name"
+                />
+                <ErrorMessage class="invalid-feedback text-red-600" name="姓名"/>
               </div>
+
+
               <div class="flex flex-col gap-2">
                 <label for="user-phone" class="font-bold text-white">手機號碼</label>
-                <input type="phone" id="user-phone" class="p-4 rounded-2" placeholder="請輸入手機號碼" v-model="signupData.phone">
+                <VField 
+                  name="手機"
+                  type="phone" 
+                  id="user-phone" 
+                  rules="required|numeric"
+                  class="p-4 rounded-2" 
+                  :class="{ 'is-invalid': errors['手機'] }"
+                  placeholder="請輸入手機號碼" 
+                  v-model="signupData.phone"
+                />
+                <ErrorMessage class="invalid-feedback text-red-600" name="手機"/>
               </div>
 
               <DateSelect />
@@ -67,9 +135,10 @@
 
 
             </div>
-            <div class="btn-primary font-bold btn text-center mt-10" @click="signup()">
+            <button class="btn-primary font-bold btn text-center mt-10" type="submit">
               完成註冊
-            </div>
+            </button>
+            </VForm>
           </div>
 
 
