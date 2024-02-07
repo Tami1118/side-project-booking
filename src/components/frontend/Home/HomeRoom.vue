@@ -95,7 +95,7 @@ onMounted(async () => {
     left: 0;
     right: 0;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     margin-bottom: 34px;
 
     .swiper-button-prev,
