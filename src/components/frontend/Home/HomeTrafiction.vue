@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-neutral-100 text-white overflow-hidden">
+  <section class="bg-neutral text-white overflow-hidden">
     <div class="container mx-auto px-3 md:px-0 pt-20 md:pt-30 pb-10 md:pb-20">
       <div class="flex items-center gap-10 mb-10 md:mb-20">
         <h2 class="text-primary-100 text-8 md:text-12 font-bold">交通<br>方式</h2>
@@ -49,5 +49,5 @@
         </clipPath>
       </defs>
     </svg>
-  </div>
+  </section>
 </template>

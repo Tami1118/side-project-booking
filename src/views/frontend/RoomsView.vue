@@ -1,6 +1,6 @@
 <template>
   <div class="bg-primary-10">
-    <RoomsSwiper />
+    <RoomsBanner />
     <section class="container mx-auto px-4 py-10 lg:py-[168px]">
       <div class="flex flex-col">
         <h2 class="mb-10 lg:mb-20 text-8 lg:text-12 text-primary-100 order-1">各種房型，任您挑選</h2>
@@ -39,7 +39,7 @@ import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 
 // Components
-import RoomsSwiper from "@/components/frontend/RoomsSwiper.vue";
+import RoomsBanner from "@/components/frontend/RoomsBanner.vue";
 import RoomImageSwiper from "@/components/frontend/RoomImageSwiper.vue";
 import RoomInfoBasic from "@/components/frontend/RoomInfoBasic.vue";
 

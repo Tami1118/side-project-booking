@@ -11,7 +11,6 @@
 - TypeScript
 - Pinia 狀態管理
 - Vue Router 路由管理
-- Eslint 程式碼結構
 
 
 ## 專案套件

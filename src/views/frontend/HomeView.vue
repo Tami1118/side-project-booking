@@ -1,19 +1,19 @@
 <script setup>
-import BannerView from "@/components/frontend/Home/BannerView.vue"
-import NewsView from "@/components/frontend/Home/NewsView.vue"
-import AboutView from "@/components/frontend/Home/AboutView.vue"
-import RoomView from "@/components/frontend/Home/RoomView.vue"
-import CulinaryView from "@/components/frontend/Home/CulinaryView.vue"
-import TrafictionView from "@/components/frontend/Home/TrafictionView.vue"
+import HomeBanner from "@/components/frontend/Home/HomeBanner.vue"
+import HomeNews from "@/components/frontend/Home/HomeNews.vue"
+import HomeAbout from "@/components/frontend/Home/HomeAbout.vue"
+import HomeRoom from "@/components/frontend/Home/HomeRoom.vue"
+import HomeCulinary from "@/components/frontend/Home/HomeCulinary.vue"
+import HomeTrafiction from "@/components/frontend/Home/HomeTrafiction.vue"
 </script>
 
 <template>
   <div>
-    <BannerView />
-    <NewsView />
-    <AboutView />
-    <RoomView />
-    <CulinaryView />
-    <TrafictionView />
+    <HomeBanner />
+    <HomeNews />
+    <HomeAbout />
+    <HomeRoom />
+    <HomeCulinary />
+    <HomeTrafiction />
   </div>
 </template>

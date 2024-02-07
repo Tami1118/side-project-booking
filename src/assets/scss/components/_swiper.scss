@@ -19,7 +19,8 @@
 
 // navigation
 .room-list-swiper,
-.home-food-swiper {
+.home-food-swiper,
+.home-room-swiper-navigation {
   .swiper-button-next:after,
   .swiper-button-prev:after,
   .swiper-rtl .swiper-button-prev:after,
@@ -29,7 +30,6 @@
 }
 
 .home-food-swiper {
-  
   &-navigation{
     position: absolute;
     bottom: 0;

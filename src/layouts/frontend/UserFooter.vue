@@ -1,6 +1,6 @@
 <template>
   <!-- 可以複製前兩行 class -->
-  <div class="bg-neutral-100">
+  <div class="bg-neutral">
     <div class="container mx-auto px-4 lg:px-0">
 
       <div class="py-20 text-white">

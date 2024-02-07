@@ -1,11 +1,12 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue"
 import { news } from "@/stores/homeStore"
-const newsData = ref(news);
+import type { News } from "@/stores/homeStore"
+const newsData = ref<News[]>(news);
 </script>
 
 <template>
-  <div class="bg-primary-10">
+  <section class="bg-primary-10">
     <div class="container mx-auto px-3 xl:px-0 py-20 lg:py-30">
       <div class="flex flex-col lg:flex-row gap-10">
         <div class="w-full lg:w-2/12">
@@ -14,7 +15,7 @@ const newsData = ref(news);
         </div>
         <div class="w-full lg:w-10/12">
           <ul class="flex flex-col gap-10">
-            <li class="flex flex-col lg:flex-row gap-6 lg:items-center" v-for="(item, key) in newsData" :key="key">
+            <li class="flex flex-col lg:flex-row gap-6 lg:items-center" v-for="item in newsData" :key="item.id">
               <img :src="item.imageUrl" class="rounded-2 h-[291px] lg:w-[474px] object-cover w-full" :alt="item.title">
               <div>
                 <h3 class="text-7 lg:text-8 font-bold text-neutral-100 mb-2 lg:mb-6">{{ item.title }}</h3>
@@ -25,5 +26,5 @@ const newsData = ref(news);
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-neutral">
+  <section class="bg-neutral">
     <div class="pt-20 lg:pt-30 pb-40 lg:pb-50">
       <div class="about-bg">
         <div class="container mx-auto ps-10 pe-5 xl:p-0 flex justify-end">
@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <style>
