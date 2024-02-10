@@ -155,13 +155,17 @@
 </template>
 
 <script setup lang="ts">
-import LoginHeader from "@/layouts/frontend/LoginHeader.vue";
-import BgWave from '@/components/widgets/BgWave.vue'
+// Basic
+import { storeToRefs } from 'pinia';
+
+// Components
+import LoginHeader from "@/components/layouts/frontend/LoginHeader.vue"
+import BgWave from '@/assets/svg/BgWave.vue';
 import DateSelect from '@/components/widgets/DateSelect.vue'
 import CitySelect from '@/components/widgets/CitySelect.vue'
-import { storeToRefs } from 'pinia'
-import { useUserStore } from '@/stores/userStore'
 
+// User
+import { useUserStore } from '@/stores/userStore'
 const userStore = useUserStore()
 const { signupStep, signupData, passwordConfirm } = storeToRefs(userStore)
 const signup = userStore.signup

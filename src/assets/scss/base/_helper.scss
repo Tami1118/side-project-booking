@@ -22,14 +22,11 @@ $neutral-60 : '#909090';
 $neutral-40 : '#ECECEC';
 $neutral-10 : '#F9F9F9';
 
-.container-main {
-  @apply container mx-auto px-4 xl:px-0
-}
-
 .font-Noto{
   font-family: 'Noto Serif TC', 'serif', 'Comfortaa', 'sans-serif';
 }
 
+// 標題樣式
 .title-deco {
   position: relative;
 
@@ -45,5 +42,17 @@ $neutral-10 : '#F9F9F9';
     height: 24px;
     background: #bf9d7d;
     border-radius: 10px;
+  }
+}
+
+// 行數限制
+.ellipsis {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  
+  @media (min-width: 677px) {
+    -webkit-line-clamp: 3;
   }
 }

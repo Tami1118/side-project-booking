@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue"
-import { news } from "@/stores/homeStore"
-import type { News } from "@/stores/homeStore"
+import { ref } from "vue";
+import { news } from "@/stores/homeStore";
+import type { News } from "@/stores/homeStore";
 const newsData = ref<News[]>(news);
 </script>
 

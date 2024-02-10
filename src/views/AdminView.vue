@@ -12,7 +12,7 @@ import { onMounted } from "vue";
 import { RouterView } from "vue-router";
 
 // Components
-import AdminHeader from "@/layouts/admin/AdminHeader.vue";
+import AdminHeader from "@/components/layouts/admin/AdminHeader.vue";
 
 // User
 import { useUserStore } from "@/stores/userStore";

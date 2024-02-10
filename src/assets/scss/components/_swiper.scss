@@ -28,18 +28,3 @@
     content: '';
   }
 }
-
-.home-food-swiper {
-  &-navigation{
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    // display: flex;
-    justify-content: flex-end;
-    margin-bottom: 40px;
-    margin-right: 40px;
-  }
-  .swiper-button-prev{
-    order: 1;
-  }
-}

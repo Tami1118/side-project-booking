@@ -1,3 +1,47 @@
+<script setup lang="ts">
+// Basic
+import { watch, onMounted } from "vue";
+import { storeToRefs } from'pinia';
+
+// Components
+import LoginHeader from "@/components/layouts/frontend/LoginHeader.vue";
+import BgWave from '@/assets/svg/BgWave.vue';
+
+// User
+import { useUserStore } from '@/stores/userStore';
+const userStore = useUserStore()
+const { loginData, rememberMe } = storeToRefs(userStore)
+const login = userStore.login
+const verifyEmail = userStore.verifyEmail
+
+watch(rememberMe, (value) => {
+  console.log(value)
+  if (value) {
+    localStorage.setItem('rememberMe_email', JSON.stringify(loginData.value.email))
+    localStorage.setItem('rememberMe', JSON.stringify(true))
+  } else {
+    localStorage.setItem('rememberMe', JSON.stringify(false))
+  }
+})
+
+watch(loginData, () => {
+  localStorage.setItem('rememberMe_email', JSON.stringify(loginData.value.email))
+}, {deep: true})
+
+onMounted(() => {
+  const rememberMeValue = localStorage.getItem('rememberMe');
+  if (rememberMeValue !== null) {
+    rememberMe.value = JSON.parse(rememberMeValue);
+  }
+  if (rememberMe.value) {
+    const rememberMeEmail = localStorage.getItem('rememberMe_email');
+    if (rememberMeEmail !== null) {
+      loginData.value.email = JSON.parse(rememberMeEmail);
+    }
+  }
+})
+</script>
+
 <template>
   <LoginHeader />
   <div class="grid grid-cols-1 md:grid-cols-2 bg-neutral-100 h-screen">
@@ -75,41 +119,3 @@
   </div>
 
 </template>
-
-<script setup lang="ts">
-import LoginHeader from "@/layouts/frontend/LoginHeader.vue";
-import BgWave from '@/components/widgets/BgWave.vue'
-import { watch, onMounted } from "vue";
-import { storeToRefs } from'pinia';
-import { useUserStore } from '@/stores/userStore';
-
-const userStore = useUserStore()
-const { loginData, rememberMe } = storeToRefs(userStore)
-const login = userStore.login
-const verifyEmail = userStore.verifyEmail
-
-watch(rememberMe, (value) => {
-  console.log(value)
-  if (value) {
-    localStorage.setItem('rememberMe_email', JSON.stringify(loginData.value.email))
-    localStorage.setItem('rememberMe', JSON.stringify(true))
-  } else {
-    localStorage.setItem('rememberMe', JSON.stringify(false))
-  }
-})
-watch(loginData, () => {
-  localStorage.setItem('rememberMe_email', JSON.stringify(loginData.value.email))
-}, {deep: true})
-onMounted(() => {
-  const rememberMeValue = localStorage.getItem('rememberMe');
-  if (rememberMeValue !== null) {
-    rememberMe.value = JSON.parse(rememberMeValue);
-  }
-  if (rememberMe.value) {
-    const rememberMeEmail = localStorage.getItem('rememberMe_email');
-    if (rememberMeEmail !== null) {
-      loginData.value.email = JSON.parse(rememberMeEmail);
-    }
-  }
-})
-</script>

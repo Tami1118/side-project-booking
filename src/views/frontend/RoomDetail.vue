@@ -40,7 +40,6 @@ import { useRoute, useRouter } from "vue-router"
 const route = useRoute()
 const router = useRouter()
 
-// Action
 onMounted(() => {
   getFrontRoom()
 })
@@ -114,9 +113,7 @@ onMounted(() => {
                   </div>
                 </div>
               </div>
-              <!-- <p class="text-primary-100 text-6 font-bold">NT$ {{ $format.toThousands(roomDetail.price * nightNum) }}</p> -->
               <button @click="setStoragePeople(), setStorageDate(), router.push(`/booking/${route.params.id}`)" class="btn btn-primary disabled:bg-neutral-40" :disabled="sameDate">立即預訂</button>
-              <!-- <button @click="setPeopleNum">人數</button> -->
             </div>
           </div>
         </div>

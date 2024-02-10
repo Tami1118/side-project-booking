@@ -1,0 +1,11 @@
+.home-container{
+  @media (min-width: 1024px) {
+    width: calc((100vw - 1024px)/2 + 1024px);
+  }
+  @media (min-width: 1280px) {
+    width: calc((100vw - 1280px)/2 + 1280px);
+  }
+  @media (min-width: 1536px) {
+    width: calc((100vw - 1536px)/2 + 1536px);
+  }
+}

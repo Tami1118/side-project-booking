@@ -7,18 +7,18 @@ import { Pagination, Navigation, Autoplay } from "swiper/modules";
 const modules = [Pagination, Navigation, Autoplay]
 const pagination = {
   clickable: true,
-}
+};
 const navigation = {
   nextEl: '.swiper-button-next',
   prevEl: '.swiper-button-prev',
-}
+};
 
-import { onMounted } from "vue"
+import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
-import { useRoomStore } from "@/stores/roomStore"
-const roomStore = useRoomStore()
-const { roomList } = storeToRefs(roomStore)
-const getFrontRooms = roomStore.getFrontRooms
+import { useRoomStore } from "@/stores/roomStore";
+const roomStore = useRoomStore();
+const { roomList } = storeToRefs(roomStore);
+const getFrontRooms = roomStore.getFrontRooms;
 
 onMounted(async () => {
   await getFrontRooms()
@@ -59,7 +59,6 @@ onMounted(async () => {
                 <p class="text-3h lg:text-4">{{ room.description }}</p>
               </div>
               <p class="text-6 lg:text-8 font-bold">NT$ {{ room.price }}</p>
-
               <RouterLink :to="`/room/${room._id}`" class="flex flex-col gap-4">
                 <button type="button" class="group rounded-2 bg-white p-5 lg:p-10 flex items-center justify-end text-6 font-bold text-neutral hover:bg-primary-100 hover:text-white duration-500">
                   立即訂房
@@ -75,19 +74,6 @@ onMounted(async () => {
 </template>
 
 <style lang="scss">
-.home-container{
-  @media (min-width: 1024px) {
-    width: calc((100vw - 1024px)/2 + 1024px);
-  }
-  @media (min-width: 1280px) {
-    width: calc((100vw - 1280px)/2 + 1280px);
-  }
-  @media (min-width: 1536px) {
-    width: calc((100vw - 1536px)/2 + 1536px);
-  }
-}
-
-
 .home-room-swiper{
   &-navigation{
     position: absolute;

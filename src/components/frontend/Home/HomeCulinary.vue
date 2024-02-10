@@ -45,15 +45,17 @@ const culinary = ref<SupplyInfo[]>(supplyInfo)
 <style lang="scss">
 .home-food-swiper {
   overflow: visible;
-}
-.ellipsis {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  overflow: hidden;
-  
-  @media (min-width: 677px) {
-    -webkit-line-clamp: 3;
+
+  &-navigation{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    justify-content: flex-end;
+    margin-bottom: 40px;
+    margin-right: 40px;
+  }
+  .swiper-button-prev{
+    order: 1;
   }
 }
 </style>

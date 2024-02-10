@@ -3,14 +3,14 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper/modules";
-const modules = [Pagination, Autoplay]
+const modules = [Pagination, Autoplay];
 const pagination = {
   clickable: true,
-}
+};
 
 import { ref } from "vue";
-import { banner } from "@/stores/homeStore"
-const bannerData = ref<string[]>(banner)
+import { banner } from "@/stores/homeStore";
+const bannerData = ref<string[]>(banner);
 </script>
 
 <template>
@@ -19,13 +19,13 @@ const bannerData = ref<string[]>(banner)
   <section>
     <Swiper class="home-banner h-screen"
             :pagination="pagination"
-            :modules="modules"
             :autoplay="{
               delay: 2000,
               disableOnInteraction: false}"
+            :modules="modules"
             :loop="true">
       <SwiperSlide v-for="(item, key) in bannerData" :key="key">
-        <div class="bg-neutral-100/60 text-white absolute top-0 left-0 w-full h-full px-5 lg:px-[4.166vw]">
+        <div class="bg-neutral-100/60 absolute top-0 left-0 w-full h-full px-5 lg:px-[4.166vw]">
           <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-[4.926vh] lg:gap-0 h-full pt-[13.793vh]">
             <div class="w-full lg:max-w-[33.125vw]">
               <div class="flex flex-col items-center lg:items-start" style="color: #be9c7c">
