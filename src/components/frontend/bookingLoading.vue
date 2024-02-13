@@ -10,7 +10,6 @@
           </div>
           <div class="w-[144px] mb-4">
             <img class="mb-[5.88px]" src="/svg/logo-primary.svg" alt="享樂飯店 Logo">
-            <img src="/svg/logo-primary-en.svg" alt="享樂飯店 Logo">
           </div>
           <p class="text-6 font-bold">正在處理你的預定</p>
         </div>

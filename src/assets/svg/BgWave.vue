@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute top-0 left-0 pt-8 md:pt-18">
+  <div class="pt-8 md:pt-18">
     <svg class="max-[374px]:hidden" width="960" height="187" viewBox="0 0 960 187" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clip-path="url(#clip0_256_6769)">
         <path d="M1118.15 182.834C1074.15 188.495 956.35 193.23 837.097 166.879C688.031 133.94 559.928 94.8258 347.975 112.324C136.022 129.823 57.6065 151.439 -99.9996 131.882" stroke="#BF9D7D" stroke-opacity="0.4" />

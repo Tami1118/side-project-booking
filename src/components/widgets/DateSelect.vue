@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label for="birthdate" class="form-label text-white">生日</label>
+    <label for="birthdate" class="form-label">生日</label>
     <div class="flex gap-2">
       <select v-model="birthdate.year" class="form-input" @change="updateDays">
         <option v-for="year in Array.from({ length: new Date().getFullYear() - 1899 }, (_, index) => index + 1900).reverse()" :key="year" :value="year">{{ year }} 年</option>

@@ -49,9 +49,9 @@ onMounted(() => {
       <img class="h-screen w-full object-cover object-center overflow-hidden" src="../assets/images/desktop/register.png" />
     </div>
     <div class="col relative overflow-hidden">
-      <BgWave/>
+      <BgWave />
 
-      <div class="h-full flex justify-center items-center px-5 lg:px-0">
+      <div class="absolute top-0 bottom-0 left-0 w-full h-full flex justify-center items-center px-5 lg:px-0 z-100">
         <div class="basis-full lg:basis-1/2 flex flex-col gap-10 duration-300">
           <div class="text-bold z-10">
             <div class="text-primary-100 font-bold text-3h md:text-4 mb-2">享樂酒店，誠摯歡迎</div>
@@ -115,6 +115,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
+      
     </div>
   </div>
 

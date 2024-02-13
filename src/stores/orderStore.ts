@@ -37,13 +37,13 @@ export const useOrderStore = defineStore('order', () => {
   }
 
   // 前台-訂單格式
+  const tempOrder = ref<Order>({ ...defaultOrder })
   const bookingDate = ref({ start: '', end: '' }) // 補typescript
   const peopleNum = ref<number>(2)
   const userInfo = ref<User>({ name: '', phone: '', email: '' })
   const selectDistrict = ref<string>("")
   const addressDetail = ref<string>("")
-  const tempOrder = ref<Order>({ ...defaultOrder })
-
+  const isLoading = ref<boolean>(false)
   // 前台- 新增訂單
   const createOrder = async () => {
     const orderForm = {
@@ -63,13 +63,14 @@ export const useOrderStore = defineStore('order', () => {
     }
 
     try {
+      isLoading.value = true
       const url = `${VITE_URL}/api/v1/orders/`
       const res = await axios.post(url, orderForm)
+      isLoading.value = false
       console.log('createOrder 新增成功', res)
-      resetTempOrder()
       cleanStorageData()
-      router.push(`/booking-complete/${res.data.result._id}`)
       resetTempOrder()
+      router.push(`/booking-complete/${res.data.result._id}`)
       Toast.fire({
         title: '已建立訂單',
         icon: 'success'
@@ -85,7 +86,21 @@ export const useOrderStore = defineStore('order', () => {
 
   // 清空格式
   const resetTempOrder = () => {
-    tempOrder.value = { ...defaultOrder }
+    tempOrder.value = {
+      "roomId": "",
+      "checkInDate": "",
+      "checkOutDate": "",
+      "peopleNum": 0,
+      "userInfo": {
+        "name": "",
+        "phone": "",
+        "email": "",
+        "address": {
+          "zipcode": 0,
+          "detail": ""
+        },
+      }
+    }
   }
 
   // 前台- 取得單一訂單
@@ -113,7 +128,7 @@ export const useOrderStore = defineStore('order', () => {
   // })
 
   // 前台- 取得所有訂單列表
-  const orderList = ref<Orders[]|null>(null)
+  const orderList = ref<Orders[] | null>(null)
   const getFrontOrders = async () => {
     try {
       const url = `${VITE_URL}/api/v1/orders/`
@@ -194,7 +209,7 @@ export const useOrderStore = defineStore('order', () => {
   }
   // 取得本地端reserveDate
   const getStorageData = () => {
-    const getDate:any = localStorage.getItem('storageDate')
+    const getDate: any = localStorage.getItem('storageDate')
     const date = JSON.parse(getDate)
     const people = localStorage.getItem('storagePeople')
     console.log(date, people)
@@ -208,7 +223,7 @@ export const useOrderStore = defineStore('order', () => {
   const cleanStorageData = () => {
     localStorage.clear()
   }
-  
+
   const onSubmit = () => {
     console.log('123')
   }
@@ -222,6 +237,7 @@ export const useOrderStore = defineStore('order', () => {
     selectDistrict,
     addressDetail,
     tempOrder,
+    isLoading,
 
     // 前台
     createOrder,

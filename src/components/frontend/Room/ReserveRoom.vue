@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
+
 import BookingDatePick from "@/components/widgets/BookingDatePick.vue";
 
-const props = defineProps(["info"]);
+const { info } = defineProps(["info"]);
 
 // 預定日期
 import { useDateStore } from "@/stores/dateStore";
@@ -32,8 +33,8 @@ const router = useRouter();
     <!-- 房型資訊 -->
     <h2 class="text-6 text-black font-bold pb-4 border-b border-neutral-40">預定房型</h2>
     <div>
-      <p class="text-10 font-bold text-black mb-2">{{ props.info.name }}</p>
-      <p class="font-500">{{ props.info.description }}</p>
+      <p class="text-10 font-bold text-black mb-2">{{ info.name }}</p>
+      <p class="font-500">{{ info.description }}</p>
     </div>
 
     <!-- 預約日期選擇 -->
@@ -58,16 +59,16 @@ const router = useRouter();
             <font-awesome-icon icon="fa-solid fa-minus" class="group-hover:text-white group-active:text-white group-disabled:text-black" />
           </button>
           <input type="number" v-model="peopleNum" class="w-[48px] mx-4 text-center text-5 bg-white" disabled>
-          <button class="group rounded-full w-[56px] aspect-square p-4 border border-neutral-40 hover:bg-primary-100 active:bg-primary disabled:bg-neutral-10" @click="peopleNum++" :disabled="peopleNum === props.info?.maxPeople">
+          <button class="group rounded-full w-[56px] aspect-square p-4 border border-neutral-40 hover:bg-primary-100 active:bg-primary disabled:bg-neutral-10" @click="peopleNum++" :disabled="peopleNum === info?.maxPeople">
             <font-awesome-icon icon="fa-solid fa-plus" class="group-hover:text-white group-active:text-white group-disabled:text-black" />
           </button>
         </div>
-        <p v-if="peopleNum === props.info?.maxPeople" class="text-alert-120 text-center">房間最多 {{ props.info?.maxPeople }} 人</p>
+        <p v-if="peopleNum === info?.maxPeople" class="text-alert-120 text-center">房間最多 {{ info?.maxPeople }} 人</p>
       </div>
     </div>
 
     <!-- 金額小計 -->
-    <div class="text-6 text-primary-100 font-bold">NT$ {{ nightNum * props.info?.price }}</div>
+    <div class="text-6 text-primary-100 font-bold">NT$ {{ nightNum * info?.price }}</div>
 
     <button @click="setStoragePeople(), setStorageDate(), router.push(`/booking/${route.params.id}`)" class="btn btn-primary disabled:bg-neutral-40" :disabled="sameDate">立即預訂</button>
   </div>

@@ -111,7 +111,6 @@ const router = createRouter({
 
 router.beforeEach((to) => {
   document.title = `${to.meta.title}-享樂酒店` || '享樂酒店';
-  // next()
 })
 
 export default router

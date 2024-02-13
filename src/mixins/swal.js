@@ -20,7 +20,6 @@ const Alert = Swal.mixin({
   confirmButtonColor: '#be0e3d',
 })
 
-
 export {
   Toast,
   Alert,

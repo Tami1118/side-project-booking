@@ -1,9 +1,7 @@
 <script setup lang="ts">
-// Basic
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 
-// Components
 import RoomDetailImageSwiper from "@/components/frontend/RoomDetailImageSwiper.vue";
 import RoomDetailBanner from "@/components/frontend/RoomDetailBanner.vue";
 import RoomInfoMain from "@/components/frontend/RoomInfoMain.vue";
@@ -16,7 +14,7 @@ const { roomDetail, roomLayout } = storeToRefs(roomStore);
 const getFrontRoom = roomStore.getFrontRoom;
 
 onMounted(() => {
-  getFrontRoom()
+  getFrontRoom();
 })
 </script>
 

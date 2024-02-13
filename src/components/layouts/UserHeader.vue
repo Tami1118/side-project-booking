@@ -31,9 +31,9 @@ const { isScroll } = useScrollBackground();
 
 // Action
 onMounted(() => {
-  getPath()
   checkUser()
   getUser()
+  getPath()
 })
 </script>
 
@@ -48,7 +48,7 @@ onMounted(() => {
           <font-awesome-icon icon="fa-solid fa-bars" class="text-6" />
         </button>
         <div class="lg:block" :class="!isMenu ? 'hidden' : ''">
-          <div :class="{ 'bg-neutral': isMenu }" class="max-lg:fixed top-0 right-0 max-lg:w-full max-lg:h-full z-20 flex justify-center items-center px-5 lg:p-0">
+          <div class="max-lg:fixed top-0 right-0 max-lg:w-full max-lg:h-full bg-neutral lg:bg-transparent z-20 flex justify-center items-center px-5 lg:p-0">
             <div @click="isMenu = !isMenu" class="absolute top-0 right-0 p-5 group lg:hidden">
               <button class="group-hover:text-primary-100"><font-awesome-icon icon="fa-solid fa-xmark" class="text-12" /></button>
             </div>
@@ -57,9 +57,9 @@ onMounted(() => {
               <li class="group"><router-link to="/room" @click="isMenu = false" class="block text-center p-4 group-hover:text-primary-100">房客旅宿</router-link></li>
               <li v-if="!userStatus" class="group"><router-link to="/login" @click="isMenu = false" class="block text-center p-4 group-hover:text-primary-100">會員登入</router-link></li>
               <li v-else class="group hidden lg:block relative">
-                <router-link to="/user" @click="isMenu = false" class="block text-center p-4 group-hover:text-primary-100">
+                <button @click="isMenu = false" class="block text-center p-4 group-hover:text-primary-100">
                   <font-awesome-icon icon="fa-regular fa-circle-user" class="me-2" /> {{ userInfo.name }}
-                </router-link>
+                </button>
                 <ul class="hidden md:group-hover:flex flex-col absolute top-100 right-0 w-[260px] bg-white py-3 rounded-5 overflow-hidden">
                   <li><router-link to="/user" class="block py-4 px-8 text-nowrap hover:bg-primary-10 text-neutral-80 hover:text-primary-100">我的訂單</router-link></li>
                   <li><button class="w-full py-4 px-8 text-nowrap text-start hover:bg-primary-10 text-neutral-80 hover:text-primary-100" @click="logout()">帳戶登出</button></li>

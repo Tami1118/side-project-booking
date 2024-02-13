@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps(["imageList"])
+const { imageList } = defineProps(["imageList"])
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
@@ -12,7 +12,7 @@ const modules = [Pagination];
   <swiper :pagination="true"
           :modules="modules"
           class="room-list-swiper h-[250px] md:h-[500px] duration-300">
-    <swiper-slide class="h-full" v-for="item in props.imageList" :key="item">
+    <swiper-slide class="h-full" v-for="item in imageList" :key="item">
       <img :src="item" class="w-full h-full object-cover" alt="Room Image">
     </swiper-slide>
   </swiper>

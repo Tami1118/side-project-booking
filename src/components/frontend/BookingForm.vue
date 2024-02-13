@@ -1,10 +1,8 @@
 <script setup lang="ts">
-// Basic
 import { storeToRefs } from "pinia";
 import axios from "axios";
 const { VITE_URL } = import.meta.env;
 
-// Components
 import AddressForm from "@/components/widgets/AddressForm.vue";
 
 // Order-使用者資訊

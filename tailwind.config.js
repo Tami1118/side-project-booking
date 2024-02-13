@@ -51,7 +51,6 @@ export default {
         'neutral-40': '#ECECEC',
         'neutral-10': '#F9F9F9',
       },
-
       fontSize: {
         '3':  '12px',
         '3h': '14px',

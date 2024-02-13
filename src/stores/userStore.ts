@@ -71,7 +71,7 @@ export const useUserStore = defineStore('userStore', () => {
           icon: 'success',
           title: '登入成功'
         })
-        router.push('/')
+        router.go(-1)
       })
       .catch(err => {
         console.log('login 失敗',err)
@@ -85,7 +85,7 @@ export const useUserStore = defineStore('userStore', () => {
   // logout
   const logout = () => {
     document.cookie = `typescript=""`
-    userStatus.value = false
+    isChecked.value = false
     router.push('/')
   }
   // signup
@@ -150,14 +150,15 @@ export const useUserStore = defineStore('userStore', () => {
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)typescript\s*=\s*([^;]*).*$)|^.*$/, "$1");
     axios.defaults.headers.common["Authorization"] = token;
     const url = `${VITE_URL}/api/v1/user/check`
-    axios.get(url)
-      .then(res => {
-        console.log('checkUser 驗證成功', res)
-        isChecked.value = true
-      })
-      .catch(err => {
-        console.log('checkUser 驗證失敗', err)
-      })
+    try {
+      const res = await axios.get(url);
+      isChecked.value = res.data.status;
+      console.log('checkUser 驗證成功', isChecked.value);
+      console.log(res)
+    } catch (err) {
+      isChecked.value = false;
+      console.log('checkUser 驗證失敗', isChecked.value);
+    }
   }
   // edit
   const editUserData = ref<EditUserData>({
@@ -183,10 +184,12 @@ export const useUserStore = defineStore('userStore', () => {
         console.log('getUser 成功', res)
         userInfo.value = res.data.result
         userStatus.value = res.data.status
+        console.log(userStatus.value)
       })
       .catch(err => {
         console.log('getUser 失敗', err)
-        
+        userStatus.value = err.response.data.status
+        console.log(userStatus.value)
       })
   }
   const editUserPass = async () => {

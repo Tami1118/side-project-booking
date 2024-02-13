@@ -1,9 +1,7 @@
 <script setup lang="ts">
-// Basic
 import { ref, watch, onMounted } from "vue"
-const props = defineProps(["info", "layout"])
+const { info, layout } = defineProps(["info", "layout"]);
 
-// Components
 import RoomInfoTitle from "@/components/frontend/RoomInfoTitle.vue";
 import RoomInfoBasic from "@/components/frontend/RoomInfoBasic.vue";
 import RoomInfoProvide from "@/components/frontend/RoomInfoProvide.vue";
@@ -17,7 +15,7 @@ const routeName = ref<any>('');
 const getRouteName = () => {
   routeName.value = route.name !== null && route.name !== undefined ? route.name : '';
 }
-
+// 取得當下最新route.name，不需等到變化時才取得值
 watch(() => route.name, () => {
   getRouteName();
 });
@@ -30,19 +28,19 @@ onMounted(() => {
 <template>
   <div>
     <RoomInfoTitle title="房型基本資訊" />
-    <RoomInfoBasic :info="props.info" />
+    <RoomInfoBasic :info="info" />
   </div>
   <div>
     <RoomInfoTitle title="房間格局" />
-    <RoomInfoProvide :info="props.layout" />
+    <RoomInfoProvide :info="layout" />
   </div>
   <div>
     <RoomInfoTitle title="房內設備" />
-    <RoomInfoProvide :info="props.info.facilityInfo" />
+    <RoomInfoProvide :info="info.facilityInfo" />
   </div>
   <div>
     <RoomInfoTitle title="備品提供" />
-    <RoomInfoProvide :info="props.info.amenityInfo" />
+    <RoomInfoProvide :info="info.amenityInfo" />
   </div>
   <div :class="routeName !== 'room-detail'? 'hidden':''">
     <RoomInfoTitle title="訂房須知" />

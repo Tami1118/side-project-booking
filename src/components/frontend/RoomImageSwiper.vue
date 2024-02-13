@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps(["images"])
+const { images } = defineProps(["images"])
 
 // Swiper
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -20,7 +20,7 @@ const modules = [Pagination, Navigation];
           :loop="true"
           :modules="modules">
 
-    <div class="hidden lg:block">
+          <div class="hidden lg:block">
       <div class="swiper-button-prev bg-white text-block group" style="height: 56px; width: 56px; border-radius: 100%">
         <span class="material-icons text-black group-hover:text-primary-100">keyboard_arrow_left</span>
       </div>
@@ -29,7 +29,7 @@ const modules = [Pagination, Navigation];
       </div>
     </div>
 
-    <swiper-slide v-for="image in props.images" :key="image">
+    <swiper-slide v-for="image in images" :key="image">
       <img class="object-cover h-full w-full" :src="image" alt="room img">
     </swiper-slide>
   </swiper>
