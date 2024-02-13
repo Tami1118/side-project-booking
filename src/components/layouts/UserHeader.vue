@@ -39,7 +39,7 @@ onMounted(() => {
 
 <template>
   <header class="top-0 left-0 w-full z-10 duration-800" :class="{ 'fixed': pathName === '/' || pathName === '/room', 'sticky bg-neutral': pathName !== '/' && pathName !== '/room', 'bg-neutral': isScroll }">
-    <div class="container mx-auto px-3 xl:px-0 py-4">
+    <div class="max-w-[1860px] mx-auto px-3 py-4">
       <div class="flex items-center justify-between text-white">
         <router-link to="/" class="max-w-[109px] lg:max-w-[196px] duration-200">
           <img src="/svg/logo-white.svg" alt="享樂飯店 Logo">

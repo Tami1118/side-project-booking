@@ -42,11 +42,11 @@
                     type="email"
                     rules="required|email"
                     class="p-4 rounded-2"
-                    :class="{ 'is-invalid': errors['email'] }"
+                    :class="{ 'border border-red-600': errors['email'] }"
                     placeholder="請輸入電子信箱"
                     v-model="signupData.email"
                   />
-                  <ErrorMessage class="invalid-feedback text-red-600" name="email"/>
+                  <ErrorMessage class="text-red-600" name="email"/>
                 </div>
 
 
@@ -60,12 +60,12 @@
                     type="password"
                     rules="required|min:8"
                     class="p-4 rounded-2"
-                    :class="{ 'is-invalid': errors['密碼'] }"
+                    :class="{ 'border border-red-600': errors['密碼'] }"
                     placeholder="請輸入密碼"
                     v-model="signupData.password"
                     ref="password"
                   />
-                  <ErrorMessage class="invalid-feedback text-red-600" name="密碼"/>
+                  <ErrorMessage class="text-red-600" name="密碼"/>
                 </div>
 
                 <div class="flex flex-col gap-2">
@@ -78,12 +78,12 @@
                     type="password"
                     rules="required|min:8|confirmed:@密碼"
                     class="p-4 rounded-2"
-                    :class="{ 'is-invalid': errors['確認密碼'] }"
+                    :class="{ 'border border-red-600': errors['確認密碼'] }"
                     placeholder="請再輸入一次密碼"
                     v-model="passwordConfirm"
                     data-vv-as="password"
                   />
-                  <ErrorMessage class="invalid-feedback text-red-600" name="確認密碼"/>
+                  <ErrorMessage class="text-red-600" name="確認密碼"/>
                 </div>
               </div>
               <button 
@@ -107,11 +107,11 @@
                   id="user-name" 
                   rules="required|min:2"
                   class="p-4 rounded-2" 
-                  :class="{ 'is-invalid': errors['姓名'] }"
+                  :class="{ 'border border-red-600': errors['姓名'] }"
                   placeholder="請輸入姓名" 
                   v-model="signupData.name"
                 />
-                <ErrorMessage class="invalid-feedback text-red-600" name="姓名"/>
+                <ErrorMessage class="text-red-600" name="姓名"/>
               </div>
 
 
@@ -123,11 +123,11 @@
                   id="user-phone" 
                   rules="required|numeric"
                   class="p-4 rounded-2" 
-                  :class="{ 'is-invalid': errors['手機'] }"
+                  :class="{ 'border border-red-600': errors['手機'] }"
                   placeholder="請輸入手機號碼" 
                   v-model="signupData.phone"
                 />
-                <ErrorMessage class="invalid-feedback text-red-600" name="手機"/>
+                <ErrorMessage class="text-red-600" name="手機"/>
               </div>
 
               <DateSelect />
@@ -159,7 +159,7 @@
 import { storeToRefs } from 'pinia';
 
 // Components
-import LoginHeader from "@/components/layouts/frontend/LoginHeader.vue"
+import LoginHeader from "@/components/layouts/LoginHeader.vue";
 import BgWave from '@/assets/svg/BgWave.vue';
 import DateSelect from '@/components/widgets/DateSelect.vue'
 import CitySelect from '@/components/widgets/CitySelect.vue'

@@ -4,7 +4,7 @@ import { watch, onMounted } from "vue";
 import { storeToRefs } from'pinia';
 
 // Components
-import LoginHeader from "@/components/layouts/frontend/LoginHeader.vue";
+import LoginHeader from "@/components/layouts/LoginHeader.vue";
 import BgWave from '@/assets/svg/BgWave.vue';
 
 // User

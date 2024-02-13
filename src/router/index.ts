@@ -9,19 +9,19 @@ const routes = [
         path: '',
         name: 'home',
         component: () => import('../views/frontend/HomeView.vue'),
-        meta: { title: '首頁' }
+        meta: { title: '住宿首選' }
       },
       {
         path: 'room',
         name: 'room',
         component: () => import('../views/frontend/RoomsView.vue'),
-        meta: { title: '旅宿房型' }
+        meta: { title: '房客旅宿' }
       },
       {
         path: 'room/:id',
         name: 'room-detail',
         component: () => import('../views/frontend/RoomDetail.vue'),
-        meta: { title: '房型詳細資訊' }
+        meta: { title: '房型介紹' }
       },
       {
         path: 'booking/:id',
@@ -59,13 +59,13 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: () => import('../views/SignupView.vue'),
-    meta: { title: '註冊頁面' }
+    meta: { title: '註冊' }
   },
   {
     path: '/login',
     name: 'login',
     component: () => import('../views/LoginView.vue'),
-    meta: { title: '登入頁面' }
+    meta: { title: '登入' }
   },
   {
     path: '/admin',
@@ -107,6 +107,11 @@ const router = createRouter({
       top: 0,
     };
   },
+})
+
+router.beforeEach((to) => {
+  document.title = `${to.meta.title}-享樂酒店` || '享樂酒店';
+  // next()
 })
 
 export default router

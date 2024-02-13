@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col space-y-1">
-    <label for="district" class="form-label text-white ">地區</label>
+    <label for="district" class="form-label" :class="route.name === 'booking'? 'text-neutral':'text-white'">地區</label>
     <div class="">
       <div class="flex space-x-2">
         <select v-model="selectedCity" class="form-input block w-full mt-1" @change="updateCity">

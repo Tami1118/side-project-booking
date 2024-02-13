@@ -208,6 +208,10 @@ export const useOrderStore = defineStore('order', () => {
   const cleanStorageData = () => {
     localStorage.clear()
   }
+  
+  const onSubmit = () => {
+    console.log('123')
+  }
 
   return {
     showOrderModal,
@@ -238,5 +242,7 @@ export const useOrderStore = defineStore('order', () => {
     setStoragePeople,
     getStorageData,
     cleanStorageData,
+
+    onSubmit
   }
 })

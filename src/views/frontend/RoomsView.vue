@@ -8,13 +8,12 @@ import RoomsBanner from "@/components/frontend/RoomsBanner.vue";
 import RoomImageSwiper from "@/components/frontend/RoomImageSwiper.vue";
 import RoomInfoBasic from "@/components/frontend/RoomInfoBasic.vue";
 
-// Room
+// 房型列表
 import { useRoomStore } from "@/stores/roomStore";
 const roomStore = useRoomStore();
 const { roomList } = storeToRefs(roomStore);
 const getFrontRooms = roomStore.getFrontRooms;
 
-// Action
 onMounted(() => {
   getFrontRooms();
 });

@@ -3,16 +3,12 @@ export interface Address {
   detail: string,
 }
 
-export interface CityData{
-  cities: City[]
+export interface City {
+  districts: District[],
+  name: string
 }
 
 export interface District {
   zip: number | string,
-  name: string
-}
-
-export interface City {
-  district: District[],
   name: string
 }
