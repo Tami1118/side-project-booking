@@ -59,7 +59,7 @@
                     id="password"
                     type="password"
                     rules="required|min:8"
-                    class="p-4 rounded-2"
+                    class="p-4 rounded-2 form-input"
                     :class="{ 'border border-red-600': errors['密碼'] }"
                     placeholder="請輸入密碼"
                     v-model="signupData.password"
@@ -77,7 +77,7 @@
                     id="password2"
                     type="password"
                     rules="required|min:8|confirmed:@密碼"
-                    class="p-4 rounded-2"
+                    class="p-4 rounded-2 form-input"
                     :class="{ 'border border-red-600': errors['確認密碼'] }"
                     placeholder="請再輸入一次密碼"
                     v-model="passwordConfirm"
@@ -118,21 +118,32 @@
               <div class="flex flex-col gap-2">
                 <label for="user-phone" class="font-bold text-white">手機號碼</label>
                 <VField 
-                  name="手機"
+                  name="手機號碼"
                   type="phone" 
                   id="user-phone" 
-                  rules="required|numeric"
+                  rules="required|numeric|min:10|mobile"
                   class="p-4 rounded-2" 
-                  :class="{ 'border border-red-600': errors['手機'] }"
+                  :class="{ 'border border-red-600': errors['手機號碼'] }"
                   placeholder="請輸入手機號碼" 
                   v-model="signupData.phone"
                 />
-                <ErrorMessage class="text-red-600" name="手機"/>
+                <ErrorMessage class="text-red-600" name="手機號碼"/>
               </div>
 
               <DateSelect />
               <CitySelect />
-
+              <div class="mt-3">
+                <VField 
+                  name="詳細地址"
+                  type="text" 
+                  rules="required"
+                  v-model="detailedAddress" 
+                  class="form-input mt-1 block w-full" 
+                  :class="{ 'border border-red-600': errors['詳細地址'] }"
+                  placeholder="請輸入詳細地址"
+                />
+                <ErrorMessage class="text-red-600" name="詳細地址"/>
+              </div>
 
             </div>
             <button class="btn-primary font-bold btn text-center mt-10" type="submit">
@@ -167,6 +178,6 @@ import CitySelect from '@/components/widgets/CitySelect.vue'
 // User
 import { useUserStore } from '@/stores/userStore'
 const userStore = useUserStore()
-const { signupStep, signupData, passwordConfirm } = storeToRefs(userStore)
+const { signupStep, signupData, passwordConfirm, detailedAddress } = storeToRefs(userStore)
 const signup = userStore.signup
 </script>

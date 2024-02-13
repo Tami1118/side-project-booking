@@ -18,6 +18,10 @@ import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
 Object.keys(AllRules).forEach((rule) => {
   defineRule(rule, (rules as Record<string, any>)[rule]);
 });
+// 09開頭
+defineRule('mobile', (value: string) => {
+  return /^09\d{8}$/.test(value) || '手機號碼格式不正確';
+});
 // 將當前 VeeValidate 的語系設定為繁體中文
 configure({
   generateMessage: localize({ zh_TW: zhTW }),
