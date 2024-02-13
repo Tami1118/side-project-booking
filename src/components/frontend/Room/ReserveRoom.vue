@@ -67,7 +67,7 @@ const router = useRouter();
     </div>
 
     <!-- 金額小計 -->
-    <div class="text-6 text-primary-100 font-bold">NT$ {{ $format.toThousands(nightNum * props.info?.price) }}</div>
+    <div class="text-6 text-primary-100 font-bold">NT$ {{ nightNum * props.info?.price }}</div>
 
     <button @click="setStoragePeople(), setStorageDate(), router.push(`/booking/${route.params.id}`)" class="btn btn-primary disabled:bg-neutral-40" :disabled="sameDate">立即預訂</button>
   </div>

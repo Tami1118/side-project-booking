@@ -42,7 +42,7 @@ onMounted(() => {
             <RoomInfoBasic :info="item" />
             <span class="block w-full h-[2px] bg-gradient-to-r from-primary-100"></span>
             <div class="py-[13.5px] flex justify-between items-center">
-              <p class="text-primary-100 text-4 lg:text-6 font-bold">NT$ {{ $format.toThousands(item.price) }}</p>
+              <p class="text-primary-100 text-4 lg:text-6 font-bold">NT$ {{ item.price }}</p>
               <RouterLink :to="`/room/${item._id}`">
                 <span class="material-icons text-primary-100 text-6 block">arrow_forward</span>
               </RouterLink>
