@@ -137,7 +137,13 @@ export const useUserStore = defineStore('userStore', () => {
             "county": "",
           }
         }
-        router.push('/')
+        signupStep.value = 1
+        passwordConfirm.value = ''
+        detailedAddress.value = ''
+        selectedCity.value = ''
+        selectedDistrict.value = ''
+        selectedZip.value = 0
+        router.push('/login')
       })
       .catch(err => {
         console.log(err)

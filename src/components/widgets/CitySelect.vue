@@ -10,12 +10,9 @@
           <option v-for="district in districts" :key="district.zip" :value="district.name">{{ district.name }}</option>
         </select>
       </div>
-      <div class="mt-3">
-        <input type="text" id="address" v-model="detailedAddress" class="form-input mt-1 block w-full" placeholder="請輸入詳細地址">
-      </div>
+
     </div>
   </div>
-  <!-- {{ selectedCity }} {{ selectedDistrict }} {{ selectedZip }} -->
 </template>
 
 <script setup lang="ts">
