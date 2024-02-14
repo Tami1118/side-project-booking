@@ -1,18 +1,18 @@
 export interface Room {
-  name: string;
-  description: string;
-  imageUrl: string;
-  imageUrlList: string[];
+  amenityInfo: ProvideInfo[];
   areaInfo: string;
   bedInfo: string;
-  maxPeople: number;
-  price: number;
-  status: 1;
+  createdAt: string | Date;
+  description: string;
   facilityInfo: ProvideInfo[];
-  amenityInfo: ProvideInfo[];
+  imageUrl: string;
+  imageUrlList: string[];
+  maxPeople: number;
+  name: string;
+  price: number;
+  status: number;
+  updatedAt: string | Date;
   _id: string;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 interface ProvideInfo {

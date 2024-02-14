@@ -61,8 +61,8 @@ onMounted(() => {
                   <font-awesome-icon icon="fa-regular fa-circle-user" class="me-2" /> {{ userInfo.name }}
                 </button>
                 <ul class="hidden md:group-hover:flex flex-col absolute top-100 right-0 w-[260px] bg-white py-3 rounded-5 overflow-hidden">
-                  <li><router-link to="/user" class="block py-4 px-8 text-nowrap hover:bg-primary-10 text-neutral-80 hover:text-primary-100">我的訂單</router-link></li>
-                  <li><button class="w-full py-4 px-8 text-nowrap text-start hover:bg-primary-10 text-neutral-80 hover:text-primary-100" @click="logout()">帳戶登出</button></li>
+                  <li><router-link to="/user-order" class="block py-4 px-8 text-nowrap hover:bg-primary-10 text-neutral-80 hover:text-primary-100">我的訂單</router-link></li>
+                  <li><button class="w-full py-4 px-8 text-nowrap text-start hover:bg-primary-10 text-neutral-80 hover:text-primary-100" @click="logout()">登出</button></li>
                 </ul>
               </li>
               <li v-if="userStatus" class="group lg:hidden"><router-link to="/user" @click="isMenu = false" class="block text-center p-4 group-hover:text-primary-100">我的帳戶</router-link></li>

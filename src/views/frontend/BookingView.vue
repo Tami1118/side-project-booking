@@ -21,12 +21,11 @@ const getFrontRoom = roomStore.getFrontRoom;
 // 預約表單操作
 import { useOrderStore } from "@/stores/orderStore";
 const orderStore = useOrderStore();
-const { peopleNum, bookingDate, isLoading, userInfo, selectDistrict, addressDetail } = storeToRefs(orderStore);
 const getStorageData = orderStore.getStorageData;
 const createOrder = orderStore.createOrder;
-// const isFormAll = ref(false)
+const { peopleNum, bookingDate, isLoading, userInfo, selectDistrict, addressDetail } = storeToRefs(orderStore);
 
-// 判斷欄位都有值
+// 確保所有欄位都有值
 const isFormAll = computed(() => {
   return userInfo.value.name && userInfo.value.phone && userInfo.value.email && selectDistrict.value && addressDetail.value;
 });
@@ -138,7 +137,7 @@ onMounted(() => {
                   </div>
                 </div>
 
-                <button type="button" class="p-4 text-bold rounded-2" :class="isFormAll? 'bg-primary-100 text-white':'bg-neutral-40 text-neutral-60'" @click="createOrder()">確認訂房</button>
+                <button type="button" class="p-4 text-bold rounded-2 bg-primary-100 text-white disabled:bg-neutral-40 disabled:text-neutral-60" :disabled="!isFormAll" @click="createOrder()">確認訂房</button>
               </div>
             </div>
           </div>

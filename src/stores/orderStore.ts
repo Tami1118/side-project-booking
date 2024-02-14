@@ -1,14 +1,12 @@
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { defineStore } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 
 const { VITE_URL } = import.meta.env;
 import format from "@/mixins/format";
-import { Toast, Alert } from "@/mixins/swal"
-
-import type { Order, Orders } from "@/interfaces/order";
-import type { Date } from "@/interfaces/order";
+import { Toast, Alert } from "@/mixins/swal";
+import type { Order, TempOrder, CheckDate } from "@/interfaces/order";
 
 interface User {
   name: string,
@@ -21,10 +19,10 @@ export const useOrderStore = defineStore('order', () => {
   const router = useRouter()
   const showOrderModal = ref<boolean>(false)
   const defaultOrder = {
-    "roomId": "",
     "checkInDate": "",
     "checkOutDate": "",
     "peopleNum": 0,
+    "roomId": "",
     "userInfo": {
       "name": "",
       "phone": "",
@@ -36,21 +34,22 @@ export const useOrderStore = defineStore('order', () => {
     }
   }
 
-  // 前台-訂單格式
-  const tempOrder = ref<Order>({ ...defaultOrder })
-  const bookingDate = ref({ start: '', end: '' }) // 補typescript
+  // 前台-tempOrder格式
+  const tempOrder = ref<TempOrder>({ ...defaultOrder })
+  const bookingDate = ref<CheckDate>({ start: '', end: '' })
   const peopleNum = ref<number>(2)
   const userInfo = ref<User>({ name: '', phone: '', email: '' })
   const selectDistrict = ref<string>("")
   const addressDetail = ref<string>("")
   const isLoading = ref<boolean>(false)
+  
   // 前台- 新增訂單
   const createOrder = async () => {
     const orderForm = {
-      roomId: route.params.id,
       checkInDate: format.getLocalDateFormat(new Date(bookingDate.value.start)),
       checkOutDate: format.getLocalDateFormat(new Date(bookingDate.value.end)),
       peopleNum: peopleNum.value,
+      roomId: route.params.id,
       userInfo: {
         name: userInfo.value.name,
         phone: userInfo.value.phone,
@@ -61,7 +60,6 @@ export const useOrderStore = defineStore('order', () => {
         }
       }
     }
-
     try {
       isLoading.value = true
       const url = `${VITE_URL}/api/v1/orders/`
@@ -86,79 +84,62 @@ export const useOrderStore = defineStore('order', () => {
 
   // 清空格式
   const resetTempOrder = () => {
-    tempOrder.value = {
-      "roomId": "",
-      "checkInDate": "",
-      "checkOutDate": "",
-      "peopleNum": 0,
-      "userInfo": {
-        "name": "",
-        "phone": "",
-        "email": "",
-        "address": {
-          "zipcode": 0,
-          "detail": ""
-        },
-      }
-    }
+    tempOrder.value = {...defaultOrder}
   }
 
   // 前台- 取得單一訂單
-  const order = ref()
-  const roomId = ref({})
-  const totalPrice = ref<number>(0)
+  const order = ref<null|Order>(null)
   const getFrontOrder = async () => {
     try {
       const url = `${VITE_URL}/api/v1/orders/${route.params.id}`
       const res = await axios.get(url)
       order.value = res.data.result
-      userInfo.value = res.data.result.userInfo
-      roomId.value = res.data.result.roomId
-      totalPrice.value = format.getNightNum(order.value.checkInDate, order.value.checkOutDate) * order.value.roomId.price
       console.log('getFrontOrder 取得資料', order.value)
     } catch (err) {
       console.log('getFrontOrder 失敗', err)
     }
   }
 
-  // const totalPrice = computed(async () => {
-  // const nightNum = await format.getNightNum(order.value.checkInDate, order.value.checkOutDate)
-  // return nightNum
-  // return roomId.value.price
-  // })
+  // 計算總額
+  const totalPrice = computed<number>(() => {
+    if(order.value){
+      return format.getNightNum(order.value.checkInDate, order.value.checkOutDate) * order.value.roomId.price
+    }else {
+      return 0
+    }
+  })
 
   // 前台- 取得所有訂單列表
-  const orderList = ref<Orders[] | null>(null)
+  const orderList = ref<Order[]>([])
   const getFrontOrders = async () => {
     try {
       const url = `${VITE_URL}/api/v1/orders/`
       const res = await axios.get(url)
       orderList.value = res.data.result
-      console.log('取得所有訂單', orderList.value)
+      console.log('getFrontOrders 取得所有訂單', orderList.value)
     } catch (err) {
       console.log('getFrontOrders 失敗', err)
     }
-    // axios.get(url)
-    //   .then(res => {
-    //     console.log(res)
-    //     console.log(res.data.result)
-    //     orderList.value = res.data.result
-    //     console.log('取得所有訂單', orderList.value)
-    //   })
-    //   .catch(err => {
-    //     console.log('getFrontOrders 失敗', err)
-    //   })
   }
 
   // 前台- 取消訂單
-  const deleteFrontOrder = () => {
-    const url = `${VITE_URL}/api/v1/order/${route.params.id}`
+  const deleteFrontOrder = (id:string) => {
+    const url = `${VITE_URL}/api/v1/orders/${id}`
     axios.delete(url)
       .then(res => {
         console.log(res)
+        getFrontOrders()
+        Toast.fire({
+          icon: 'success',
+          title: '成功刪除訂單'
+        })
       })
       .catch(err => {
         console.log(err)
+        Alert.fire({
+          icon: 'error',
+          title: '請重新再試一次'
+        })
       })
   }
 
@@ -244,7 +225,6 @@ export const useOrderStore = defineStore('order', () => {
     orderList,
     getFrontOrder,
     order,
-    roomId,
     getFrontOrders,
     totalPrice,
     deleteFrontOrder,

@@ -1,26 +1,28 @@
-import type { User } from "@/interfaces/user"
+import type { Room } from "@/interfaces/room"
+import type { TempUser } from "@/interfaces/user"
 
 export interface Order {
-  roomId: string;
-  checkInDate: string;
-  checkOutDate: string;
-  peopleNum: number;
-  userInfo: User;
-}
-
-export interface Orders {
-  _id: string,
+  checkInDate: string | Date;
+  checkOutDate: string | Date;
   createdAt: string | Date;
-  roomId: {
-    name: string;
-  };
-  checkInDate: string;
-  checkOutDate: string;
+  orderUserId: string;
   peopleNum: number;
-  userInfo: User;
+  roomId: Room;
+  status: number;
+  updateAt: string | Date;
+  userInfo: TempUser;
+  _id: string,
 }
 
-export interface Date {
-  start: string | Date;
-  end: string | Date;
+export interface TempOrder {
+  checkInDate: string | Date;
+  checkOutDate: string | Date;
+  peopleNum: number;
+  roomId: string;
+  userInfo: TempUser;
+}
+
+export interface CheckDate {
+  start: string
+  end: string;
 }
