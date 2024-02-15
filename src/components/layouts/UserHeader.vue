@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Basic
 import { ref, onMounted, watch } from "vue";
 import { storeToRefs } from "pinia";
 
@@ -8,7 +7,7 @@ const isMenu = ref<boolean>(false);
 // User
 import { useUserStore } from "@/stores/userStore";
 const userStore = useUserStore();
-const { userStatus, userInfo } = storeToRefs(userStore);
+const { userInfo, isChecked } = storeToRefs(userStore);
 const checkUser = userStore.checkUser;
 const getUser = userStore.getUser;
 const logout = userStore.logout;
@@ -29,7 +28,6 @@ watch(() => route.path, () => {
 import { useScrollBackground } from "@/mixins/scroll"
 const { isScroll } = useScrollBackground();
 
-// Action
 onMounted(() => {
   checkUser()
   getUser()
@@ -55,7 +53,7 @@ onMounted(() => {
 
             <ul class="flex flex-col lg:items-center lg:flex-row w-full lg:w-fit gap-4">
               <li class="group"><router-link to="/room" @click="isMenu = false" class="block text-center p-4 group-hover:text-primary-100">房客旅宿</router-link></li>
-              <li v-if="!userStatus" class="group"><router-link to="/login" @click="isMenu = false" class="block text-center p-4 group-hover:text-primary-100">會員登入</router-link></li>
+              <li v-if="!isChecked" class="group"><router-link to="/login" @click="isMenu = false" class="block text-center p-4 group-hover:text-primary-100">會員登入</router-link></li>
               <li v-else class="group hidden lg:block relative">
                 <button @click="isMenu = false" class="block text-center p-4 group-hover:text-primary-100">
                   <font-awesome-icon icon="fa-regular fa-circle-user" class="me-2" /> {{ userInfo.name }}
@@ -65,8 +63,8 @@ onMounted(() => {
                   <li><button class="w-full py-4 px-8 text-nowrap text-start hover:bg-primary-10 text-neutral-80 hover:text-primary-100" @click="logout()">登出</button></li>
                 </ul>
               </li>
-              <li v-if="userStatus" class="group lg:hidden"><router-link to="/user" @click="isMenu = false" class="block text-center p-4 group-hover:text-primary-100">我的帳戶</router-link></li>
-              <li v-if="userStatus" class="group lg:hidden"><button @click="isMenu = false, logout()" class="block w-full text-center p-4 group-hover:text-primary-100">帳戶登出</button></li>
+              <li v-if="isChecked" class="group lg:hidden"><router-link to="/user" @click="isMenu = false" class="block text-center p-4 group-hover:text-primary-100">我的帳戶</router-link></li>
+              <li v-if="isChecked" class="group lg:hidden"><button @click="isMenu = false, logout()" class="block w-full text-center p-4 group-hover:text-primary-100">帳戶登出</button></li>
               <li><router-link to="/room" @click="isMenu = false" class="block text-center py-4 px-8 btn-primary rounded-2">立即訂房</router-link></li>
             </ul>
           </div>

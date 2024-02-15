@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {ref} from "vue";
 import { storeToRefs } from "pinia";
 import axios from "axios";
 const { VITE_URL } = import.meta.env;
@@ -8,7 +9,7 @@ import AddressForm from "@/components/widgets/AddressForm.vue";
 // Order-使用者資訊
 import { useOrderStore } from "@/stores/orderStore"
 const orderStore = useOrderStore()
-const { userInfo, addressDetail } = storeToRefs(orderStore)
+const { userInfo } = storeToRefs(orderStore)
 
 // 電話號碼格式
 const isPhone = (value: string) => {
@@ -16,12 +17,14 @@ const isPhone = (value: string) => {
   return phoneNum.test(value) ? true : '請輸入正確電話號碼格式，例如 0987654321'
 }
 
+
+const userAddressRef = ref()
 const getUser = () => {
   const url = `${VITE_URL}/api/v1/user`
   axios.get(url)
     .then(res => {
       userInfo.value = res.data.result
-      addressDetail.value = res.data.result.address.detail
+      userAddressRef.value.getAddress()
       console.log('getUser 成功', userInfo.value)
     })
     .catch(err => {
@@ -69,17 +72,6 @@ const getUser = () => {
               class="p-4 rounded-2" />
       <ErrorMessage class="text-red-600" name="Email" />
     </div>
-    <AddressForm  />
-    <div class="flex flex-col gap-2">
-      <VField type="text"
-            name="詳細地址"
-            :class="{ 'border border-red-600': errors['詳細地址'] }"
-            v-model="addressDetail"
-            rules="required"
-            placeholder="請輸入詳細地址"
-            class="p-4 rounded-2">
-      </VField>
-      <ErrorMessage name="詳細地址" class="text-red-600" />
-    </div>
+    <AddressForm ref="userAddressRef" />
   </VForm>
 </template>

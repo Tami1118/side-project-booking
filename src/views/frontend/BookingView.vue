@@ -1,8 +1,9 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted, watch, computed } from "vue";
 import { storeToRefs } from "pinia";
 
 import { Alert } from "@/mixins/swal";
+import format from "@/mixins/format";
 import RoomInfoMain from "@/components/frontend/RoomInfoMain.vue";
 import BookingForm from "@/components/frontend/BookingForm.vue";
 import BookingLoading from "@/components/frontend/BookingLoading.vue";
@@ -84,8 +85,8 @@ onMounted(() => {
               <div class="flex items-center">
                 <div>
                   <h3 class="title-deco ps-4 text-4 mb-2">訂房日期</h3>
-                  <p class="mb-2">入住：{{ $format.getTradDateFormat(bookingDate.start) }}</p>
-                  <p>退房：{{ $format.getTradDateFormat(bookingDate.end) }}</p>
+                  <p class="mb-2">入住：{{ format.getTradDateFormat(new Date(bookingDate.start)) }}</p>
+                  <p>退房：{{ format.getTradDateFormat(new Date(bookingDate.end)) }}</p>
                 </div>
                 <router-link :to="`/room/${route.params.id}`" class="underline ms-auto hover:text-primary-100">編輯</router-link>
               </div>
@@ -123,16 +124,16 @@ onMounted(() => {
                   <h2 class="text-5 lg:text-7">價格詳情</h2>
                   <div class="flex flex-col gap-4">
                     <div class="flex">
-                      <p>NT$ {{ $format.toThousands(roomDetail.price) }} <font-awesome-icon icon="fa-solid fa-xmark" /> {{ $format.getNightNum(bookingDate.start, bookingDate.end) }} 晚</p>
-                      <p class="ms-auto">NT$ {{ $format.toThousands(roomDetail.price * $format.getNightNum(bookingDate.start, bookingDate.end)) }}</p>
+                      <p>NT$ {{ format.toThousands(roomDetail.price) }} <font-awesome-icon icon="fa-solid fa-xmark" /> {{ format.getNightNum(bookingDate.start, bookingDate.end) }} 晚</p>
+                      <p class="ms-auto">NT$ {{ format.toThousands(roomDetail.price * format.getNightNum(bookingDate.start, bookingDate.end)) }}</p>
                     </div>
                     <div class="flex pb-4 border-b border-neutral-40">
                       <p>住宿折扣</p>
-                      <p class="ms-auto text-primary-100">NT$ {{ roomDetail.discount ? "roomDetail.discount" : 0 }}</p>
+                      <!-- <p class="ms-auto text-primary-100">NT$ {{ roomDetail.discount ? "roomDetail.discount" : 0 }}</p> -->
                     </div>
                     <div class="flex font-bold">
                       <p>總價</p>
-                      <p class="ms-auto"> NT$ {{ $format.toThousands(roomDetail.price) }}</p>
+                      <p class="ms-auto"> NT$ {{ format.toThousands(roomDetail.price) }}</p>
                     </div>
                   </div>
                 </div>

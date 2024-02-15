@@ -71,7 +71,7 @@ export const useUserStore = defineStore('userStore', () => {
           icon: 'success',
           title: '登入成功'
         })
-        router.go(-1)
+        router.push('/')
       })
       .catch(err => {
         console.log('login 失敗',err)

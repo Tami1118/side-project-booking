@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col space-y-1">
-    <label for="district" class="form-label" :class="route.name === 'booking'? 'text-neutral':'text-white'">地區</label>
+    <label for="district" class="form-label" :class="route.name === 'booking' ? 'text-neutral' : 'text-white'">地區</label>
     <div class="">
       <div class="flex space-x-2">
         <select v-model="selectedCity" class="form-input block w-full mt-1" @change="updateCity">
@@ -10,7 +10,6 @@
           <option v-for="district in districts" :key="district.zip" :value="district.name">{{ district.name }}</option>
         </select>
       </div>
-
     </div>
   </div>
 </template>
@@ -18,15 +17,13 @@
 <script setup lang="ts">
 import { computed, watch, onMounted } from "vue"
 import { useRoute } from "vue-router";
-import { storeToRefs } from'pinia' 
+import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/stores/userStore'
-import taiwanCities from '../../data/taiwanCities'
+import taiwanCities from '@/data/taiwanCities'
 
 const route = useRoute()
 const userStore = useUserStore()
 const { selectedCity, selectedDistrict, detailedAddress, selectedZip, userInfo } = storeToRefs(userStore)
-
-
 
 const cities = computed(() => taiwanCities.map((city) => city.name));
 
@@ -43,26 +40,24 @@ const updateCity = () => {
 const updateZip = () => {
   console.log(selectedZip.value, selectedCity.value, selectedDistrict.value)
   const city = taiwanCities.find(c => c.name === selectedCity.value);
-if (city) {
+  if (city) {
     const district = city.districts.find(d => d.name === selectedDistrict.value);
     if (district) {
-        selectedZip.value = Number(district.zip);
+      selectedZip.value = Number(district.zip);
     } else {
-        // 如果没有找到匹配的区县，可以根据需要设置 selectedZip 的值
-        selectedZip.value = NaN; // 或者设置为合理的默认值
+      // 沒有 find 縣市，selectedZip 設置默認值
+      selectedZip.value = NaN;
     }
-} else {
-    // 如果没有找到匹配的城市，也可以设置 selectedZip 的值
-    selectedZip.value = NaN; // 或者设置为合理的默认值
-}
-console.log(selectedZip.value);
+  } else {
+    selectedZip.value = NaN;
+  }
+  console.log(selectedZip.value);
 };
 
 
 watch(selectedDistrict, updateZip);
 
-onMounted(() => {
-  console.log(123131321321)
+const getUserAddress = () => {
   if (route.fullPath === '/user') {
     console.log(userInfo.value)
     selectedZip.value = userInfo.value.address.zipcode;
@@ -81,9 +76,11 @@ onMounted(() => {
   } else {
     console.log(taiwanCities[0])
     selectedCity.value = taiwanCities[0].name;
-    selectedDistrict.value =  taiwanCities[0].districts[0].name;
-
+    selectedDistrict.value = taiwanCities[0].districts[0].name;
   }
+}
+
+onMounted(() => {
+  getUserAddress()
 });
-console.log(123131321321)
 </script>

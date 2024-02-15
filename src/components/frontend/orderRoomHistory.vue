@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import format from "@/mixins/format";
 const { orderList } = defineProps(["orderList"]);
+import format from "@/mixins/format";
 
 const emit = defineEmits(['detail-selected']);
 const viewDetail = (item: any) => {
@@ -24,7 +24,7 @@ const goTop = () => {
 
 <template>
   <ul class="flex flex-col">
-    <li v-for="order in orderList" :key="order._id">
+    <li v-for="order in orderList" :key="`${order._id}${order.status}`">
       <div @click="viewDetail(order), goTop()" class="px-4 lg:px-10 pt-4 lg:pt-10 hover:bg-neutral-40 cursor-pointer" :class="new Date(order.checkInDate) <= new Date() ? 'text-neutral-60' : ''">
         <div class="flex gap-6 flex-col lg:flex-row pb-4 lg:pb-10 border-b border-neutral-40">
           <img class="h-[80px] w-[120px] object-cover object-center rounded-2" :src="order.roomId.imageUrl" alt="">

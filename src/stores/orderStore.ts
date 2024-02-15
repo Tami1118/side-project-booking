@@ -42,7 +42,7 @@ export const useOrderStore = defineStore('order', () => {
   const selectDistrict = ref<string>("")
   const addressDetail = ref<string>("")
   const isLoading = ref<boolean>(false)
-  
+
   // 前台- 新增訂單
   const createOrder = async () => {
     const orderForm = {
@@ -67,14 +67,15 @@ export const useOrderStore = defineStore('order', () => {
       isLoading.value = false
       console.log('createOrder 新增成功', res)
       cleanStorageData()
-      resetTempOrder()
       router.push(`/booking-complete/${res.data.result._id}`)
+      resetTempOrder()
       Toast.fire({
         title: '已建立訂單',
         icon: 'success'
       })
     } catch (err) {
       console.log('createOrder 失敗', err)
+      isLoading.value = false
       Alert.fire({
         title: '資料有誤，請稍後再試一次',
         icon: 'error'
@@ -84,11 +85,18 @@ export const useOrderStore = defineStore('order', () => {
 
   // 清空格式
   const resetTempOrder = () => {
-    tempOrder.value = {...defaultOrder}
+    bookingDate.value = {
+      start: '',
+      end: ''
+    };
+    peopleNum.value = 2;
+    userInfo.value = { name: '', phone: '', email: '' };
+    selectDistrict.value = "";
+    addressDetail.value = "";
   }
 
   // 前台- 取得單一訂單
-  const order = ref<null|Order>(null)
+  const order = ref<null | Order>(null)
   const getFrontOrder = async () => {
     try {
       const url = `${VITE_URL}/api/v1/orders/${route.params.id}`
@@ -102,9 +110,9 @@ export const useOrderStore = defineStore('order', () => {
 
   // 計算總額
   const totalPrice = computed<number>(() => {
-    if(order.value){
+    if (order.value) {
       return format.getNightNum(order.value.checkInDate, order.value.checkOutDate) * order.value.roomId.price
-    }else {
+    } else {
       return 0
     }
   })
@@ -123,7 +131,7 @@ export const useOrderStore = defineStore('order', () => {
   }
 
   // 前台- 取消訂單
-  const deleteFrontOrder = (id:string) => {
+  const deleteFrontOrder = (id: string) => {
     const url = `${VITE_URL}/api/v1/orders/${id}`
     axios.delete(url)
       .then(res => {
@@ -228,6 +236,7 @@ export const useOrderStore = defineStore('order', () => {
     getFrontOrders,
     totalPrice,
     deleteFrontOrder,
+    resetTempOrder,
 
     // 後台
     getOrders,

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import format from "@/mixins/format";
 import { storeToRefs } from "pinia";
 import RoomInfoProvide from "@/components/frontend/RoomInfoProvide.vue"
-
+import format from "@/mixins/format";
 const { order } = defineProps(["order"])
 
 // 取消訂單modal
@@ -39,7 +38,7 @@ const router = useRouter()
     <img class="h-[200px] w-full rounded-5 object-cover" :src="order.roomId.imageUrl" :alt="order.roomId.name">
     <div class="flex flex-col gap-6 text-3h lg:text-4 text-neutral-80 font-bold pb-6 border-b border-neutral-40">
       <div class="flex gap-4 lg:text-5">
-        <p class="pe-4 border-r border-neutral-60">{{ order.roomId.name }}，{{ }}晚</p>
+        <p class="pe-4 border-r border-neutral-60">{{ order.roomId.name }}，{{ format.getNightNum(order.checkInDate, order.checkOutDate) }} 晚</p>
         <p>住宿人數：{{ order.peopleNum }} 位</p>
       </div>
       <div>

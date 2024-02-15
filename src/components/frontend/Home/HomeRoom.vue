@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -16,6 +16,8 @@ const navigation = {
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useRoomStore } from "@/stores/roomStore";
+import format from "@/mixins/format";
+
 const roomStore = useRoomStore();
 const { roomList } = storeToRefs(roomStore);
 const getFrontRooms = roomStore.getFrontRooms;
@@ -58,7 +60,7 @@ onMounted(async () => {
                 <h3 class="text-7 lg:text-10 font-bold mb-2">{{ room.name }}</h3>
                 <p class="text-3h lg:text-4">{{ room.description }}</p>
               </div>
-              <p class="text-6 lg:text-8 font-bold">NT$ {{ $format.toThousands(room.price) }}</p>
+              <p class="text-6 lg:text-8 font-bold">NT$ {{ format.toThousands(room.price) }}</p>
               <RouterLink :to="`/room/${room._id}`" class="flex flex-col gap-4">
                 <button type="button" class="group rounded-2 bg-white p-5 lg:p-10 flex items-center justify-end text-6 font-bold text-neutral hover:bg-primary-100 hover:text-white duration-500">
                   立即訂房

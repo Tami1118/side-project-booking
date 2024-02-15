@@ -22,7 +22,7 @@ const getTradDateFormat = (data: Date) => {
   return `${month} 月 ${day} 日，${dayOfWeek}`;
 }
 
-const getTradDateSecondary = (data: Date) => {
+const getTradDateSecondary = (data: Date | string) => {
   const newDate = new Date(data);
   const month = newDate.getMonth() + 1;
   const day = newDate.getDate();
@@ -30,7 +30,7 @@ const getTradDateSecondary = (data: Date) => {
   return `${month} 月 ${day} 日${dayOfWeek}`;
 }
 
-const getNightNum = (start:Date|string, end:Date|string) => {
+const getNightNum = (start: Date | string, end: Date | string) => {
   const startDate: Date = new Date(start)
   const endDate: Date = new Date(end)
 

@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, watch, toRefs } from "vue"
+import { ref, onMounted, computed, watch } from "vue"
 import { storeToRefs } from "pinia"
 
-// Components
+import UserBanner from "@/components/frontend/UserBanner.vue";
 import OrderRoomDetail from '@/components/frontend/OrderRoomDetail.vue';
 import OrderRoomHistory from '@/components/frontend/OrderRoomHistory.vue';
 
-// Order
+// Order-取得訂單列表
 import { useOrderStore } from "@/stores/orderStore"
 const orderStore = useOrderStore()
-const { orderList } = toRefs(orderStore)
+const { orderList } = storeToRefs(orderStore)
 const getFrontOrders = orderStore.getFrontOrders;
 
 // 篩選歷史訂單
@@ -40,13 +40,21 @@ const selectOrder = (order: any) => {
   orderDetail.value = order;
 };
 
+// 預設觀看前三筆
+const currentVisible = ref(3);
+const visibleOrders = computed(() => {
+  return filterList.value.slice(0, currentVisible.value)}
+); 
+
 // 查看更多
-const visibleOrders = ref(filterList.value.slice(0, 3)); // 預設觀看前三筆
 const showMoreOrders = () => {
-  const currentVisible = visibleOrders.value.length;
-  const nextIndex = currentVisible + 3;
-  visibleOrders.value = filterList.value.slice(0, nextIndex);
+  currentVisible.value += 3;
 };
+
+// 
+watch(visibleOrders, (n) => {
+  if (n) orderDetail.value = visibleOrders.value[0];
+})
 
 // User
 import { useUserStore } from "@/stores/userStore"
@@ -57,32 +65,22 @@ watch(isChecked, (n) => {
   if (n) getFrontOrders()
 });
 
+
+
 onMounted(async () => {
   await getFrontOrders();
   // 預設顯示最近一筆訂單
-  if (filterList.value.length > 0) {
-    orderDetail.value = filterList.value[0];
+  if (visibleOrders.value.length > 0) {
+    orderDetail.value = visibleOrders.value[0];
   }
 })
 </script>
 
 <template>
   <div class="bg-neutral">
-    <div class="h-[206px] lg:h-[384px] relative">
-      <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1606744837616-56c9a5c6a6eb?q=80&w=2835&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
-      <div class="absolute top-0 left-0 w-full h-full my-auto">
-        <div class="container mx-auto h-full flex flex-col justify-center lg:flex-row lg:justify-start lg:items-center gap-4 lg:gap-6 px-4 sm:px-0 duration-300">
-          <div class="w-[72px] h-[72px] lg:w-[144px] lg:h-[144px] rounded-full"></div>
-          <h1 class="text-white text-8 lg:text-12">Hello，</h1>
-        </div>
-      </div>
-    </div>
-    <div class="container mx-auto px-4 sm:px-0 py-10 lg:py-20">
-      <div class="mb-10">
-        <router-link to="/user" class="py-4 px-6 text-white">個人資料</router-link>
-        <router-link to="/user-order" class="py-4 px-6 text-white">我的訂單</router-link>
-      </div>
+    <UserBanner />
 
+    <div class="container mx-auto px-4 sm:px-0 pb-10 lg:pb-20">
       <div class="flex flex-col lg:flex-row gap-10">
         
         <!-- left: 訂單詳細資訊 -->
