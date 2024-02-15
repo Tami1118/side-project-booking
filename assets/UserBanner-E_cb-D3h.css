@@ -1,0 +1,1 @@
+.user-btn-action{position:relative}.user-btn-action:after{content:"";position:absloute;display:flex;height:4px;width:32px;background-color:#bf9d7d;border-radius:2px;bottom:0;left:0;right:0;margin:8px auto auto;opacity:0}.user-btn-action.active:after{opacity:1}
