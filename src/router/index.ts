@@ -45,7 +45,7 @@ const routes = [
         path: 'user-order',
         name: 'user-order',
         component: () => import('../views/frontend/UserOrders.vue'),
-        meta: { title: '訂單列表' }
+        meta: { title: '訂單記錄' }
       },
       {
         path: 'guideline',

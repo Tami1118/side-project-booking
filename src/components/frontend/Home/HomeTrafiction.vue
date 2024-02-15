@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import HomeWave from "@/assets/svg/HomeWave.vue";
 </script>
 

@@ -1,8 +1,10 @@
 <script setup lang="ts">
-const { orderList } = defineProps(["orderList"]);
 import format from "@/mixins/format";
 
-const emit = defineEmits(['detail-selected']);
+const { orderList } = defineProps(["orderList"]);
+
+// 點擊訂單後顯示於左邊
+const emit = defineEmits(['detail-selected']); // 值傳至父元件
 const viewDetail = (item: any) => {
   emit('detail-selected', item);
 }
@@ -39,7 +41,7 @@ const goTop = () => {
               <p class="title-deco ps-4 mb-2">入住：{{ format.getTradDateSecondary(order.checkInDate) }}</p>
               <p class="title-deco ps-4">退房：{{ format.getTradDateSecondary(order.checkOutDate) }}</p>
             </div>
-            <p class="font-bold">{{ format.toThousands(order.roomId.price * format.getNightNum(order.checkInDate, order.checkOutDate)) }}</p>
+            <p class="font-bold">NT$ {{ format.toThousands(order.roomId.price * format.getNightNum(order.checkInDate, order.checkOutDate)) }}</p>
           </div>
         </div>
       </div>

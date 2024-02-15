@@ -1,12 +1,29 @@
+<script setup lang="ts">
+import { onMounted } from "vue";
+import { storeToRefs } from 'pinia';
+import { useUserStore } from '@/stores/userStore';
+
+import UserAccount from '@/components/frontend/UserAccount.vue';
+import UserBanner from "@/components/frontend/UserBanner.vue";
+import UserFrom from '@/components/frontend/UserForm.vue';
+
+const userStore = useUserStore()
+const { userInfo, showEditUserInfo } = storeToRefs(userStore)
+const getUer = userStore.getUser
+
+onMounted(() => {
+  getUer()
+})
+</script>
+
 <template>
   <div class="bg-neutral">
     <UserBanner />
+
     <div class="container mx-auto px-4 sm:px-0 pb-10 lg:pb-20">
       <div class="flex flex-col lg:flex-row gap-10">
         <div class="basis-full lg:basis-5/12 bg-white rounded-[20px] p-4 lg:p-10 flex flex-col gap-6 lg:gap-10 h-fit duration-300">
-          <h2 class="text-5 lg:text-6">
-            修改密碼
-          </h2>
+          <h2 class="text-5 lg:text-6">修改密碼</h2>
           <UserAccount />
         </div>
 
@@ -35,25 +52,8 @@
             <button class="btn btn-secondary border border-primary-100 w-fit" @click="showEditUserInfo = true">編輯</button>
           </div>
         </div>
+        
       </div>
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import UserAccount from '@/components/frontend/UserAccount.vue'
-import UserBanner from "@/components/frontend/UserBanner.vue";
-import UserFrom from '@/components/frontend/UserForm.vue'
-import { onMounted } from "vue";
-import { storeToRefs } from 'pinia'
-import { useUserStore } from '@/stores/userStore'
-
-const userStore = useUserStore()
-const { userInfo, showEditUserInfo } = storeToRefs(userStore)
-const getUer = userStore.getUser
-
-onMounted(() => {
-  getUer()
-})
-
-</script>

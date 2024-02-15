@@ -1,10 +1,10 @@
-import { defineStore } from 'pinia';
 import { ref } from 'vue';
+import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import { Toast, Alert, Swal } from '@/mixins/swal';
 
 const VITE_URL = import.meta.env.VITE_URL as string;
+import { Toast, Alert, Swal } from '@/mixins/swal';
 
 interface LoginData {
   email: string;
@@ -57,7 +57,7 @@ export const useUserStore = defineStore('userStore', () => {
     const url = `${VITE_URL}/api/v1/user/login`
     axios.post(url, loginData.value)
       .then(res => {
-        console.log('login 成功',res)
+        // console.log('login 成功',res)
         const { token } = res.data
         document.cookie = `typescript=${token}`;
         axios.defaults.headers.common['Authorization'] = token;
@@ -73,8 +73,8 @@ export const useUserStore = defineStore('userStore', () => {
         })
         router.push('/')
       })
-      .catch(err => {
-        console.log('login 失敗',err)
+      .catch(() => {
+        // console.log('login 失敗',err)
         // console.log(err.response.data.message)
         Alert.fire({
           icon: 'error',
@@ -84,10 +84,15 @@ export const useUserStore = defineStore('userStore', () => {
   }
   // logout
   const logout = () => {
-    document.cookie = `typescript=""`
-    isChecked.value = false
+    document.cookie = `typescript=""`;
+    isChecked.value = false;
+    Toast.fire({
+      icon: 'success',
+      title: '登入成功'
+    })
     router.push('/')
   }
+
   // signup
   const signupStep = ref<number>(1);
   const signupData = ref<SignupData>({
@@ -150,6 +155,7 @@ export const useUserStore = defineStore('userStore', () => {
         alert(err.response.data.message)
       })
   }
+
   // check
   const isChecked = ref<boolean>(false);
   const checkUser = async () => {
@@ -166,6 +172,7 @@ export const useUserStore = defineStore('userStore', () => {
       console.log('checkUser 驗證失敗', isChecked.value);
     }
   }
+
   // edit
   const editUserData = ref<EditUserData>({
     userId: "",
@@ -335,8 +342,6 @@ export const useUserStore = defineStore('userStore', () => {
       })
     })
   }
-
-
 
   const forgotPassword = async () => {
     const url = `${VITE_URL}/api/v1/user/forgot`

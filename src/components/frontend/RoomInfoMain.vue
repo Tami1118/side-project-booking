@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from "vue"
-const { info, layout } = defineProps(["info", "layout"]);
 
 import RoomInfoTitle from "@/components/frontend/RoomInfoTitle.vue";
 import RoomInfoBasic from "@/components/frontend/RoomInfoBasic.vue";
 import RoomInfoProvide from "@/components/frontend/RoomInfoProvide.vue";
 import RoomInfoRegulation from "@/components/frontend/RoomInfoRegulation.vue";
+
+const { info, layout } = defineProps(["info", "layout"]);
 
 // Route
 import { useRoute } from "vue-router"

@@ -12,16 +12,16 @@ const dateStore = useDateStore();
 const { reserveDateRange, sameDate, nightNum } = storeToRefs(dateStore);
 const setStorageDate = dateStore.setStorageDate;
 
+// 開啟日期modal
+import { useModalStore } from "@/stores/modalStore";
+const modalStore = useModalStore();
+const openModal = modalStore.openModal;
+
 // 人數選擇
 import { useOrderStore } from "@/stores/orderStore";
 const orderStore = useOrderStore();
 const { peopleNum } = storeToRefs(orderStore);
 const setStoragePeople = orderStore.setStoragePeople;
-
-// 開啟日期modal
-import { useModalStore } from "@/stores/modalStore";
-const modalStore = useModalStore();
-const openModal = modalStore.openModal;
 
 // Route
 import { useRoute, useRouter } from "vue-router";

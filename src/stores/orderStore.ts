@@ -2,8 +2,8 @@ import { computed, ref } from 'vue';
 import { defineStore } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
-
 const { VITE_URL } = import.meta.env;
+
 import format from "@/mixins/format";
 import { Toast, Alert } from "@/mixins/swal";
 import type { Order, TempOrder, CheckDate } from "@/interfaces/order";
@@ -65,7 +65,7 @@ export const useOrderStore = defineStore('order', () => {
       const url = `${VITE_URL}/api/v1/orders/`
       const res = await axios.post(url, orderForm)
       isLoading.value = false
-      console.log('createOrder 新增成功', res)
+      // console.log('createOrder 新增成功', res)
       cleanStorageData()
       router.push(`/booking-complete/${res.data.result._id}`)
       resetTempOrder()
@@ -74,7 +74,7 @@ export const useOrderStore = defineStore('order', () => {
         icon: 'success'
       })
     } catch (err) {
-      console.log('createOrder 失敗', err)
+      // console.log('createOrder 失敗', err)
       isLoading.value = false
       Alert.fire({
         title: '資料有誤，請稍後再試一次',
@@ -102,9 +102,9 @@ export const useOrderStore = defineStore('order', () => {
       const url = `${VITE_URL}/api/v1/orders/${route.params.id}`
       const res = await axios.get(url)
       order.value = res.data.result
-      console.log('getFrontOrder 取得資料', order.value)
+      // console.log('getFrontOrder 取得資料', order.value)
     } catch (err) {
-      console.log('getFrontOrder 失敗', err)
+      // console.log('getFrontOrder 失敗', err)
     }
   }
 
@@ -124,9 +124,9 @@ export const useOrderStore = defineStore('order', () => {
       const url = `${VITE_URL}/api/v1/orders/`
       const res = await axios.get(url)
       orderList.value = res.data.result
-      console.log('getFrontOrders 取得所有訂單', orderList.value)
+      // console.log('getFrontOrders 取得所有訂單', orderList.value)
     } catch (err) {
-      console.log('getFrontOrders 失敗', err)
+      // console.log('getFrontOrders 失敗', err)
     }
   }
 
@@ -201,20 +201,16 @@ export const useOrderStore = defineStore('order', () => {
     const getDate: any = localStorage.getItem('storageDate')
     const date = JSON.parse(getDate)
     const people = localStorage.getItem('storagePeople')
-    console.log(date, people)
+    // console.log(date, people)
     if (date && people) {
       bookingDate.value = date
       peopleNum.value = Number(people)
     }
-    console.log(bookingDate.value, peopleNum.value)
+    // console.log(bookingDate.value, peopleNum.value)
   }
   // 刪除本地端所有資料
   const cleanStorageData = () => {
     localStorage.clear()
-  }
-
-  const onSubmit = () => {
-    console.log('123')
   }
 
   return {
@@ -247,7 +243,5 @@ export const useOrderStore = defineStore('order', () => {
     setStoragePeople,
     getStorageData,
     cleanStorageData,
-
-    onSubmit
   }
 })

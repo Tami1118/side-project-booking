@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
+import { onMounted, watch } from 'vue';
 import { storeToRefs } from "pinia";
 
 import OrderRoomInfo from "@/components/frontend/OrderRoomInfo.vue";

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import RoomInfoProvide from "@/components/frontend/RoomInfoProvide.vue"
 import format from "@/mixins/format";
+import RoomInfoProvide from "@/components/frontend/RoomInfoProvide.vue"
 
 const { order, price } = defineProps(["order", "price"])
 </script>
@@ -12,7 +12,7 @@ const { order, price } = defineProps(["order", "price"])
         <p class="text-neutral-60 mb-2 text-3h lg:text-4">預定參考編號：{{ order._id }}</p>
         <h3 class="text-4 lg:text-6">即將來的行程</h3>
       </div>
-      <img class="h-[200px] w-full rounded-5 object-cover" :src="order.roomId.imageUrl" alt="">
+      <img class="h-[200px] w-full rounded-5 object-cover" :src="order.roomId.imageUrl" :alt="order.roomId.name">
       <div class="flex flex-col gap-6 text-3h lg:text-4 text-neutral-80 font-bold pb-6 border-b border-neutral-40">
         <div class="flex gap-4 lg:text-5">
           <p class="pe-4 border-r border-neutral-60">{{ order.roomId.name }}，{{ format.getNightNum(order.checkInDate, order.checkOutDate) }}晚</p>

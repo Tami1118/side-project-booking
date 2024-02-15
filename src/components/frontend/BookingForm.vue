@@ -7,9 +7,9 @@ const { VITE_URL } = import.meta.env;
 import AddressForm from "@/components/widgets/AddressForm.vue";
 
 // Order-使用者資訊
-import { useOrderStore } from "@/stores/orderStore"
-const orderStore = useOrderStore()
-const { userInfo } = storeToRefs(orderStore)
+import { useOrderStore } from "@/stores/orderStore";
+const orderStore = useOrderStore();
+const { userInfo } = storeToRefs(orderStore);
 
 // 電話號碼格式
 const isPhone = (value: string) => {
@@ -17,8 +17,8 @@ const isPhone = (value: string) => {
   return phoneNum.test(value) ? true : '請輸入正確電話號碼格式，例如 0987654321'
 }
 
-
-const userAddressRef = ref()
+// 取得元件按鈕
+const userAddressRef = ref();
 const getUser = () => {
   const url = `${VITE_URL}/api/v1/user`
   axios.get(url)

@@ -4,7 +4,7 @@ import { storeToRefs } from "pinia";
 
 const isMenu = ref<boolean>(false);
 
-// User
+// user-使用者資訊
 import { useUserStore } from "@/stores/userStore";
 const userStore = useUserStore();
 const { userInfo, isChecked } = storeToRefs(userStore);
@@ -37,7 +37,7 @@ onMounted(() => {
 
 <template>
   <header class="top-0 left-0 w-full z-10 duration-800" :class="{ 'fixed': pathName === '/' || pathName === '/room', 'sticky bg-neutral': pathName !== '/' && pathName !== '/room', 'bg-neutral': isScroll }">
-    <div class="max-w-[1860px] mx-auto px-3 py-4">
+    <div class="px-5 lg:px-[4.166vw] py-4 lg:py-6">
       <div class="flex items-center justify-between text-white">
         <router-link to="/" class="max-w-[109px] lg:max-w-[196px] duration-200">
           <img src="/svg/logo-white.svg" alt="享樂飯店 Logo">

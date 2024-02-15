@@ -1,9 +1,7 @@
 <script setup lang="ts">
-// Basic
 import { watch, onMounted } from "vue";
 import { storeToRefs } from'pinia';
 
-// Components
 import LoginHeader from "@/components/layouts/LoginHeader.vue";
 import BgWave from '@/assets/svg/BgWave.vue';
 

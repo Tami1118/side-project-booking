@@ -3,10 +3,10 @@ import { ref, watch, computed } from "vue";
 import { storeToRefs } from "pinia";
 
 // Order-地址
-import { useOrderStore } from "@/stores/orderStore"
-const orderStore = useOrderStore()
-const { selectDistrict, addressDetail } = storeToRefs(orderStore)
-import taiwanCities from '@/data/taiwanCities'
+import { useOrderStore } from "@/stores/orderStore";
+const orderStore = useOrderStore();
+const { selectDistrict, addressDetail } = storeToRefs(orderStore);
+import taiwanCities from '@/data/taiwanCities';
 
 // 縣市列表
 const cities = computed(() => taiwanCities.map((item) => item.name))
