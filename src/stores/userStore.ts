@@ -149,6 +149,10 @@ export const useUserStore = defineStore('userStore', () => {
         selectedDistrict.value = ''
         selectedZip.value = 0
         router.push('/login')
+        Alert.fire({
+          title: '註冊成功，請登入會員',
+          icon: 'success'
+        })
       })
       .catch(err => {
         console.log(err)
