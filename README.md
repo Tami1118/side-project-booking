@@ -1,6 +1,8 @@
 # 享樂酒店訂房網
 
-![](https://imgur.com/sjJ2KYz)
+###### 網站Demo：[享樂酒店-線上訂房](https://tami1118.github.io/side-project-booking/)
+
+![](https://github.com/Tami1118/side-project-booking/blob/main/src/assets/images/room_booking_image.png?raw=true)
 
 ###### [UI 設計稿](https://www.figma.com/file/23VhjSXFWeZfXYXjcZOceb/%E5%85%AD%E8%A7%92-Project-%2F-%E9%85%92%E5%BA%97%E8%A8%82%E6%88%BF%E7%B6%B2%E7%AB%99?node-id=4323%3A10366&mode=dev)
 
@@ -13,8 +15,6 @@
 - 訂房紀錄
 - 房型管理
 - 訂單管理
-
-###### 網站Demo：[享樂酒店-線上訂房](https://tami1118.github.io/side-project-booking/)
 
 
 ## Src 資料夾說明
