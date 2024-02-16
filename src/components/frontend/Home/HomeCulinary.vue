@@ -16,15 +16,15 @@ const culinary = ref<SupplyInfo[]>(supplyInfo)
         <h2 class="text-primary-100 text-8 lg:text-12 font-bold">佳餚<br>美饌</h2>
         <span class="block h-[2px] w-[200px] bg-gradient-to-r from-primary-100"></span>
       </div>
-      <Swiper
-        :slidesPerView="1.2"
-        :spaceBetween="24"
-        :breakpoints="{
-          '1280': { slidesPerView: 3.5, },
-          '992': { slidesPerView: 2.7, },
-          '767': { slidesPerView: 2.2, },
-        }" 
-        class="home-food-swiper">
+        <Swiper
+          :slidesPerView="1.2"
+          :spaceBetween="24"
+          :breakpoints="{
+            '1280': { slidesPerView: 3.5, },
+            '992': { slidesPerView: 2.7, },
+            '767': { slidesPerView: 2.2, },
+          }"
+          class="home-food-swiper">
         <SwiperSlide v-for="item in culinary" :key="item.id">
           <div class="h-[480px] md:h-[560px] xl:h-[600px] relatvie rounded-2 overflow-hidden duration-200">
             <img :src="item.imageUrl" class="w-full h-full object-cover" :alt="item.title">

@@ -88,7 +88,7 @@ export const useUserStore = defineStore('userStore', () => {
     isChecked.value = false;
     Toast.fire({
       icon: 'success',
-      title: '登入成功'
+      title: '已成功'
     })
     router.push('/')
   }

@@ -27,7 +27,7 @@ onMounted(() => {
         <p class="mb-2 lg:mb-4 text-3h lg:text-5 font-bold">房型選擇</p>
       </div>
       <div class="flex flex-col gap-12" v-if="roomList">
-        <div v-for="item in roomList" :key="item._id" class="flex flex-wrap lg:flex-row rounded-[24px] overflow-hidden bg-white duration-300">
+        <div v-for="item in roomList" :key="item._id" data-aos="fade-up" data-aos-once="true" class="flex flex-wrap lg:flex-row rounded-[24px] overflow-hidden bg-white duration-300">
           <div class="w-full lg:w-7/12">
             <div class="h-[200px] lg:h-[464px]">
               <RoomImageSwiper :images="item.imageUrlList" />

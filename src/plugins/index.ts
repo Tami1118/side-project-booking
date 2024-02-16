@@ -43,6 +43,11 @@ import { far } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 library.add(fas, fab, far);
 
+// AOS
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+AOS.init();
+
 import format from '../mixins/format';
 
 export function registerPlugins(app:any) {

@@ -21,6 +21,7 @@
     "@sweetalert2/theme-dark": "^5.0.16",
     "@vee-validate/i18n": "^4.12.4",
     "@vee-validate/rules": "^4.12.4",
+    "aos": "^3.0.0-beta.6",
     "date-fns": "^3.3.1",
     "pinia": "^2.1.7",
     "sass": "^1.69.7",
