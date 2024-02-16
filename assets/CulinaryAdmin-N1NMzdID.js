@@ -1,1 +1,0 @@
-import{_ as e}from"./_plugin-vue_export-helper-x3n3nnut.js";import{e as r,c}from"./index-Hvgb4jPn.js";const n={};function o(t,a){return c(),r("div",null," 我是美味佳餚管理頁 ")}const f=e(n,[["render",o]]);export{f as default};
