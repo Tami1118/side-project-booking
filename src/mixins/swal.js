@@ -3,7 +3,7 @@ import '@sweetalert2/theme-dark/dark.scss'
 
 const Toast = Swal.mixin({
   toast: true,
-  position: "bottom-start",
+  position: "bottom-end",
   showConfirmButton: false,
   timer: 2000,
   timerProgressBar: true,
