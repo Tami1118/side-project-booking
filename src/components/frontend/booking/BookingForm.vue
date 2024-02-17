@@ -17,7 +17,7 @@ const isPhone = (value: string) => {
   return phoneNum.test(value) ? true : '請輸入正確電話號碼格式，例如 0987654321'
 }
 
-// 取得元件按鈕
+// 取得子元件資料事件
 const userAddressRef = ref();
 const getUser = () => {
   const url = `${VITE_URL}/api/v1/user`

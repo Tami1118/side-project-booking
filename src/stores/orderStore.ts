@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue';
+import { ref, computed } from 'vue';
 import { defineStore } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
@@ -17,7 +17,6 @@ interface User {
 export const useOrderStore = defineStore('order', () => {
   const route = useRoute()
   const router = useRouter()
-  const showOrderModal = ref<boolean>(false)
   const defaultOrder = {
     "checkInDate": "",
     "checkOutDate": "",
@@ -43,7 +42,11 @@ export const useOrderStore = defineStore('order', () => {
   const addressDetail = ref<string>("")
   const isLoading = ref<boolean>(false)
 
-  // 前台- 新增訂單
+  /**
+   * 前台-新增訂單
+   * 
+   * @param orderForm 訂單資料
+   */
   const createOrder = async () => {
     const orderForm = {
       checkInDate: format.getLocalDateFormat(new Date(bookingDate.value.start)),
@@ -64,8 +67,8 @@ export const useOrderStore = defineStore('order', () => {
       isLoading.value = true
       const url = `${VITE_URL}/api/v1/orders/`
       const res = await axios.post(url, orderForm)
-      isLoading.value = false
       // console.log('createOrder 新增成功', res)
+      isLoading.value = false
       cleanStorageData()
       router.push(`/booking-complete/${res.data.result._id}`)
       resetTempOrder()
@@ -77,13 +80,15 @@ export const useOrderStore = defineStore('order', () => {
       // console.log('createOrder 失敗', err)
       isLoading.value = false
       Alert.fire({
-        title: '資料有誤，請稍後再試一次',
+        title: '請填寫正確格式',
         icon: 'error'
       })
     }
   }
 
-  // 清空格式
+  /**
+   * 清空格式
+   */
   const resetTempOrder = () => {
     bookingDate.value = {
       start: '',
@@ -95,20 +100,24 @@ export const useOrderStore = defineStore('order', () => {
     addressDetail.value = "";
   }
 
-  // 前台- 取得單一訂單
+  /**
+   * 前台-取得單一訂單
+   */
   const order = ref<null | Order>(null)
   const getFrontOrder = async () => {
     try {
+      // console.log('getFrontOrder 取得資料', order.value)
       const url = `${VITE_URL}/api/v1/orders/${route.params.id}`
       const res = await axios.get(url)
       order.value = res.data.result
-      // console.log('getFrontOrder 取得資料', order.value)
     } catch (err) {
       // console.log('getFrontOrder 失敗', err)
     }
   }
 
-  // 計算總額
+  /**
+   * 計算總額
+   */
   const totalPrice = computed<number>(() => {
     if (order.value) {
       return format.getNightNum(order.value.checkInDate, order.value.checkOutDate) * order.value.roomId.price
@@ -117,7 +126,9 @@ export const useOrderStore = defineStore('order', () => {
     }
   })
 
-  // 前台- 取得所有訂單列表
+  /**
+   * 前台-取得所有訂單列表
+   */
   const orderList = ref<Order[]>([])
   const getFrontOrders = async () => {
     try {
@@ -130,20 +141,24 @@ export const useOrderStore = defineStore('order', () => {
     }
   }
 
-  // 前台- 取消訂單
+  /**
+   * 前台-取消訂單
+   * 
+   * @param id 訂單order._id
+   */
   const deleteFrontOrder = (id: string) => {
     const url = `${VITE_URL}/api/v1/orders/${id}`
     axios.delete(url)
-      .then(res => {
-        console.log(res)
+      .then(() => {
+        // console.log('deleteFrontOrder 成功刪除',res)
         getFrontOrders()
         Toast.fire({
           icon: 'success',
           title: '成功刪除訂單'
         })
       })
-      .catch(err => {
-        console.log(err)
+      .catch(() => {
+        // console.log('deleteFrontOrder 失敗',err)
         Alert.fire({
           icon: 'error',
           title: '請重新再試一次'
@@ -153,7 +168,9 @@ export const useOrderStore = defineStore('order', () => {
 
 
 
-  // 後台- 取得訂單列表
+  /**
+   * 後台-取得訂單列表
+   */
   const getOrders = () => {
     const url = `${VITE_URL}/api/v1/admin/orders/`
     axios.get(url)
@@ -166,10 +183,14 @@ export const useOrderStore = defineStore('order', () => {
       })
   }
 
-  // 後台- 編輯訂單
-  const editOrder = () => {
+  /**
+   * 後台-編輯訂單
+   * 
+   * @param id 訂單詳細資料
+   */
+  const editOrder = (id:Object) => {
     const url = `${VITE_URL}/api/v1/admin/orders/${route.params.id}`
-    axios.put(url)
+    axios.put(url, id)
       .then(res => {
         console.log(res)
       })
@@ -178,7 +199,11 @@ export const useOrderStore = defineStore('order', () => {
       })
   }
 
-  // 後台- 刪除單一訂單
+  /**
+   * 後台-刪除單一訂單
+   * 
+   * @param id 訂單order._id
+   */
   const deleteOrder = (id: string) => {
     const url = `${VITE_URL}/api/v1/admin/orders/${id}`
     axios.delete(url)
@@ -191,12 +216,16 @@ export const useOrderStore = defineStore('order', () => {
       })
   }
 
-
-  // 本地端儲存日期
+  /**
+   * 本地端儲存日期
+   */
   const setStoragePeople = () => {
     localStorage.setItem('storagePeople', peopleNum.value.toString())
   }
-  // 取得本地端reserveDate
+
+  /**
+   * 取得本地端reserveDate
+   */
   const getStorageData = () => {
     const getDate: any = localStorage.getItem('storageDate')
     const date = JSON.parse(getDate)
@@ -208,14 +237,15 @@ export const useOrderStore = defineStore('order', () => {
     }
     // console.log(bookingDate.value, peopleNum.value)
   }
-  // 刪除本地端所有資料
+
+  /**
+   * 刪除本地端所有資料
+   */
   const cleanStorageData = () => {
     localStorage.clear()
   }
 
   return {
-    showOrderModal,
-
     bookingDate,
     peopleNum,
     userInfo,
@@ -224,7 +254,7 @@ export const useOrderStore = defineStore('order', () => {
     tempOrder,
     isLoading,
 
-    // 前台
+    // frontend
     createOrder,
     orderList,
     getFrontOrder,
@@ -234,12 +264,12 @@ export const useOrderStore = defineStore('order', () => {
     deleteFrontOrder,
     resetTempOrder,
 
-    // 後台
+    // admin
     getOrders,
     editOrder,
     deleteOrder,
 
-    // Storage
+    // localStorage
     setStoragePeople,
     getStorageData,
     cleanStorageData,

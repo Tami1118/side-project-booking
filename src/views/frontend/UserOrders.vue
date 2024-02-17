@@ -105,7 +105,6 @@ onMounted(async () => {
             <p class="text-primary-100 lg:text-6 font-bold">尚未有歷史記錄</p>
           </div>
         </div>
-
       </div>
     </div>
   </div>

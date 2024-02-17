@@ -15,10 +15,10 @@ const navigation = {
 
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
-
-import { useRoomStore } from "@/stores/roomStore";
 import format from "@/mixins/format";
 
+// 取得房型列表
+import { useRoomStore } from "@/stores/roomStore";
 const roomStore = useRoomStore();
 const { roomList } = storeToRefs(roomStore);
 const getFrontRooms = roomStore.getFrontRooms;

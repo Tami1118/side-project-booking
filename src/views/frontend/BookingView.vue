@@ -16,8 +16,8 @@ const route = useRoute();
 // 房型資訊
 import { useRoomStore } from "@/stores/roomStore";
 const roomStore = useRoomStore();
-const { roomDetail, roomLayout } = storeToRefs(roomStore);
 const getFrontRoom = roomStore.getFrontRoom;
+const { roomDetail, roomLayout } = storeToRefs(roomStore);
 
 // 預約表單操作
 import { useOrderStore } from "@/stores/orderStore";
@@ -51,10 +51,6 @@ const loginCheck = async () => {
   await checkUser();
   isLogin();
 }
-// 監聽 isChecked 值變化
-watch(isChecked, () => {
-  isLogin();
-})
 
 onMounted(() => {
   loginCheck()

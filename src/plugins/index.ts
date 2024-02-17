@@ -1,10 +1,14 @@
 import { createPinia } from 'pinia'
 import router from '../router'
+
+
+// Axios
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import * as rules from "@vee-validate/rules";
+
 
 // VeeValidate
+import * as rules from "@vee-validate/rules";
 // 引入 VeeValidate 元件跟功能
 import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate';
 // 引入 VeeValidate 的驗證規則
@@ -43,14 +47,14 @@ import { far } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 library.add(fas, fab, far);
 
+
 // AOS
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 AOS.init();
 
-import format from '../mixins/format';
 
-export function registerPlugins(app:any) {
+export function registerPlugins(app: any) {
   app
     .use(createPinia())
     .use(router)
@@ -60,5 +64,4 @@ export function registerPlugins(app:any) {
     .component('ErrorMessage', ErrorMessage)
     .use(VCalendar, {})
     .component("font-awesome-icon", FontAwesomeIcon)
-    .config.globalProperties.$format = format;
 }

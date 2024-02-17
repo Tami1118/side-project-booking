@@ -1,11 +1,11 @@
 <script setup lang="ts">
-const { imageList } = defineProps(["imageList"])
-
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 const modules = [Pagination];
+
+const { imageList } = defineProps(["imageList"])
 </script>
 
 <template>

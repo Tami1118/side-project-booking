@@ -19,8 +19,8 @@ const districts = computed(() => {
 
 // 縣市變動時，行政區隨縣市列表變動，預設為 ""
 const selectCity = ref<string>("")
-const selectZip = ref()
-const districtName = ref()
+const zipValue = ref()
+const districtValue = ref()
 
 const updateCity = () => {
   selectDistrict.value = districts.value.length > 0 ? '' : '';
@@ -30,19 +30,19 @@ const updateZip = () => {
   if (city) {
     const district = city.districts.find(d => d.name === selectDistrict.value);
     if (district) {
-      selectZip.value = Number(district.zip);
+      zipValue.value = Number(district.zip);
     } else {
-      selectZip.value = NaN;
+      zipValue.value = NaN;
     }
   } else {
-    selectZip.value = NaN;
+    zipValue.value = NaN;
   }
 };
 
 watch(selectDistrict, updateZip);
 
 
-// 取得使用者地址
+// 取得使用者地址(分解地址)
 import { useUserStore } from "@/stores/userStore";
 const userStore = useUserStore()
 const { userInfo } = storeToRefs(userStore)
@@ -54,12 +54,12 @@ const getAddress = () => {
     if (district) {
       selectCity.value = area.name;
       selectDistrict.value = district.zip;
-      districtName.value = district.name;
+      districtValue.value = district.name;
       break;
     }
   }
   addressDetail.value = userInfo.value.address.detail.replace(selectCity.value, "");
-  addressDetail.value = addressDetail.value.replace(districtName.value, "");
+  addressDetail.value = addressDetail.value.replace(districtValue.value, "");
 }
 
 defineExpose({ getAddress });

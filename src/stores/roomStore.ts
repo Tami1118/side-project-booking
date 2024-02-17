@@ -135,12 +135,12 @@ export const useRoomStore = defineStore('roomStore', () => {
   const roomList = ref<null|Room[]>(null)
   const getFrontRooms = async () => {
     try {
+      // console.log('getFrontRooms 取得資料', roomList.value)
       const url = `${VITE_URL}/api/v1/rooms/`
       const res = await axios.get(url)
       roomList.value = res.data.result
-      console.log('getFrontRooms 取得資料', roomList.value)
     } catch (err) {
-      console.log('getFrontRooms 失敗', err)
+      // console.log('getFrontRooms 失敗', err)
     }
   }
 
@@ -148,16 +148,18 @@ export const useRoomStore = defineStore('roomStore', () => {
   const roomDetail = ref<Room|null>();
   const getFrontRoom = async () => {
     try {
+      // console.log('getFrontRoom 取得資料', roomDetail.value)
       const url = `${VITE_URL}/api/v1/rooms/${route.params.id}`
       const res = await axios.get(url);
       roomDetail.value = res.data.result
-      console.log('getFrontRoom 取得資料', roomDetail.value)
     } catch (err) {
-      console.log('getFrontRoom 失敗', err)
+      // console.log('getFrontRoom 失敗', err)
     }
   }
 
-  // 取得縣市資料
+  /**
+   * 取得縣市資料
+   */
   const getTaiwan = async () => {
     try {
       const url = "/api/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json";
@@ -168,7 +170,9 @@ export const useRoomStore = defineStore('roomStore', () => {
     }
   }
 
-  // 後台-房型格式
+  /**
+   * 後台-房型格式
+   */
   const roomDataTemp = ref({ ...defaultRoom })
   // 後台-清除格式
   const resetRoomDataTemp = () => {
