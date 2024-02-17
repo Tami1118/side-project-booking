@@ -5,7 +5,7 @@ import { storeToRefs } from "pinia";
 import RoomDetailImageSwiper from "@/components/frontend/RoomDetailImageSwiper.vue";
 import RoomDetailBanner from "@/components/frontend/RoomDetailBanner.vue";
 import RoomInfoMain from "@/components/frontend/RoomInfoMain.vue";
-import ReserveRoom from "@/components/frontend/Room/ReserveRoom.vue"
+import ReserveRoom from "@/components/frontend/room/ReserveRoom.vue";
 
 // 房型資訊
 import { useRoomStore } from "@/stores/roomStore";
