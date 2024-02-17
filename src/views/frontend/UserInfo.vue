@@ -3,9 +3,9 @@ import { onMounted } from "vue";
 import { storeToRefs } from 'pinia';
 import { useUserStore } from '@/stores/userStore';
 
-import UserAccount from '@/components/frontend/UserAccount.vue';
-import UserBanner from "@/components/frontend/UserBanner.vue";
-import UserFrom from '@/components/frontend/UserForm.vue';
+import UserAccount from '@/components/frontend/user/UserAccount.vue';
+import UserBanner from "@/components/frontend/user/UserBanner.vue";
+import UserFrom from '@/components/frontend/user/UserForm.vue';
 
 const userStore = useUserStore()
 const { userInfo, showEditUserInfo } = storeToRefs(userStore)

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import format from "@/mixins/format";
-import RoomInfoProvide from "@/components/frontend/RoomInfoProvide.vue"
+import RoomInfoProvide from "@/components/frontend/room/RoomInfoProvide.vue"
 
 const { order, price } = defineProps(["order", "price"])
 </script>

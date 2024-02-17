@@ -2,7 +2,7 @@
 import { onMounted, watch } from 'vue';
 import { storeToRefs } from "pinia";
 
-import OrderRoomInfo from "@/components/frontend/OrderRoomInfo.vue";
+import OrderRoomInfo from "@/components/frontend/order/OrderRoomInfo.vue";
 
 // Order-取得訂單資訊
 import { useOrderStore } from "@/stores/orderStore"

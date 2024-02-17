@@ -3,9 +3,9 @@ import { ref, onMounted, computed, watch } from "vue";
 import { storeToRefs } from "pinia";
 
 import type { Order } from "@/interfaces/order";
-import UserBanner from "@/components/frontend/UserBanner.vue";
-import OrderRoomDetail from '@/components/frontend/OrderRoomDetail.vue';
-import OrderRoomHistory from '@/components/frontend/OrderRoomHistory.vue';
+import UserBanner from "@/components/frontend/user/UserBanner.vue";
+import OrderRoomDetail from '@/components/frontend/order/OrderRoomDetail.vue';
+import OrderRoomHistory from '@/components/frontend/order/OrderRoomHistory.vue';
 
 // Order-取得訂單列表
 import { useOrderStore } from "@/stores/orderStore";

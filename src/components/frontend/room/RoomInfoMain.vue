@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from "vue"
 
-import RoomInfoTitle from "@/components/frontend/RoomInfoTitle.vue";
-import RoomInfoBasic from "@/components/frontend/RoomInfoBasic.vue";
-import RoomInfoProvide from "@/components/frontend/RoomInfoProvide.vue";
-import RoomInfoRegulation from "@/components/frontend/RoomInfoRegulation.vue";
+import RoomInfoTitle from "@/components/frontend/room/RoomInfoTitle.vue";
+import RoomInfoBasic from "@/components/frontend/room/RoomInfoBasic.vue";
+import RoomInfoProvide from "@/components/frontend/room/RoomInfoProvide.vue";
+import RoomInfoRegulation from "@/components/frontend/room/RoomInfoRegulation.vue";
 
 const { info, layout } = defineProps(["info", "layout"]);
 

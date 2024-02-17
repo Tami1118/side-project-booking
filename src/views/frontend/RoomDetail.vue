@@ -2,9 +2,9 @@
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 
-import RoomDetailImageSwiper from "@/components/frontend/RoomDetailImageSwiper.vue";
-import RoomDetailBanner from "@/components/frontend/RoomDetailBanner.vue";
-import RoomInfoMain from "@/components/frontend/RoomInfoMain.vue";
+import RoomDetailImageSwiper from "@/components/frontend/room/RoomDetailImageSwiper.vue";
+import RoomDetailBanner from "@/components/frontend/room/RoomDetailBanner.vue";
+import RoomInfoMain from "@/components/frontend/room/RoomInfoMain.vue";
 import ReserveRoom from "@/components/frontend/room/ReserveRoom.vue";
 
 // 房型資訊

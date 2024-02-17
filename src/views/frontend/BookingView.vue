@@ -4,9 +4,9 @@ import { storeToRefs } from "pinia";
 
 import { Alert } from "@/mixins/swal";
 import format from "@/mixins/format";
-import RoomInfoMain from "@/components/frontend/RoomInfoMain.vue";
-import BookingForm from "@/components/frontend/BookingForm.vue";
-import BookingLoading from "@/components/frontend/BookingLoading.vue";
+import RoomInfoMain from "@/components/frontend/room/RoomInfoMain.vue";
+import BookingForm from "@/components/frontend/booking/BookingForm.vue";
+import BookingLoading from "@/components/frontend/booking/BookingLoading.vue";
 
 // Route
 import { useRouter, useRoute } from "vue-router";

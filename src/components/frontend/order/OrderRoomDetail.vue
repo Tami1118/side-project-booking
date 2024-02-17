@@ -2,7 +2,7 @@
 import { storeToRefs } from "pinia";
 
 import format from "@/mixins/format";
-import RoomInfoProvide from "@/components/frontend/RoomInfoProvide.vue";
+import RoomInfoProvide from "@/components/frontend/room/RoomInfoProvide.vue";
 
 const { order } = defineProps(["order"]);
 
