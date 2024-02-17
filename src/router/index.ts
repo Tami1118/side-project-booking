@@ -55,6 +55,7 @@ const routes = [
       },
     ],
   },
+
   {
     path: '/signup',
     name: 'signup',
@@ -66,6 +67,12 @@ const routes = [
     name: 'login',
     component: () => import('../views/LoginView.vue'),
     meta: { title: '登入' }
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    component: () => import('../views/NotFound.vue'),
+    meta: { title: '404' }
   },
   {
     path: '/admin',
