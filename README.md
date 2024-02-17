@@ -14,8 +14,8 @@
 - 訂單管理
 
 
-## Src 資料夾說明
-- assets - 圖片及SCSS樣式
+## 專案架構
+- assets - 靜態檔案，包含 圖片及SCSS樣式
 - components - Vue 組件
 - data - 資料庫
 - interfaces - TypeScript interface

@@ -1,4 +1,4 @@
-import './assets/scss/all.scss'
+import './style/all.scss';
 
 import { createApp } from 'vue';
 import { registerPlugins } from "@/plugins";

@@ -102,6 +102,7 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
+  // 頁面切換時，回到頁面頂部
   scrollBehavior() {
     return {
       top: 0,
