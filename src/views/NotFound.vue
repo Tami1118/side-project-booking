@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import BgWave from '@/assets/svg/BgWave.vue';
-</script>
-
 <template>
   <div class="grid grid-cols-1 md:grid-cols-2 bg-neutral-100 h-screen">
     <div class="col hidden md:block">
@@ -9,7 +5,7 @@ import BgWave from '@/assets/svg/BgWave.vue';
     </div>
     <div class="col relative overflow-hidden">
       <div class="relative">
-        <BgWave />
+        <img src="/svg/bgwave.svg" class="w-full" alt="">
         <RouterLink to="/" class="absolute top-0 left-0 w-full h-full flex justify-center items-center z-10">
           <img src="/svg/logo-white.svg" class="h-[60px] lg:h-[80px]" alt="享樂酒店logo">
         </RouterLink>
