@@ -55,11 +55,9 @@
 </template>
 
 <script setup lang="ts">
-// Basis
 import { watch, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 
-// Components
 import RoomModal from "@/components/admin/RoomModal.vue";
 
 // Room

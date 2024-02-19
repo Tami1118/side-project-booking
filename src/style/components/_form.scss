@@ -1,4 +1,4 @@
-label{
+label {
   @apply block font-bold mb-2
 }
 
@@ -12,8 +12,40 @@ label{
 }
 
 .form-select {
-  @apply border border-neutral-40;
+  @apply w-full rounded-2 p-4 border border-neutral-40 block;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+
+  &:after {
+    content: '123';
+    // width: 14px;
+    // height: 8px;
+    position: absolute;
+    right: 20px;
+    top: 41%;
+    background: url('/public/svg/arrow-down.svg') no-repeat center;
+    pointer-events: none;
+  }
+}
+
+
+input[type=checkbox] {
+  display: none;
+}
+
+input[type="checkbox"]+span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  background: #fff;
+  user-select: none;
+  margin-right: 8px;
+}
+
+input[type="checkbox"]:checked+span {
+  background: #BF9D7D;
 }

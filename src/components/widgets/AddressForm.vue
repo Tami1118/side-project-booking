@@ -73,7 +73,7 @@ defineExpose({ getAddress });
         <option value="" selected>請選擇縣市</option>
         <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
       </select>
-      <div class="absolute top-0 bottom-0 right-0 m-auto p-4">
+      <div class="absolute top-0 bottom-0 right-0 m-auto p-4 pointer-events-none">
         <span class="material-icons">keyboard_arrow_down</span>
       </div>
     </div>
@@ -83,7 +83,7 @@ defineExpose({ getAddress });
           <option value="" selected>請選擇行政區</option>
           <option v-for="district in districts" :key="district.zip" :value="district.zip">{{ district.name }}</option>
         </select>
-        <div class="absolute top-0 bottom-0 right-0 m-auto p-4">
+        <div class="absolute top-0 bottom-0 right-0 m-auto p-4 pointer-events-none">
           <span class="material-icons">keyboard_arrow_down</span>
         </div>
       </div>

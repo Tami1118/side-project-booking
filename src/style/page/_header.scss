@@ -1,0 +1,7 @@
+.header-height {
+  height: calc(100vh - 72px);
+
+  @media (min-width: 1024px) {
+    height: calc(100vh - 120px);
+  }
+}

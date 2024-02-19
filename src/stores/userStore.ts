@@ -66,7 +66,7 @@ export const useUserStore = defineStore('userStore', () => {
           "email": "",
           "password": "",
         }
-        console.log(userInfo.value)
+        // console.log(userInfo.value)
         Toast.fire({
           icon: 'success',
           title: '登入成功'
@@ -74,11 +74,11 @@ export const useUserStore = defineStore('userStore', () => {
         router.push('/')
       })
       .catch(() => {
-        // console.log('login 失敗',err)
-        // console.log(err.response.data.message)
+        // console.log('login 失敗', err)
         Alert.fire({
           icon: 'error',
-          title: '登入失敗'
+          title: '登入失敗',
+          content: '格式有誤，請重新登入'
         })
       })
   }
@@ -124,7 +124,7 @@ export const useUserStore = defineStore('userStore', () => {
     signupData.value.address.county = selectedDistrict.value
     signupData.value.address.detail = detailedAddress.value
     signupData.value.birthday = `${birthdate.value.year}/${birthdate.value.month}/${birthdate.value.day}`
-    console.log(signupData.value.address, signupData.value.birthday)
+    // console.log(signupData.value.address, signupData.value.birthday)
     const url = `${VITE_URL}/api/v1/user/signup`
     axios.post(url, signupData.value)
       .then(res => {
@@ -169,11 +169,11 @@ export const useUserStore = defineStore('userStore', () => {
     try {
       const res = await axios.get(url);
       isChecked.value = res.data.status;
-      console.log('checkUser 驗證成功', isChecked.value);
-      console.log(res)
+      // console.log('checkUser 驗證成功', isChecked.value);
+      // console.log(res)
     } catch (err) {
       isChecked.value = false;
-      console.log('checkUser 驗證失敗', isChecked.value);
+      // console.log('checkUser 驗證失敗', isChecked.value);
     }
   }
 

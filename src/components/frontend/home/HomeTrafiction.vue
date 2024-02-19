@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import HomeWave from "@/assets/svg/HomeWave.vue";
-</script>
-
 <template>
   <section class="bg-neutral text-white overflow-hidden">
     <div class="container mx-auto px-3 md:px-0 pt-20 md:pt-30 pb-10 md:pb-20">
@@ -33,6 +29,7 @@ import HomeWave from "@/assets/svg/HomeWave.vue";
         </div>
       </div>
     </div>
-    <HomeWave />
+
+    <img class="w-full" src="/svg/home-wave.svg" alt="bg wave">
   </section>
 </template>

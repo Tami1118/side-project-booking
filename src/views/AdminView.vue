@@ -6,24 +6,38 @@
 </template>
 
 <script setup lang="ts">
-
-// Basic
 import { onMounted } from "vue";
+import { storeToRefs } from "pinia";
 import { RouterView } from "vue-router";
+import { useRouter } from "vue-router";
+const router = useRouter()
 
-// Components
 import AdminHeader from "@/components/layouts/AdminHeader.vue";
 
-// User
 import { useUserStore } from "@/stores/userStore";
+import { Toast } from "@/mixins/swal";
 const userStore = useUserStore()
 const checkUser = userStore.checkUser;
-const getUser = userStore.getUser;
+const { isChecked } = storeToRefs(userStore)
 
-// Action
-onMounted(() => {
-  checkUser();
-  getUser();
+const isLogin = () => {
+  if (isChecked.value) {
+    Toast.fire({
+      title: '登入成功',
+      icon: 'success'
+    })
+  } else {
+    router.push('/login')
+  }
+}
+
+const checkLogin = async () => {
+  await checkUser()
+  isLogin()
+}
+
+onMounted(async () => {
+  await checkLogin();
 });
 
 </script>

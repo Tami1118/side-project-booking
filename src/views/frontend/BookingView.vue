@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, watch, computed } from "vue";
+import { onMounted, computed } from "vue";
 import { storeToRefs } from "pinia";
 
 import { Alert } from "@/mixins/swal";
