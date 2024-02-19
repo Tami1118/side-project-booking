@@ -1,13 +1,7 @@
-<template>
-  <div>
-    <admin-header></admin-header>
-    <router-view></router-view>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
+
 import { RouterView } from "vue-router";
 import { useRouter } from "vue-router";
 const router = useRouter()
@@ -39,5 +33,15 @@ const checkLogin = async () => {
 onMounted(async () => {
   await checkLogin();
 });
-
 </script>
+
+<template>
+  <div class="flex flex-col lg:flex-row bg-primary-10">
+    <div class="lg:w-1/5 bg-neutral">
+      <AdminHeader />
+    </div>
+    <div class="lg:w-4/5">
+      <RouterView />
+    </div>
+  </div>
+</template>

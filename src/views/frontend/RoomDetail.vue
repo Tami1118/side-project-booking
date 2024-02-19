@@ -27,7 +27,7 @@ onMounted(() => {
       </div>
       <div class="max-w-[1860px] mx-auto hidden lg:block px-2 py-20">
         <div v-if="roomDetail.imageUrlList">
-          <RoomDetailBanner :image-list="roomDetail.imageUrlList" />
+          <RoomDetailBanner :image="roomDetail.imageUrl" :image-list="roomDetail.imageUrlList" />
         </div>
       </div>
     </div>

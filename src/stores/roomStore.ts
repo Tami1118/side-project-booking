@@ -5,12 +5,11 @@ import { useRoute } from 'vue-router'
 
 const { VITE_URL } = import.meta.env
 import type { Room } from "@/interfaces/room"
-// import { Toast, Alert } from '@/mixins/swal'
+import { Toast, Alert } from '@/mixins/swal'
 
 
 export const useRoomStore = defineStore('roomStore', () => {
   const route = useRoute()
-  const showRoomModal = ref<boolean>(false)
   const updateRoomType = ref<string>("create")
   const roomLayout = ref([
     {
@@ -40,7 +39,7 @@ export const useRoomStore = defineStore('roomStore', () => {
     "name": "",
     "description": "",
     "imageUrl": "",
-    "imageUrlList": ["", "", "", "", ""],
+    "imageUrlList": [],
     "areaInfo": "",
     "bedInfo": "",
     "maxPeople": 0,
@@ -132,7 +131,7 @@ export const useRoomStore = defineStore('roomStore', () => {
   }
 
   // 前台-房型列表
-  const roomList = ref<null|Room[]>(null)
+  const roomList = ref<null | Room[]>(null)
   const getFrontRooms = async () => {
     try {
       // console.log('getFrontRooms 取得資料', roomList.value)
@@ -145,7 +144,7 @@ export const useRoomStore = defineStore('roomStore', () => {
   }
 
   // 前台-房型詳細資料
-  const roomDetail = ref<Room|null>();
+  const roomDetail = ref<null | Room>(null);
   const getFrontRoom = async () => {
     try {
       // console.log('getFrontRoom 取得資料', roomDetail.value)
@@ -173,20 +172,20 @@ export const useRoomStore = defineStore('roomStore', () => {
   /**
    * 後台-房型格式
    */
-  const roomDataTemp = ref({ ...defaultRoom })
+  const tempRoom = ref({ ...defaultRoom })
   // 後台-清除格式
-  const resetRoomDataTemp = () => {
-    roomDataTemp.value = { ...defaultRoom }
+  const resetTempRoom = () => {
+    tempRoom.value = { ...defaultRoom }
+    tempRoom.value.imageUrlList = []
   }
 
   // 後台-取得所有房型資料
-  const roomData = ref<Room[]>([]);
   const getRooms = async () => {
     try {
       const url = `${VITE_URL}/api/v1/admin/rooms/`
       const res = await axios.get(url)
-      roomData.value = res.data.result
-      console.log('getRooms 成功取得資料', roomData.value)
+      roomList.value = res.data.result
+      console.log('getRooms 成功取得資料', roomList.value)
     } catch (err) {
       console.log('getRooms 失敗', err)
     }
@@ -196,49 +195,101 @@ export const useRoomStore = defineStore('roomStore', () => {
   const createRoom = () => {
     // console.log('createRoom')
     const url = `${VITE_URL}/api/v1/admin/rooms/`
-    axios.post(url, roomDataTemp.value)
+    axios.post(url, tempRoom.value)
       .then((res) => {
         console.log('createRoom 已新增房型', res)
-        resetRoomDataTemp()
+        Toast.fire({
+          icon: 'success',
+          title: '成功新增房型'
+        })
+        resetTempRoom()
         getRooms()
       })
       .catch((err) => {
         console.log('createRoom 失敗', err)
+        Alert.fire({
+          icon: 'errors',
+          title: '房型新增失敗',
+          text: '格式有誤，請稍後再試一次'
+        })
       })
   }
 
   // 後台-編輯房型資料
+  // const loadingIcon = ref(false)
   const editRoomId = ref("")
   const editRoom = () => {
     console.log('editRoom', editRoomId.value)
+    // loadingIcon.value = true
     const url = `${VITE_URL}/api/v1/admin/rooms/${editRoomId.value}`
-    axios.put(url, roomDataTemp.value)
+    axios.put(url, tempRoom.value)
       .then((res) => {
         console.log('editRoomId 已更新房型', res)
-        resetRoomDataTemp()
+        resetTempRoom()
+        Toast.fire({
+          title: '更新成功',
+          icon: 'success'
+        })
+        // loadingIcon.value = false
         getRooms()
       })
       .catch((err) => {
+        Alert.fire({
+          title: '更新失敗',
+          text: '請稍後再試一次',
+          icon: 'error'
+        })
         console.log('editRoomId 失敗', err)
       })
   }
 
   // 後台-刪除房型資料
-  const deleteRoom = (id: string) => {
-    console.log(id)
-    const url = `${VITE_URL}/api/v1/admin/rooms/${id}`
+  const deleteRoom = () => {
+    const url = `${VITE_URL}/api/v1/admin/rooms/${editRoomId.value}`
     axios.delete(url)
       .then((res) => {
         console.log('deleteRoom 已刪除房型', res)
+        Toast.fire({
+          title: '成功刪除房型',
+          icon: 'success'
+        })
         getRooms()
       })
       .catch((err) => {
         console.log(err)
+        Alert.fire({
+          title: '刪除失敗，請稍後再試一次',
+          icon: 'error'
+        })
       })
   }
 
+  const showRoomModal = ref<boolean>(false)
+  const showDelModal = ref<boolean>(false)
+
+  const openRoomModal = () => {
+    showRoomModal.value = true;
+  }
+
+  const closeRoomModal = () => {
+    showRoomModal.value = false
+    resetTempRoom()
+  }
+
+  const toogleModal = () => {
+    showRoomModal.value = !showRoomModal.value
+  }
+
+  const openRoomDelModal = () => {
+    showDelModal.value = true
+  }
+
+  const closeRoomDelModal = () => {
+    showDelModal.value = false
+    resetTempRoom()
+  }
+
   return {
-    showRoomModal,
     updateRoomType,
     roomLayout,
     bedType,
@@ -250,15 +301,22 @@ export const useRoomStore = defineStore('roomStore', () => {
     getFrontRoom,
 
     // 後台
-    roomDataTemp,
-    resetRoomDataTemp,
-    roomData,
+    tempRoom,
+    resetTempRoom,
     getRooms,
     createRoom,
     editRoomId,
     editRoom,
     deleteRoom,
 
-    getTaiwan
+    getTaiwan,
+
+    showRoomModal,
+    toogleModal,
+    openRoomModal,
+    closeRoomModal,
+    showDelModal,
+    openRoomDelModal,
+    closeRoomDelModal,
   }
 })

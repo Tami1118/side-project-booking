@@ -1,97 +1,97 @@
+<script setup lang="ts">
+import { onMounted } from "vue";
+import { storeToRefs } from "pinia";
+
+import format from "@/mixins/format";
+import RoomDelete from "@/components/admin/RoomDelete.vue";
+import RoomModal from "@/components/admin/RoomModal.vue";
+
+// 房型資訊
+import { useRoomStore } from "@/stores/roomStore";
+const roomStore = useRoomStore();
+const { roomList, tempRoom, updateRoomType, editRoomId, showRoomModal, showDelModal } = storeToRefs(roomStore);
+const getRooms = roomStore.getRooms;
+
+// 先驗證使用者身份，再取得資訊
+import { useUserStore } from "@/stores/userStore";
+const userStore = useUserStore();
+const { isChecked } = storeToRefs(userStore);
+const checkUser = userStore.checkUser;
+const isLogin = () => {
+  if (isChecked.value) getRooms()
+}
+const getAuth = async () => {
+  await checkUser();
+  isLogin()
+}
+onMounted(() => {
+  getAuth();
+});
+</script>
+
 <template>
-  <div class="container mx-auto px-4 xl:px-0 py-10 lg:py-20">
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-6">房型管理</h1>
-      <button class="p-3 btn-primary text-white" @click="showRoomModal = true, updateRoomType = 'create'">
-        新增房型
-      </button>
+  <div class="p-10 flex flex-col gap-6">
+    <div class="flex items-end">
+      <h1 class="text-7">房型管理</h1>
+      <p v-if="roomList" class="font-bold ms-2">(共 <span class="text-primary-100">{{ roomList.length }}</span> 筆資料)</p>
     </div>
-    <table class="w-full">
+
+    <button class="btn btn-primary ms-auto" @click="showRoomModal = true, updateRoomType = 'create'">
+      <font-awesome-icon icon="fa-solid fa-plus" class="me-2" />
+      新增房型
+    </button>
+
+    <div v-if="!roomList" class="text-primary-100 text-7 font-bold w-full h-[70vh] flex justify-center items-center">
+      <font-awesome-icon icon="fa-solid fa-bed" class="me-2" /> 目前還沒有任何房型，快去新增吧！
+    </div>
+    <table v-else class="w-full">
       <thead>
-        <tr class="border-y border-neutral-40">
-          <th class="p-2" colspan="2">房型名稱</th>
+        <tr class="border-y border-primary-60">
+          <th class="p-2"></th>
+          <th class="p-2 text-start">房型名稱</th>
           <th class="p-2">床數</th>
           <th class="p-2">坪數</th>
+          <th class="p-2">容納人數</th>
           <th class="p-2 text-end">價格</th>
-          <th class="p-2 text-start">管理</th>
+          <th class="p-2 text-center">管理</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in roomData" :key="item._id" class="border-b border-neutral-40">
+        <tr v-for="item in roomList" :key="item._id" class="border-b border-primary-60 hover:bg-primary-40">
           <td class="p-2">
-            <img v-if="item.imageUrl" class="w-[80px] h-[80px] object-cover rounded-2" :src="item.imageUrl" :alt="item.name">
+            <img v-if="item.imageUrl" class="w-full h-[120px] object-cover rounded-2" :src="item.imageUrl" :alt="item.name">
           </td>
-          <td class="p-2">{{ item.name }}</td>
-          <td class="p-2 text-center">{{ item.bedInfo }}</td>
-          <td class="p-2 text-center">{{ item.areaInfo }} 坪</td>
-          <td class="p-2 text-end">{{ item.price }}</td>
+          <td class="p-2 text-4h font-bold">{{ item.name }}</td>
+          <td class="p-2 text-4h text-center">{{ item.bedInfo }}</td>
+          <td class="p-2 text-4h text-center">{{ item.areaInfo }} 坪</td>
+          <td class="p-2 text-4h text-center">{{ item.maxPeople }} 人</td>
+          <td class="p-2 text-4h text-end">NT$ {{ format.toThousands(item.price) }}</td>
           <td class="p-2">
-            <div class="flex flex-wrap gap-2">
-              <button class="p-3 btn-primary" @click="
-                      showRoomModal = true, 
-                      roomDataTemp = JSON.parse(JSON.stringify(item)),
+            <div class="flex flex-wrap justify-center gap-2">
+              <button @click="
+                      showRoomModal = true,
+                      tempRoom = JSON.parse(JSON.stringify(item)),
                       updateRoomType = 'edit',
-                      editRoomId = item._id">
-                編輯
+                      editRoomId = item._id"
+                      class="btn btn-primary text-4h">
+                      <font-awesome-icon icon="fa-solid fa-pencil" class="me-2" />
+                      編輯
               </button>
-              <button class="p-3 btn-secondary" @click="deleteRoom(item._id)">
-                刪除
+              <button @click="
+                      showDelModal = true,
+                      tempRoom = JSON.parse(JSON.stringify(item)),
+                      editRoomId = item._id"
+                      class="btn text-primary-100 text-4h hover:text-primary border border-primary-100 hover:border-primary bg-transparent hover:bg-primary-60">
+                      <font-awesome-icon icon="fa-solid fa-trash-can" class="me-2" />
+                      刪除
               </button>
             </div>
           </td>
         </tr>
       </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="6" class="text-end border-y border-neutral-40">
-            共 {{ roomData.length }} 筆資料
-          </td>
-        </tr>
-      </tfoot>
     </table>
   </div>
-  {{ roomData[0] }}
+
   <RoomModal v-if="showRoomModal" />
+  <RoomDelete v-if="showDelModal" />
 </template>
-
-<script setup lang="ts">
-import { watch, onMounted } from "vue";
-import { storeToRefs } from "pinia";
-
-import RoomModal from "@/components/admin/RoomModal.vue";
-
-// Room
-import { useRoomStore } from "@/stores/roomStore";
-const roomStore = useRoomStore();
-const { roomData, roomDataTemp, updateRoomType, editRoomId, showRoomModal } = storeToRefs(roomStore);
-const getRooms = roomStore.getRooms;
-const deleteRoom = roomStore.deleteRoom;
-
-// User
-import { useUserStore } from "@/stores/userStore";
-const userStore = useUserStore();
-const { isChecked } = storeToRefs(userStore);
-watch(isChecked, (n) => {
-  if(n) getRooms()
-});
-
-onMounted(() => {
-  if (isChecked) getRooms();
-});
-
-// 問題：如果直接跳到 roomAdim時，會因為 checkuser 較慢無法取得 roomData
-// 解決：用watch監聽 checked，當 checked 為 true 時，再去取得 roomData
-
-// // route
-// import { useRoute } from "vue-router"
-// const route  = useRoute()
-// watchEffect(() => {
-//   if (route.path === '/admin/rooms') {
-//     getRooms()
-//     window.scrollTo(0, 0);
-//   }
-// });
-
-// 延伸
-// 問題：若不加 onMounted 會需要再重新更新頁面才會出現，但加了 onMounted 變成先取得失敗然後再重新驗證一次
-</script>

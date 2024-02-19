@@ -78,7 +78,7 @@ export const useUserStore = defineStore('userStore', () => {
         Alert.fire({
           icon: 'error',
           title: '登入失敗',
-          content: '格式有誤，請重新登入'
+          text: '格式有誤，請重新登入'
         })
       })
   }
