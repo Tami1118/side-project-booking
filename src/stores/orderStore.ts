@@ -1,9 +1,9 @@
 import { ref, computed } from 'vue';
 import { defineStore } from "pinia";
-import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
-const { VITE_URL } = import.meta.env;
+import { useRoute, useRouter } from "vue-router";
 
+const { VITE_URL } = import.meta.env;
 import format from "@/mixins/format";
 import { Toast, Alert } from "@/mixins/swal";
 import type { Order, TempOrder, CheckDate } from "@/interfaces/order";
@@ -14,14 +14,109 @@ interface User {
   email: string,
 }
 
+
 export const useOrderStore = defineStore('order', () => {
   const route = useRoute()
   const router = useRouter()
+  const editOrderId = ref('')
   const defaultOrder = {
     "checkInDate": "",
     "checkOutDate": "",
     "peopleNum": 0,
-    "roomId": "",
+    "roomId": {
+      "name": "",
+      "description": "",
+      "imageUrl": "",
+      "imageUrlList": [],
+      "areaInfo": "",
+      "bedInfo": "",
+      "maxPeople": 0,
+      "price": 0,
+      "facilityInfo": [
+        {
+          "title": "平面電視",
+          "isProvide": true,
+        },
+        {
+          "title": "吹風機",
+          "isProvide": true,
+        },
+        {
+          "title": "冰箱",
+          "isProvide": true,
+        },
+        {
+          "title": "熱水壺",
+          "isProvide": true,
+        },
+        {
+          "title": "檯燈",
+          "isProvide": true,
+        },
+        {
+          "title": "衣櫃",
+          "isProvide": true,
+        },
+        {
+          "title": "除濕機",
+          "isProvide": true,
+        },
+        {
+          "title": "浴缸",
+          "isProvide": true,
+        },
+        {
+          "title": "書桌",
+          "isProvide": true,
+        },
+        {
+          "title": "音響",
+          "isProvide": true,
+        },
+      ],
+      "amenityInfo": [
+        {
+          "title": "衛生紙",
+          "isProvide": true,
+        },
+        {
+          "title": "拖鞋",
+          "isProvide": true,
+        },
+        {
+          "title": "沐浴用品",
+          "isProvide": true,
+        },
+        {
+          "title": "清潔用品",
+          "isProvide": true,
+        },
+        {
+          "title": "刮鬍刀",
+          "isProvide": true,
+        },
+        {
+          "title": "吊衣架",
+          "isProvide": true,
+        },
+        {
+          "title": "浴巾",
+          "isProvide": true,
+        },
+        {
+          "title": "刷牙用品",
+          "isProvide": true,
+        },
+        {
+          "title": "罐裝水",
+          "isProvide": true,
+        },
+        {
+          "title": "梳子",
+          "isProvide": true,
+        },
+      ],
+    },
     "userInfo": {
       "name": "",
       "phone": "",
@@ -34,7 +129,7 @@ export const useOrderStore = defineStore('order', () => {
   }
 
   // 前台-tempOrder格式
-  const tempOrder = ref<TempOrder>({ ...defaultOrder })
+  const tempOrder = ref({ ...defaultOrder })
   const bookingDate = ref<CheckDate>({ start: '', end: '' })
   const peopleNum = ref<number>(2)
   const userInfo = ref<User>({ name: '', phone: '', email: '' })
@@ -67,7 +162,7 @@ export const useOrderStore = defineStore('order', () => {
       isLoading.value = true
       const url = `${VITE_URL}/api/v1/orders/`
       const res = await axios.post(url, orderForm)
-      // console.log('createOrder 新增成功', res)
+      console.log('createOrder 新增成功', res)
       isLoading.value = false
       cleanStorageData()
       router.push(`/booking-complete/${res.data.result._id}`)
@@ -77,7 +172,7 @@ export const useOrderStore = defineStore('order', () => {
         icon: 'success'
       })
     } catch (err) {
-      // console.log('createOrder 失敗', err)
+      console.log('createOrder 失敗', err)
       isLoading.value = false
       Alert.fire({
         title: '請填寫正確格式',
@@ -106,12 +201,12 @@ export const useOrderStore = defineStore('order', () => {
   const order = ref<null | Order>(null)
   const getFrontOrder = async () => {
     try {
-      // console.log('getFrontOrder 取得資料', order.value)
+      console.log('getFrontOrder 取得資料', order.value)
       const url = `${VITE_URL}/api/v1/orders/${route.params.id}`
       const res = await axios.get(url)
       order.value = res.data.result
     } catch (err) {
-      // console.log('getFrontOrder 失敗', err)
+      console.log('getFrontOrder 失敗', err)
     }
   }
 
@@ -188,14 +283,23 @@ export const useOrderStore = defineStore('order', () => {
    * 
    * @param id 訂單詳細資料
    */
-  const editOrder = (id:Object) => {
-    const url = `${VITE_URL}/api/v1/admin/orders/${route.params.id}`
-    axios.put(url, id)
+  const editOrder = () => {
+    const url = `${VITE_URL}/api/v1/admin/orders/${editOrderId.value}`
+    axios.put(url, tempOrder.value)
       .then(res => {
-        console.log(res)
+        console.log('editOrder 更新成功',res)
+        Toast.fire({
+          icon: 'success',
+          title: '更新訂單成功',
+        })
+        getOrders()
       })
       .catch(err => {
-        console.log(err)
+        console.log('editOrder 失敗',err)
+        Alert.fire({
+          icon: 'error',
+          title: '更新失敗，請稍後再試一次',
+        })
       })
   }
 
@@ -204,15 +308,23 @@ export const useOrderStore = defineStore('order', () => {
    * 
    * @param id 訂單order._id
    */
-  const deleteOrder = (id: string) => {
-    const url = `${VITE_URL}/api/v1/admin/orders/${id}`
+  const deleteOrder = () => {
+    const url = `${VITE_URL}/api/v1/admin/orders/${editOrderId.value}`
     axios.delete(url)
       .then(res => {
-        console.log('刪除成功', res)
+        console.log('deleteOrder 刪除成功', res)
+        Toast.fire({
+          icon: 'success',
+          title: '成功刪除訂單',
+        })
         getOrders()
       })
       .catch(err => {
-        console.log(err)
+        console.log('deleteOrder 失敗',err)
+        Alert.fire({
+          icon: 'error',
+          title: '刪除失敗，請稍後再試一次',
+        })
       })
   }
 
@@ -245,24 +357,48 @@ export const useOrderStore = defineStore('order', () => {
     localStorage.clear()
   }
 
+  // 開啟/關閉 modal
+  const showOrderModal = ref<boolean>(false)
+  const openOrderModal = () => {
+    showOrderModal.value = true;
+  }
+  const closeOrderModal = () => {
+    showOrderModal.value = false
+    resetTempOrder()
+  }
+  const toogleModal = () => {
+    showOrderModal.value = !showOrderModal.value
+  }
+
+  const showDelModal = ref<boolean>(false)
+  const openOrderDelModal = () => {
+    showDelModal.value = true
+  }
+  const closeOrderDelModal = () => {
+    showDelModal.value = false
+    resetTempOrder()
+  }
+
   return {
+    tempOrder,
+    resetTempOrder,
+
+    editOrderId,
     bookingDate,
     peopleNum,
     userInfo,
     selectDistrict,
     addressDetail,
-    tempOrder,
     isLoading,
 
     // frontend
-    createOrder,
     orderList,
     getFrontOrder,
+    createOrder,
     order,
     getFrontOrders,
     totalPrice,
     deleteFrontOrder,
-    resetTempOrder,
 
     // admin
     getOrders,
@@ -273,5 +409,14 @@ export const useOrderStore = defineStore('order', () => {
     setStoragePeople,
     getStorageData,
     cleanStorageData,
+
+    // modal
+    showOrderModal,
+    openOrderModal,
+    closeOrderModal,
+    toogleModal,
+    showDelModal,
+    openOrderDelModal,
+    closeOrderDelModal,
   }
 })

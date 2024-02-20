@@ -1,8 +1,19 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { news } from "@/stores/homeStore";
-import type { News } from "@/stores/homeStore";
-const newsData = ref<News[]>(news);
+import { onMounted } from "vue";
+import { storeToRefs } from 'pinia';
+import { useNewsStore } from "@/stores/newsStore";
+const newsStore = useNewsStore();
+const { newsList } = storeToRefs(newsStore);
+const getFrontNews = newsStore.getFrontNews;
+
+onMounted(() => {
+  getFrontNews()
+})
+
+// import { ref } from "vue";
+// import { news } from "@/stores/homeStore";
+// import type { News } from "@/stores/homeStore";
+// const newsData = ref<News[]>(news);
 </script>
 
 <template>
@@ -15,11 +26,11 @@ const newsData = ref<News[]>(news);
         </div>
         <div class="w-full lg:w-10/12">
           <ul class="flex flex-col gap-10" data-aos="fade-left">
-            <li class="flex flex-col lg:flex-row gap-6 lg:items-center" v-for="item in newsData" :key="item.id">
-              <img :src="item.imageUrl" class="rounded-2 h-[291px] lg:w-[474px] object-cover w-full" :alt="item.title">
+            <li class="flex flex-col lg:flex-row gap-6 lg:items-center" v-for="item in newsList" :key="item._id">
+              <img :src="item.image" class="rounded-2 h-[291px] lg:w-[474px] object-cover w-full" :alt="item.title">
               <div>
                 <h3 class="text-7 lg:text-8 font-bold text-neutral-100 mb-2 lg:mb-6">{{ item.title }}</h3>
-                <p class="text-3h lg:text-4 text-500 text-justify">{{ item.descript }}</p>
+                <p class="text-3h lg:text-4 text-500 text-justify">{{ item.description }}</p>
               </div>
             </li>
           </ul>
