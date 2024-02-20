@@ -4,7 +4,7 @@
       <img class="h-screen w-full object-cover object-center overflow-hidden" src="../assets/images/desktop/register.png" />
     </div>
     <div class="col relative overflow-hidden">
-      <div class="relative">
+      <div class="relative pt-10 lg:pt-20">
         <img src="/svg/bgwave.svg" class="w-full" alt="">
         <RouterLink to="/" class="absolute top-0 left-0 w-full h-full flex justify-center items-center z-10">
           <img src="/svg/logo-white.svg" class="h-[60px] lg:h-[80px]" alt="享樂酒店logo">

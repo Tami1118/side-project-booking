@@ -24,12 +24,12 @@ const logout = userStore.logout
         <img src="/svg/logo-white.svg" class="w-[196px]" alt="">
       </RouterLink>
       <ul class="flex flex-col gap-5">
-        <li><RouterLink to="/admin/rooms" class="flex items-center text-6 hover:text-primary-80" :class="pathName === '/admin/rooms'? 'text-primary-100':'text-white'"><font-awesome-icon icon="fa-solid fa-bed" class="w-6" /> <p class="ms-4">房型管理</p> </RouterLink></li>
-        <li><RouterLink to="/admin/orders" class="flex items-center text-6 hover:text-primary-80" :class="pathName === '/admin/orders'? 'text-primary-100':'text-white'"><font-awesome-icon icon="fa-solid fa-note-sticky" class="w-6" /> <p class="ms-4">訂單管理</p> </RouterLink></li>
-        <li><RouterLink to="/admin/news" class="flex items-center text-6 hover:text-primary-80" :class="pathName === '/admin/news'? 'text-primary-100':'text-white'"><font-awesome-icon icon="fa-solid fa-bullhorn" class="w-6" /> <p class="ms-4">消息管理</p> </RouterLink></li>
-        <li><RouterLink to="/admin/culinary" class="flex items-center text-6 hover:text-primary-80" :class="pathName === '/admin/culinary'? 'text-primary-100':'text-white'"><font-awesome-icon icon="fa-solid fa-utensils" class="w-6" /> <p class="ms-4">餐飲管理</p> </RouterLink></li>
+        <li><RouterLink to="/admin/rooms" class="flex items-center text-5 hover:text-primary-80" :class="pathName === '/admin/rooms'? 'text-primary-100':'text-white'"><font-awesome-icon icon="fa-solid fa-bed" class="w-6" /> <p class="ms-4">房型管理</p> </RouterLink></li>
+        <li><RouterLink to="/admin/orders" class="flex items-center text-5 hover:text-primary-80" :class="pathName === '/admin/orders'? 'text-primary-100':'text-white'"><font-awesome-icon icon="fa-solid fa-note-sticky" class="w-6" /> <p class="ms-4">訂單管理</p> </RouterLink></li>
+        <li><RouterLink to="/admin/news" class="flex items-center text-5 hover:text-primary-80" :class="pathName === '/admin/news'? 'text-primary-100':'text-white'"><font-awesome-icon icon="fa-solid fa-bullhorn" class="w-6" /> <p class="ms-4">消息管理</p> </RouterLink></li>
+        <li><RouterLink to="/admin/culinary" class="flex items-center text-5 hover:text-primary-80" :class="pathName === '/admin/culinary'? 'text-primary-100':'text-white'"><font-awesome-icon icon="fa-solid fa-utensils" class="w-6" /> <p class="ms-4">美饌管理</p> </RouterLink></li>
       </ul>
-      <button @click="logout()" class="mt-auto text-white text-6 hover:text-primary-100 text-start"><font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket" class="me-6 rotate-180" />登出</button>
+      <button @click="logout()" class="mt-auto text-white text-5 hover:text-primary-100 text-start"><font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket" class="me-6 rotate-180" />登出</button>
     </div>
   </div>
 </template>

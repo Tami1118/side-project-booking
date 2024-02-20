@@ -6,12 +6,12 @@ declare module '*.vue' {
   export default componentOptions
 }
 
-declare module 'aos';
+import { ComponentCustomProperties } from "vue";
+declare module 'vue' {
+  interface ComponentCustomProperties {
+    $format: any;
+  }
+}
+export default ComponentCustomProperties;
 
-// import { ComponentCustomProperties } from "vue";
-// declare module 'vue' {
-//   interface ComponentCustomProperties {
-//     $format: any;
-//   }
-// }
-// export default ComponentCustomProperties;
+declare module 'aos';

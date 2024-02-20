@@ -85,9 +85,15 @@ const routes = [
         meta: { title: '房型管理' }
       },
       {
+        path: 'orders',
+        name: 'orders',
+        component: () => import('../views/admin/OrderAdmin.vue'),
+        meta: { title: '訂單管理' }
+      },
+      {
         path: 'news',
         name: 'news',
-        component: () => import('../views/admin/OrderAdmin.vue'),
+        component: () => import('../views/admin/NewsAdmin.vue'),
         meta: { title: '消息管理' }
       },
       {
@@ -95,12 +101,6 @@ const routes = [
         name: 'culinary',
         component: () => import('../views/admin/CulinaryAdmin.vue'),
         meta: { title: '菜單管理' }
-      },
-      {
-        path: 'orders',
-        name: 'orders',
-        component: () => import('../views/admin/OrderAdmin.vue'),
-        meta: { title: '訂單管理' }
       },
     ]
   },

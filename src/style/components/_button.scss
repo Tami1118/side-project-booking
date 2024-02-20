@@ -3,14 +3,14 @@
 }
 
 .btn-primary {
-  @apply bg-primary-100 hover:bg-primary disabled:bg-transparent
-         text-white disabled:text-neutral-60 ;
+  @apply bg-primary-100 hover:bg-primary disabled:bg-neutral-10
+         text-white disabled:text-neutral-60;
 }
 
 .btn-secondary {
   @apply border border-primary-100 hover:border-primary disabled:border-neutral-60 
-         bg-white hover:bg-primary-10 disabled:bg-transparent 
-         text-primary-100 hover:text-primary disabled:text-neutral-60 ;
+        hover:bg-primary-10 disabled:bg-neutral-10/30
+         text-primary-100 hover:text-primary disabled:text-neutral-60;
 }
 
 .btn-ghost {
