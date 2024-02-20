@@ -1,12 +1,11 @@
-import { ref } from 'vue'
-import { defineStore } from "pinia"
-import axios from 'axios'
-import { useRoute } from 'vue-router'
+import { ref } from 'vue';
+import { defineStore } from "pinia";
+import axios from 'axios';
+import { useRoute } from 'vue-router';
 
-const { VITE_URL } = import.meta.env
-import type { Room } from "@/interfaces/room"
-import { Toast, Alert } from '@/mixins/swal'
-
+const { VITE_URL } = import.meta.env;
+import type { Room } from "@/interfaces/room";
+import { Toast, Alert } from '@/mixins/swal';
 
 export const useRoomStore = defineStore('roomStore', () => {
   const route = useRoute()
@@ -130,56 +129,47 @@ export const useRoomStore = defineStore('roomStore', () => {
     ],
   }
 
-  // 前台-房型列表
+  /**
+   * 前台-(get)取得 所有房型資料
+   */
   const roomList = ref<null | Room[]>(null)
   const getFrontRooms = async () => {
     try {
-      // console.log('getFrontRooms 取得資料', roomList.value)
+      console.log('getFrontRooms 取得資料', roomList.value)
       const url = `${VITE_URL}/api/v1/rooms/`
       const res = await axios.get(url)
       roomList.value = res.data.result
     } catch (err) {
-      // console.log('getFrontRooms 失敗', err)
+      console.log('getFrontRooms 失敗', err)
     }
   }
 
-  // 前台-房型詳細資料
+  /**
+   * 前台-(get)取得 單一房型詳細資料
+   */
   const roomDetail = ref<null | Room>(null);
   const getFrontRoom = async () => {
     try {
-      // console.log('getFrontRoom 取得資料', roomDetail.value)
+      console.log('getFrontRoom 取得資料', roomDetail.value)
       const url = `${VITE_URL}/api/v1/rooms/${route.params.id}`
       const res = await axios.get(url);
       roomDetail.value = res.data.result
     } catch (err) {
-      // console.log('getFrontRoom 失敗', err)
+      console.log('getFrontRoom 失敗', err)
     }
   }
 
-  /**
-   * 取得縣市資料
-   */
-  const getTaiwan = async () => {
-    try {
-      const url = "/api/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json";
-      const res = await axios.get(url)
-      console.log('取得縣市資料', res)
-    } catch (err) {
-      console.log('getTailwan 失敗', err)
-    }
-  }
 
-  /**
-   * 後台-房型格式
-   */
-  const tempRoom = ref({ ...defaultRoom })
+  // 後台-房型格式
+  const tempRoom = ref(JSON.parse(JSON.stringify(defaultRoom)))
   // 後台-清除格式
   const resetTempRoom = () => {
-    tempRoom.value = { ...defaultRoom }
-    tempRoom.value.imageUrlList = []
+    tempRoom.value = JSON.parse(JSON.stringify(defaultRoom))
   }
 
-  // 後台-取得所有房型資料
+  /**
+   * 後台-(get)取得 所有房型資料
+   */
   const getRooms = async () => {
     try {
       const url = `${VITE_URL}/api/v1/admin/rooms/`
@@ -191,7 +181,9 @@ export const useRoomStore = defineStore('roomStore', () => {
     }
   }
 
-  // 後台-新增房型資料
+  /**
+   * 後台-(post)新增 房型資料
+   */
   const createRoom = () => {
     // console.log('createRoom')
     const url = `${VITE_URL}/api/v1/admin/rooms/`
@@ -215,48 +207,49 @@ export const useRoomStore = defineStore('roomStore', () => {
       })
   }
 
-  // 後台-編輯房型資料
-  // const loadingIcon = ref(false)
+  /**
+   * 後台-(put)編輯 房型資料
+   */
   const editRoomId = ref("")
   const editRoom = () => {
     console.log('editRoom', editRoomId.value)
-    // loadingIcon.value = true
     const url = `${VITE_URL}/api/v1/admin/rooms/${editRoomId.value}`
     axios.put(url, tempRoom.value)
       .then((res) => {
         console.log('editRoomId 已更新房型', res)
         resetTempRoom()
         Toast.fire({
+          icon: 'success',
           title: '更新成功',
-          icon: 'success'
         })
-        // loadingIcon.value = false
         getRooms()
       })
       .catch((err) => {
+        console.log('editRoomId 失敗', err)
         Alert.fire({
+          icon: 'error',
           title: '更新失敗',
           text: '請稍後再試一次',
-          icon: 'error'
         })
-        console.log('editRoomId 失敗', err)
       })
   }
 
-  // 後台-刪除房型資料
+  /**
+   * 後台-(del)刪除 單一房型資料
+   */
   const deleteRoom = () => {
     const url = `${VITE_URL}/api/v1/admin/rooms/${editRoomId.value}`
     axios.delete(url)
       .then((res) => {
         console.log('deleteRoom 已刪除房型', res)
         Toast.fire({
+          icon: 'success',
           title: '成功刪除房型',
-          icon: 'success'
         })
         getRooms()
       })
       .catch((err) => {
-        console.log(err)
+        console.log('deleteRoom 失敗',err)
         Alert.fire({
           title: '刪除失敗，請稍後再試一次',
           icon: 'error'
@@ -264,59 +257,72 @@ export const useRoomStore = defineStore('roomStore', () => {
       })
   }
 
-  const showRoomModal = ref<boolean>(false)
-  const showDelModal = ref<boolean>(false)
 
+  // 開啟/關閉 modal
+  const showRoomModal = ref<boolean>(false)
   const openRoomModal = () => {
     showRoomModal.value = true;
   }
-
   const closeRoomModal = () => {
     showRoomModal.value = false
     resetTempRoom()
   }
-
   const toogleModal = () => {
     showRoomModal.value = !showRoomModal.value
   }
 
+  const showDelModal = ref<boolean>(false)
   const openRoomDelModal = () => {
     showDelModal.value = true
   }
-
   const closeRoomDelModal = () => {
     showDelModal.value = false
     resetTempRoom()
   }
 
+
+  /**
+   * 取得縣市資料
+   */
+  // const getTaiwan = async () => {
+  //   try {
+  //     const url = "/api/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json";
+  //     const res = await axios.get(url)
+  //     console.log('取得縣市資料', res)
+  //   } catch (err) {
+  //     console.log('getTailwan 失敗', err)
+  //   }
+  // }
+
   return {
-    updateRoomType,
     roomLayout,
     bedType,
-
-    // 前台
-    roomList,
-    getFrontRooms,
-    roomDetail,
-    getFrontRoom,
-
-    // 後台
     tempRoom,
     resetTempRoom,
+     
+    // 後台
+    roomList,
     getRooms,
     createRoom,
+    updateRoomType,
     editRoomId,
     editRoom,
     deleteRoom,
 
-    getTaiwan,
+    // 前台
+    getFrontRooms,
+    roomDetail,
+    getFrontRoom,
 
+    // Modal
     showRoomModal,
-    toogleModal,
     openRoomModal,
     closeRoomModal,
+    toogleModal,
     showDelModal,
     openRoomDelModal,
     closeRoomDelModal,
+
+    // getTaiwan,
   }
 })

@@ -3,8 +3,8 @@ import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 
 import format from "@/mixins/format";
-import RoomDelete from "@/components/admin/RoomDelete.vue";
 import RoomModal from "@/components/admin/RoomModal.vue";
+import RoomDelete from "@/components/admin/RoomDelete.vue";
 
 // 房型資訊
 import { useRoomStore } from "@/stores/roomStore";
@@ -44,29 +44,29 @@ onMounted(() => {
     <div v-if="!roomList" class="text-primary-100 text-7 font-bold w-full h-[70vh] flex justify-center items-center">
       <font-awesome-icon icon="fa-solid fa-bed" class="me-2" /> 目前還沒有任何房型，快去新增吧！
     </div>
-    <table v-else class="w-full">
+    <table v-else class="w-full admin-table">
       <thead>
         <tr class="border-y border-primary-60">
-          <th class="p-2"></th>
-          <th class="p-2 text-start">房型名稱</th>
-          <th class="p-2">床數</th>
-          <th class="p-2">坪數</th>
-          <th class="p-2">容納人數</th>
-          <th class="p-2 text-end">價格</th>
-          <th class="p-2 text-center">管理</th>
+          <th></th>
+          <th class="text-start">房型名稱</th>
+          <th>床數</th>
+          <th>坪數</th>
+          <th>容納人數</th>
+          <th class="text-end">價格</th>
+          <th class="text-center">管理</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in roomList" :key="item._id" class="border-b border-primary-60 hover:bg-primary-40">
-          <td class="p-2">
+          <td>
             <img v-if="item.imageUrl" class="w-full h-[120px] object-cover rounded-2" :src="item.imageUrl" :alt="item.name">
           </td>
-          <td class="p-2 text-4h font-bold">{{ item.name }}</td>
-          <td class="p-2 text-4h text-center">{{ item.bedInfo }}</td>
-          <td class="p-2 text-4h text-center">{{ item.areaInfo }} 坪</td>
-          <td class="p-2 text-4h text-center">{{ item.maxPeople }} 人</td>
-          <td class="p-2 text-4h text-end">NT$ {{ format.toThousands(item.price) }}</td>
-          <td class="p-2">
+          <td class="font-bold">{{ item.name }}</td>
+          <td class="text-center">{{ item.bedInfo }}</td>
+          <td class="text-center">{{ item.areaInfo }} 坪</td>
+          <td class="text-center">{{ item.maxPeople }} 人</td>
+          <td class="text-end">NT$ {{ format.toThousands(item.price) }}</td>
+          <td>
             <div class="flex flex-wrap justify-center gap-2">
               <button @click="
                       showRoomModal = true,
