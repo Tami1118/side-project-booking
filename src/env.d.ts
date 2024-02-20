@@ -1,5 +1,6 @@
 /// <reference types="vite/client" />
 
+declare module 'aos';
 declare module '*.vue' {
   import { ComponentOptions } from 'vue'
   const componentOptions: ComponentOptions
@@ -13,5 +14,3 @@ declare module 'vue' {
   }
 }
 export default ComponentCustomProperties;
-
-declare module 'aos';
