@@ -3,10 +3,16 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import 'swiper/css/mousewheel';
 
-import { ref } from "vue"
-import { supplyInfo } from "@/stores/homeStore"
-import type { SupplyInfo } from "@/stores/homeStore"
-const culinary = ref<SupplyInfo[]>(supplyInfo)
+import { onMounted } from "vue";
+import { storeToRefs } from 'pinia';
+import { useFoodStore } from "@/stores/foodStore";
+const foodStore = useFoodStore();
+const { foodList } = storeToRefs(foodStore);
+const getFrontFoods = foodStore.getFrontFoods;
+
+onMounted(() => {
+  getFrontFoods()
+})
 </script>
 
 <template>
@@ -25,15 +31,15 @@ const culinary = ref<SupplyInfo[]>(supplyInfo)
             '767': { slidesPerView: 2.2, },
           }"
           class="home-food-swiper">
-        <SwiperSlide v-for="item in culinary" :key="item.id">
+        <SwiperSlide v-for="item in foodList" :key="item._id">
           <div class="h-[480px] md:h-[560px] xl:h-[600px] relatvie rounded-2 overflow-hidden duration-200">
-            <img :src="item.imageUrl" class="w-full h-full object-cover" :alt="item.title">
+            <img :src="item.image" class="w-full h-full object-cover" :alt="item.title">
             <div class="absolute bottom-0 left-0 w-full p-4 text-white bg-gradient-to-b from-white/0 to-neutral/80 backdrop-blur-sm rounded-b-2 overflow-hidden">
               <div class="flex justify-between items-center mb-4 lg:mb-6">
                 <h3 class="text-6 font-bold">{{ item.title }}</h3>
-                <p class="text-3h lg:text-4 font-bold">{{ item.time }}</p>
+                <p class="text-3h lg:text-4 font-bold">{{ item.diningTime }}</p>
               </div>
-              <p class="text-justify text-3h lg:text-4 font-500 ellipsis">{{ item.info }}</p>
+              <p class="text-justify text-3h lg:text-4 font-500 ellipsis">{{ item.description }}</p>
             </div>
           </div>
         </SwiperSlide>
