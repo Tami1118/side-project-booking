@@ -20,6 +20,7 @@ const getFrontOrders = orderStore.getFrontOrders;
 const filterList = computed<Order[]>(() => {
   // 篩選未被刪除訂單
   const isStatus = orderList.value.filter(order => order.status === 0);
+  const isCancle = orderList.value.filter(order => order.status === -1)
 
   // 分別篩選出今日以後和今日以前的訂單
   const today = new Date(); // 取得今日日期
@@ -31,7 +32,7 @@ const filterList = computed<Order[]>(() => {
   const sortedPastOrders = pastOrders.sort((a, b) => new Date(b.checkInDate).getTime() - new Date(a.checkInDate).getTime());
 
   // 將排序後的訂單合併為一個陣列
-  const sortedOrders = [...sortedFutureOrders, ...sortedPastOrders];
+  const sortedOrders = [...sortedFutureOrders, ...sortedPastOrders, ...isCancle];
   return sortedOrders;
 });
 

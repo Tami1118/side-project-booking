@@ -27,12 +27,12 @@ const goTop = () => {
 <template>
   <ul class="flex flex-col">
     <li v-for="order in orderList" :key="`${order._id}${order.status}`">
-      <div @click="viewDetail(order), goTop()" class="px-4 lg:px-10 pt-4 lg:pt-10 hover:bg-neutral-40 cursor-pointer" :class="new Date(order.checkInDate) <= new Date() ? 'text-neutral-60' : ''">
+      <div @click="viewDetail(order), goTop()" class="px-4 lg:px-10 pt-4 lg:pt-10 hover:bg-neutral-40 cursor-pointer" :class="new Date(order.checkInDate) <= new Date() || order.status === -1 ? 'text-neutral-60' : ''">
         <div class="flex gap-6 flex-col lg:flex-row pb-4 lg:pb-10 border-b border-neutral-40">
           <img class="h-[80px] w-[120px] object-cover object-center rounded-2" :src="order.roomId.imageUrl" alt="">
           <div class="flex flex-col gap-4 text-3h lg:text-4 grow">
             <p>預定參考編號：{{ order._id }}</p>
-            <h3 class="text-4 lg:text-6 font-bold">{{ order.roomId.name }}</h3>
+            <h3 class="text-4 lg:text-6 font-bold">{{ order.roomId.name }} <span v-if="order.status === -1" class="font-bold">(已取消)</span></h3>
             <div>
               <p class="mb-2">住宿天數：{{ format.getNightNum(order.checkInDate, order.checkOutDate) }}晚</p>
               <p>住宿人數：{{ order.peopleNum }}位</p>

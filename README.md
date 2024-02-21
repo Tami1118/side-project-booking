@@ -2,7 +2,6 @@
 ###### 網站Demo：[享樂酒店-線上訂房](https://tami1118.github.io/side-project-booking/)
 
 ![](https://github.com/Tami1118/side-project-booking/blob/main/src/assets/images/room_booking_image.png?raw=true)
-###### [UI 設計稿](https://www.figma.com/file/23VhjSXFWeZfXYXjcZOceb/%E5%85%AD%E8%A7%92-Project-%2F-%E9%85%92%E5%BA%97%E8%A8%82%E6%88%BF%E7%B6%B2%E7%AB%99?node-id=4323%3A10366&mode=dev)
 
 
 ## 主要功能
@@ -45,3 +44,10 @@
 - AOS Animate 動畫套件
 - SCSS 響應設計
 - fortawesome ICON
+
+
+## 未來目標
+- 切版優化
+- 後台優化
+- 管理數據化
+- 第三方金流串接

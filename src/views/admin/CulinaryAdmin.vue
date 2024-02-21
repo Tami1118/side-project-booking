@@ -38,8 +38,10 @@ onMounted(() => {
       <font-awesome-icon icon="fa-solid fa-plus" class="me-2" />
       新增美饌
     </button>
+    
     <div v-if="!foodList" class="text-primary-100 text-7 font-bold w-full h-[70vh] flex justify-center items-center">
-      <font-awesome-icon icon="fa-solid fa-bed" class="me-2" /> 目前還沒有任何美食，快去新增吧！
+      <font-awesome-icon icon="fa-solid fa-utensils" class="me-2" />
+      目前還沒有任何美食，快去新增吧！
     </div>
     <table v-else class="w-full admin-table">
       <thead>

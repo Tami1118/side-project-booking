@@ -34,7 +34,8 @@ const router = useRouter();
   <div class="flex flex-col gap-6 lg:gap-10" v-if="order">
     <div>
       <p class="text-neutral-60 mb-2 text-3h lg:text-4">預定參考編號：{{ order._id }}</p>
-      <h2 class="text-4 lg:text-6">{{ new Date(order.checkInDate) > new Date() ? '即將來的行程' : '已結束行程' }}</h2>
+      <h2 v-if="order.status === 0" class="text-4 lg:text-6">{{ new Date(order.checkInDate) > new Date() ? '即將來的行程' : '已結束行程' }}</h2>
+      <h2 v-else class="text-4 lg:text-6">已取消的行程</h2>
     </div>
     <img class="h-[200px] w-full rounded-5 object-cover" :src="order.roomId.imageUrl" :alt="order.roomId.name">
     <div class="flex flex-col gap-6 text-3h lg:text-4 text-neutral-80 font-bold pb-6 border-b border-neutral-40">
@@ -57,7 +58,7 @@ const router = useRouter();
       <RoomInfoProvide :info="order.roomId.facilityInfo" />
     </div>
     <div class="flex gap-3">
-      <button class="grow btn btn-secondary" v-if="new Date(order.checkInDate) > new Date()" @click="openModal()">取消訂單</button>
+      <button class="grow btn btn-secondary" v-if="new Date(order.checkInDate) > new Date() && order.status === 0" @click="openModal()">取消訂單</button>
       <button class="grow btn btn-primary" @click="router.push(`/room/${order.roomId._id}`)">查看詳情</button>
     </div>
   </div>

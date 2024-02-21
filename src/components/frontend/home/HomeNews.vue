@@ -9,11 +9,6 @@ const getFrontNews = newsStore.getFrontNews;
 onMounted(() => {
   getFrontNews()
 })
-
-// import { ref } from "vue";
-// import { news } from "@/stores/homeStore";
-// import type { News } from "@/stores/homeStore";
-// const newsData = ref<News[]>(news);
 </script>
 
 <template>
