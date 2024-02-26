@@ -1,4 +1,4 @@
-# 享樂酒店訂房網
+# Vue3 + TypeScript 旅館訂房服務 - 享樂酒店
 ###### 網站Demo：[享樂酒店-線上訂房](https://tami1118.github.io/side-project-booking/)
 
 ![](https://github.com/Tami1118/side-project-booking/blob/main/src/assets/images/room_booking_image.png?raw=true)
