@@ -1,10 +1,20 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { storeToRefs } from 'pinia';
-import { useNewsStore } from "@/stores/newsStore";
-const newsStore = useNewsStore();
-const { newsList } = storeToRefs(newsStore);
-const getFrontNews = newsStore.getFrontNews;
+import { ref, onMounted } from "vue";
+import axios from "axios";
+const { VITE_URL } = import.meta.env;
+
+const newsList = ref()
+const getFrontNews = () => {
+  const url = `${VITE_URL}/api/v1/home/news/`
+  axios.get(url)
+    .then(res => {
+      console.log('getFrontNews 已取得消息', res)
+      newsList.value = res.data.result
+    })
+    .catch(err => {
+      console.log('getFrontNews 失敗', err)
+    })
+}
 
 onMounted(() => {
   getFrontNews()

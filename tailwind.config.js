@@ -94,6 +94,9 @@ export default {
       margin: {
         '30': '120px',
       },
+      zIndex: {
+        '1': '1',
+      }
     },
   },
   plugins: [],

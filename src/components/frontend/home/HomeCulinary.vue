@@ -3,15 +3,25 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import 'swiper/css/mousewheel';
 
-import { onMounted } from "vue";
-import { storeToRefs } from 'pinia';
-import { useFoodStore } from "@/stores/foodStore";
-const foodStore = useFoodStore();
-const { foodList } = storeToRefs(foodStore);
-const getFrontFoods = foodStore.getFrontFoods;
+import { ref, onMounted } from "vue";
+import axios from 'axios';
+const { VITE_URL } = import.meta.env;
+
+const foodList = ref()
+const getFoods = () => {
+  const url = `${VITE_URL}/api/v1/home/culinary/`
+  axios.get(url)
+    .then(res => {
+      // console.log('getFoods 已取得美食', res)
+      foodList.value = res.data.result
+    })
+    .catch((err) => {
+      console.log('getFoods 失敗', err)
+    })
+}
 
 onMounted(() => {
-  getFrontFoods()
+  getFoods()
 })
 </script>
 
@@ -22,15 +32,13 @@ onMounted(() => {
         <h2 class="text-primary-100 text-8 lg:text-12 font-bold">佳餚<br>美饌</h2>
         <span class="block h-[2px] w-[200px] bg-gradient-to-r from-primary-100"></span>
       </div>
-        <Swiper
-          :slidesPerView="1.2"
-          :spaceBetween="24"
-          :breakpoints="{
-            '1280': { slidesPerView: 3.5, },
-            '992': { slidesPerView: 2.7, },
-            '767': { slidesPerView: 2.2, },
-          }"
-          class="home-food-swiper">
+      <Swiper :slidesPerView="1.2"
+              :spaceBetween="24"
+              :breakpoints="{
+                '1280': { slidesPerView: 3.5, },
+                '992': { slidesPerView: 2.7, },
+                '767': { slidesPerView: 2.2, },}"
+              class="home-food-swiper">
         <SwiperSlide v-for="item in foodList" :key="item._id">
           <div class="h-[480px] md:h-[560px] xl:h-[600px] relatvie rounded-2 overflow-hidden duration-200">
             <img :src="item.image" class="w-full h-full object-cover" :alt="item.title">
@@ -52,7 +60,7 @@ onMounted(() => {
 .home-food-swiper {
   overflow: visible;
 
-  &-navigation{
+  &-navigation {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -60,7 +68,8 @@ onMounted(() => {
     margin-bottom: 40px;
     margin-right: 40px;
   }
-  .swiper-button-prev{
+
+  .swiper-button-prev {
     order: 1;
   }
 }

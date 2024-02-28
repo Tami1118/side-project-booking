@@ -48,7 +48,7 @@ onMounted(() => {
 
         <!-- 房型預定 -->
         <!-- <div class="hidden lg:block lg:basis-5/12 z-1"> -->
-        <div class="hidden lg:block lg:basis-5/12 z-1">
+        <div class="lg:basis-5/12">
           <div class="sticky top-[120px] rounded-5 bg-white p-10">
             <ReserveRoom :info="roomDetail" />
           </div>

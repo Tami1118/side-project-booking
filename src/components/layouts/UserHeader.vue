@@ -12,6 +12,11 @@ const checkUser = userStore.checkUser;
 const getUser = userStore.getUser;
 const logout = userStore.logout;
 
+// Open/Close Modal
+import { useModalStore } from "@/stores/modalStore.js";
+const modalStore = useModalStore();
+const { isModalOpen } = storeToRefs(modalStore);
+
 // Route
 import { useRoute } from "vue-router";
 const route = useRoute();
@@ -36,7 +41,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <header class="top-0 left-0 w-full z-10 duration-800" :class="{ 'fixed': pathName === '/' || pathName === '/room', 'sticky bg-neutral': pathName !== '/' && pathName !== '/room', 'bg-neutral': isScroll }">
+  <header v-if="!isModalOpen" class="top-0 left-0 w-full duration-800 z-10" :class="{ 'fixed': pathName === '/' || pathName === '/room', 'sticky bg-neutral': pathName !== '/' && pathName !== '/room', 'bg-neutral': isScroll }">
     <div class="px-5 lg:px-[4.166vw] py-4 lg:py-6">
       <div class="flex items-center justify-between text-white">
         <router-link to="/">
