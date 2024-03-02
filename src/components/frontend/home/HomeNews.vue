@@ -1,24 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import axios from "axios";
-const { VITE_URL } = import.meta.env;
-
-const newsList = ref()
-const getFrontNews = () => {
-  const url = `${VITE_URL}/api/v1/home/news/`
-  axios.get(url)
-    .then(res => {
-      console.log('getFrontNews 已取得消息', res)
-      newsList.value = res.data.result
-    })
-    .catch(err => {
-      console.log('getFrontNews 失敗', err)
-    })
-}
-
-onMounted(() => {
-  getFrontNews()
-})
+import { ref } from "vue";
+import { news } from "@/stores/homeStore";
+import type { News } from "@/stores/homeStore";
+const newsData = ref<News[]>(news);
 </script>
 
 <template>
@@ -31,7 +15,7 @@ onMounted(() => {
         </div>
         <div class="w-full lg:w-10/12">
           <ul class="flex flex-col gap-10" data-aos="fade-left">
-            <li class="flex flex-col lg:flex-row gap-6 lg:items-center" v-for="item in newsList" :key="item._id">
+            <li class="flex flex-col lg:flex-row gap-6 lg:items-center" v-for="item in newsData" :key="item._id">
               <img :src="item.image" class="rounded-2 h-[291px] lg:w-[474px] object-cover w-full" :alt="item.title">
               <div>
                 <h3 class="text-7 lg:text-8 font-bold text-neutral-100 mb-2 lg:mb-6">{{ item.title }}</h3>

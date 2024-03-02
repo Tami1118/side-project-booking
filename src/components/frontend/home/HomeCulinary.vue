@@ -3,26 +3,10 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import 'swiper/css/mousewheel';
 
-import { ref, onMounted } from "vue";
-import axios from 'axios';
-const { VITE_URL } = import.meta.env;
-
-const foodList = ref()
-const getFoods = () => {
-  const url = `${VITE_URL}/api/v1/home/culinary/`
-  axios.get(url)
-    .then(res => {
-      // console.log('getFoods 已取得美食', res)
-      foodList.value = res.data.result
-    })
-    .catch((err) => {
-      console.log('getFoods 失敗', err)
-    })
-}
-
-onMounted(() => {
-  getFoods()
-})
+import { ref } from "vue";
+import { supplyInfo } from "@/stores/homeStore";
+import type { SupplyInfo } from "@/stores/homeStore";
+const foodList = ref<SupplyInfo[]>(supplyInfo);
 </script>
 
 <template>
