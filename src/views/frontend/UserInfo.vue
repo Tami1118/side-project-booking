@@ -9,10 +9,12 @@ import UserFrom from '@/components/frontend/user/UserForm.vue';
 
 const userStore = useUserStore()
 const { userInfo, showEditUserInfo } = storeToRefs(userStore)
-const getUer = userStore.getUser
+const getUser = userStore.getUser
+const checkUser = userStore.checkUser
 
-onMounted(() => {
-  getUer()
+onMounted(async() => {
+  await checkUser()
+  getUser()
 })
 </script>
 
