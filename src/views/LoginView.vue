@@ -7,7 +7,7 @@ import LoginHeader from "@/components/layouts/LoginHeader.vue";
 // User
 import { useUserStore } from '@/stores/userStore';
 const userStore = useUserStore()
-const { loginData, rememberMe } = storeToRefs(userStore)
+const { loginData, rememberMe, loginLoading } = storeToRefs(userStore)
 const login = userStore.login
 const verifyEmail = userStore.verifyEmail
 
@@ -100,11 +100,11 @@ onMounted(() => {
                     <span><font-awesome-icon icon="fa-solid fa-check" :class="rememberMe ? 'block text-white text-3' : 'hidden'" /></span>
                     記住帳號
                   </label>
-                  <button class="btn-text text-3h md:text-4 underline decoration-1" @click="verifyEmail()">忘記密碼</button>
+                  <button type="button" class="btn-text text-3h md:text-4 underline decoration-1" @click="verifyEmail()">忘記密碼</button>
                 </div>
 
               </div>
-              <button type="submit" class="btn-primary font-bold btn text-center mt-10 w-full">
+              <button type="submit" class="btn-primary font-bold btn text-center mt-10 w-full" :disabled="loginLoading">
                 會員登入
               </button>
             </VForm>

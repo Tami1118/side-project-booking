@@ -10,16 +10,17 @@ import CitySelect from '@/components/widgets/CitySelect.vue';
 import { useUserStore } from '@/stores/userStore';
 const userStore = useUserStore();
 const signup = userStore.signup;
-const { signupStep, signupData, passwordConfirm, detailedAddress } = storeToRefs(userStore);
+const { signupStep, passwordConfirm, detailedAddress, signupLoading, signupName, signupEmail, signupPassword, signupPhone } = storeToRefs(userStore);
 
 const readMe = ref<boolean>(false);
 
-const stepOneForm = computed(() => {
-  return signupData.value.email && signupData.value.password && passwordConfirm.value
-})
-const stepTwoForm = computed(() => {
-  return signupData.value.name && signupData.value.phone && detailedAddress.value && readMe.value
-})
+// 可以考慮拿掉
+// const stepOneForm = computed(() => {
+//   return signupData.value.email && signupData.value.password && passwordConfirm.value
+// })
+// const stepTwoForm = computed(() => {
+//   return signupData.value.name && signupData.value.phone && detailedAddress.value && readMe.value
+// })
 </script>
 
 <template>
@@ -71,7 +72,7 @@ const stepTwoForm = computed(() => {
                             class="form-input"
                             :class="{ 'border border-red-600': errors['email'] }"
                             placeholder="hello@exsample.com"
-                            v-model="signupData.email" />
+                            v-model="signupEmail" />
                     <ErrorMessage class="text-red-600" name="email" />
                   </div>
 
@@ -84,7 +85,7 @@ const stepTwoForm = computed(() => {
                             class="form-input"
                             :class="{ 'border border-red-600': errors['密碼'] }"
                             placeholder="請輸入密碼"
-                            v-model="signupData.password" 
+                            v-model="signupPassword" 
                             ref="password" />
                     <ErrorMessage class="text-red-600" name="密碼" />
                   </div>
@@ -105,8 +106,7 @@ const stepTwoForm = computed(() => {
 
                 </div>
                 <button type="submit"
-                        class="btn btn-primary mt-10 disabled:bg-neutral-40 w-full"
-                        :disabled="!stepOneForm">
+                        class="btn btn-primary mt-10 disabled:bg-neutral-40 w-full">
                   下一步
                 </button>
               </VForm>
@@ -126,7 +126,7 @@ const stepTwoForm = computed(() => {
                             class="form-input"
                             :class="{ 'border border-red-600': errors['姓名'] }"
                             placeholder="請輸入姓名"
-                            v-model="signupData.name" />
+                            v-model="signupName" />
                     <ErrorMessage class="text-red-600" name="姓名" />
                   </div>
 
@@ -139,7 +139,7 @@ const stepTwoForm = computed(() => {
                             class="form-input"
                             :class="{ 'border border-red-600': errors['手機號碼'] }"
                             placeholder="請輸入手機號碼"
-                            v-model="signupData.phone" />
+                            v-model="signupPhone" />
                     <ErrorMessage class="text-red-600" name="手機號碼" />
                   </div>
 
@@ -165,9 +165,9 @@ const stepTwoForm = computed(() => {
                 </div>
 
                 <button class="btn btn-primary mt-10 disabled:bg-neutral-40 w-full"
-                        :disabled="!stepTwoForm"
+                        :disabled="signupLoading"
                         type="submit">
-                  完成註冊
+                  {{ signupLoading? '驗證中' : '完成註冊' }}
                 </button>
               </VForm>
             </div>

@@ -1,10 +1,8 @@
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
-import axios from 'axios';
-
-const VITE_URL = import.meta.env.VITE_URL as string;
 import { Toast, Alert, Swal } from '@/mixins/swal';
+import { axiosLoginUser, axiosSignupUser, axiosCheckUser, axiosGetUser, axiosEditUser, axiosGenerateEmailCode, axiosForgotPassword, axiosVerifyEmail } from '@/api/userApi';
 
 interface LoginData {
   email: string;
@@ -50,41 +48,32 @@ export const useUserStore = defineStore('userStore', () => {
 
   // login
   const loginData = ref<LoginData>({ email: '', password: '' });
+  const loginLoading = ref<boolean>(false);
   const userInfo = ref<UserInfo>({});
   const rememberMe =  ref<boolean>(false);
-  const login = () => {
-    // console.log(loginData.value)
-    const url = `${VITE_URL}/api/v1/user/login`
-    axios.post(url, loginData.value)
-      .then(res => {
-        // console.log('login 成功',res)
-        const { token } = res.data
-        document.cookie = `typescript=${token}`;
-        axios.defaults.headers.common['Authorization'] = token;
-        userInfo.value = res.data.result
-        loginData.value = {
-          "email": "",
-          "password": "",
-        }
-        // console.log(userInfo.value)
-        Toast.fire({
-          icon: 'success',
-          title: '登入成功'
-        })
-        router.push('/')
-      })
-      .catch(() => {
-        // console.log('login 失敗', err)
-        Alert.fire({
-          icon: 'error',
-          title: '登入失敗',
-          text: '格式有誤，請重新登入'
-        })
-      })
-  }
+  const login = async () => {
+    loginLoading.value = true;
+    try {
+      const res = await axiosLoginUser(loginData.value);
+      document.cookie = `typescript=${res.data.token}`;
+      userInfo.value = res.data.result;
+      loginData.value = { email: '', password: '' };
+      console.log(userInfo.value)
+      Toast.fire({
+        icon: 'success',
+        title: '登入成功'
+      });
+      router.push('/');
+    } catch (error) {
+      //
+    } finally {
+      loginLoading.value = false;
+    }
+  };
+
   // logout
   const logout = () => {
-    document.cookie = `typescript=""`;
+    document.cookie = `typescript=`;
     isChecked.value = false;
     Toast.fire({
       icon: 'success',
@@ -95,85 +84,77 @@ export const useUserStore = defineStore('userStore', () => {
 
   // signup
   const signupStep = ref<number>(1);
-  const signupData = ref<SignupData>({
-    name: '',
-    email: '',
-    password: '',
-    phone: '',
-    birthday: '',
-    address: {
-      zipcode: 0,
-      detail: '',
-      city: '',
-      county: '',
-    },
-  });
+  const signupLoading = ref<boolean>(false);
   const passwordConfirm = ref<string>('');
+  const signupName = ref<string>('');
+  const signupEmail = ref<string>('');
+  const signupPassword = ref<string>('');
+  const signupPhone = ref<string>('');
   const birthdate = ref<Birthdate>({
     year: new Date().getFullYear(),
     month: 1,
     day: 1,
   });
+  const birthday = computed(() => `${birthdate.value.year}/${birthdate.value.month}/${birthdate.value.day}`);
   const selectedCity = ref<string>('');
   const selectedDistrict = ref<string>('');
   const selectedZip = ref<number>(0);
   const detailedAddress = ref<string>('');
-  const signup = () => {
-    signupData.value.address.zipcode = selectedZip.value
-    signupData.value.address.city = selectedCity.value
-    signupData.value.address.county = selectedDistrict.value
-    signupData.value.address.detail = detailedAddress.value
-    signupData.value.birthday = `${birthdate.value.year}/${birthdate.value.month}/${birthdate.value.day}`
-    // console.log(signupData.value.address, signupData.value.birthday)
-    const url = `${VITE_URL}/api/v1/user/signup`
-    axios.post(url, signupData.value)
-      .then(res => {
-        console.log(res)
-        signupData.value = {
-          "name": "",
-          "email": "",
-          "password": "",
-          "phone": "",
-          "birthday": "",
-          "address": {
-            "zipcode": 0,
-            "detail": "",
-            "city": "",
-            "county": "",
-          }
-        }
-        signupStep.value = 1
-        passwordConfirm.value = ''
-        detailedAddress.value = ''
-        selectedCity.value = ''
-        selectedDistrict.value = ''
-        selectedZip.value = 0
-        router.push('/login')
-        Alert.fire({
-          title: '註冊成功，請登入會員',
-          icon: 'success'
-        })
-      })
-      .catch(err => {
-        console.log(err)
-        alert(err.response.data.message)
-      })
-  }
+  const address = computed((): Address => ({
+    zipcode: selectedZip.value,
+    detail: detailedAddress.value,
+    city: selectedCity.value,
+    county: selectedDistrict.value,
+  }) as Address);
 
+  const signupData = computed((): SignupData => ({
+    name: signupName.value,
+    email: signupEmail.value,
+    password: signupPassword.value,
+    phone: signupPhone.value,
+    birthday: birthday.value,
+    address: address.value,
+  }) as SignupData);
+  const signup = async () => {
+    signupLoading.value = true;
+    try {
+      await axiosSignupUser(signupData.value);
+      Toast.fire({
+        icon: 'success',
+        title: '註冊成功，請登入'
+      });
+      resetSignupForm();
+      router.push('/login');
+    } catch (error) {
+      //
+    } finally { 
+      signupLoading.value = false;
+    }
+  };
+  const resetSignupForm = () => {
+    signupStep.value = 1;
+    passwordConfirm.value = '';
+    detailedAddress.value = '';
+    selectedCity.value = '';
+    selectedDistrict.value = '';
+    selectedZip.value = 0;
+    birthdate.value = {
+      year: new Date().getFullYear(),
+      month: 1,
+      day: 1,
+    };
+  };
+  
   // check
   const isChecked = ref<boolean>(false);
   const checkUser = async () => {
-    const token = document.cookie.replace(/(?:(?:^|.*;\s*)typescript\s*=\s*([^;]*).*$)|^.*$/, "$1");
-    axios.defaults.headers.common["Authorization"] = token;
-    const url = `${VITE_URL}/api/v1/user/check`
     try {
-      const res = await axios.get(url);
+      const res = await axiosCheckUser();
       isChecked.value = res.data.status;
-      // console.log('checkUser 驗證成功', isChecked.value);
-      // console.log(res)
-    } catch (err) {
+      console.log('checkUser 驗證成功', isChecked.value);
+    } catch (error) {
       isChecked.value = false;
-      // console.log('checkUser 驗證失敗', isChecked.value);
+      console.log('checkUser 驗證失敗', isChecked.value);
     }
   }
 
@@ -195,95 +176,73 @@ export const useUserStore = defineStore('userStore', () => {
   const showEditUserInfo = ref<boolean>(false);
   const userStatus = ref<boolean>(false);
   const getUser = async () => {
-    const url = `${VITE_URL}/api/v1/user`
-    axios.get(url)
-      .then(res => {
-        console.log('getUser 成功', res)
-        userInfo.value = res.data.result
-        userStatus.value = res.data.status
-        console.log(userStatus.value)
-      })
-      .catch(err => {
-        console.log('getUser 失敗', err)
-        userStatus.value = err.response.data.status
-        console.log(userStatus.value)
-      })
+    const res = await axiosGetUser();
+    userInfo.value = res.data.result;
   }
   const editUserPass = async () => {
     if (editUserData.value.newPassword !== newPassword2.value) {
       alert("密碼不一致");
       return;
     }
-    const url = `${VITE_URL}/api/v1/user`
-    axios.put(url, editUserData.value)
-      .then(res => {
-        console.log('修改資料 成功',res)
-        userInfo.value = res.data.result
-        showEditPassword.value = false
-        Toast.fire({
-          icon: 'success',
-          title: '修改資料成功',
-        })
-        editUserData.value = {
-          userId: "",
-          name: "",
-          phone: "",
-          birthday: "",
-          address: {
-            zipcode: 0,
-            detail: ""
-          },
-          oldPassword: "",
-          newPassword: ""
-        }
-        newPassword2.value = ""
-      })
-      .catch(err => {
-        console.log('login 失敗',err)
-        Alert.fire({
-          icon: 'error',
-          title: '修改資料失敗'
-        })
-      })
-  }
-  const editUserInfo = async () => {
-    const editUserDataNoPass = {
-      userId: "",
-      name: "",
-      phone: "",
-      birthday: "",
-      address: {
-        zipcode: 0,
-        detail: "",
-      }
+    try {
+      const res = await axiosEditUser(editUserData.value);
+      console.log('修改資料 成功', res);
+      userInfo.value = res.data.result; 
+      showEditPassword.value = false;
+      Toast.fire({
+        icon: 'success',
+        title: '修改資料成功',
+      });
+      editUserData.value = {
+        userId: "",
+        name: "",
+        phone: "",
+        birthday: "",
+        address: {
+          zipcode: 0,
+          detail: ""
+        },
+        oldPassword: "",
+        newPassword: ""
+      };
+      newPassword2.value = "";
+    } catch (err) {
+      console.log('修改密码失败', err);
+      Alert.fire({
+        icon: 'error',
+        title: '修改資料失敗'
+      });
     }
-    editUserDataNoPass.userId = editUserData.value.userId
-    editUserDataNoPass.name = editUserData.value.name
-    editUserDataNoPass.phone = editUserData.value.phone
-    editUserDataNoPass.birthday = `${birthdate.value.year}/${birthdate.value.month}/${birthdate.value.day}`
-    editUserDataNoPass.address.zipcode = selectedZip.value
-    editUserDataNoPass.address.detail = `${selectedCity.value}${selectedDistrict.value}${detailedAddress.value}`
-    console.log(editUserDataNoPass)
-    const url = `${VITE_URL}/api/v1/user`
-    axios.put(url, editUserDataNoPass)
-      .then(res => {
-        console.log('修改資料 成功',res)
-        userInfo.value = res.data.result
-        showEditUserInfo.value = false
-        Toast.fire({
-          icon: 'success',
-          title: '修改資料成功'
-        })
-
-      })
-      .catch(err => {
-        console.log('修改資料失敗',err)
-        Alert.fire({
-          icon: 'error',
-          title: '修改資料失敗'
-        })
-      })
-  }
+  };
+  const editUserInfo = async () => {
+    const userData = {
+      userId: editUserData.value.userId,
+      name: editUserData.value.name,
+      phone: editUserData.value.phone,
+      birthday: `${birthdate.value.year}/${birthdate.value.month}/${birthdate.value.day}`,
+      address: {
+        zipcode: selectedZip.value,
+        detail: `${selectedCity.value}${selectedDistrict.value}${detailedAddress.value}`,
+      },
+    };
+  
+    try {
+      const res = await axiosEditUser(userData);
+      console.log('修改資料成功', res);
+      userInfo.value = res.data.result;
+      showEditUserInfo.value = false;
+      Toast.fire({
+        icon: 'success',
+        title: '修改資料成功',
+      });
+    } catch (err) {
+      console.log('修改資料失敗', err);
+      Alert.fire({
+        icon: 'error',
+        title: '修改資料失敗',
+      });
+    }
+  };
 
   // forgot
   const verifyEmail = async () => {
@@ -297,16 +256,23 @@ export const useUserStore = defineStore('userStore', () => {
       showLoaderOnConfirm: true,
       preConfirm: async (email: string) => {
         console.log(email)
+        const res = await axiosVerifyEmail(email)
+       if(res.data.result.isEmailExists) {
         generateEmailCode(email)
-
+       } else {
+        Swal.fire({
+          title: "Email不存在",
+          text: "請確認Email",
+          icon: "error"
+        })
+       }
       },
       allowOutsideClick: () => !Swal.isLoading()
     })
   }
   const generateEmailCode = async (email: string) => {
-    const url = `${VITE_URL}/api/v1/verify/generateEmailCode`
-    axios.post(url, email)
-    .then(res => {
+    try {
+      const res = await axiosGenerateEmailCode(email);
       console.log('已將驗證信發送到您的信箱', res)
       Swal.fire({
         title: "已將驗證信發送到您的信箱",
@@ -336,31 +302,33 @@ export const useUserStore = defineStore('userStore', () => {
           })
         }
       })
-    })
-    .catch(err => {
-      console.log('checkUser 驗證失敗', err)
-      Swal.fire({
-        title: "驗證失敗，請確認Email",
-        text: err.response.data.message,
-        icon: "error"
-      })
-    })
+    } catch (error) {
+      // console.log('checkUser 驗證失敗', err)
+      // Swal.fire({
+      //   title: "驗證失敗，請確認Email",
+      //   text: err.response.data.message,
+      //   icon: "error"
+      // })
+    }
   }
 
+
+
   const forgotPassword = async () => {
-    const url = `${VITE_URL}/api/v1/user/forgot`
-    axios.get(url, {})
-      .then(res => {
-        console.log('checkUser 驗證成功', res)
-        isChecked.value = true
-      })
-      .catch(err => {
-        console.log('checkUser 驗證失敗', err)
-      })
+    try {
+      await forgotPassword();
+      Toast.fire({
+        icon: 'success',
+        title: '重置密碼郵件已發送，請檢查您的郵箱。'
+      });
+    } catch (error) {
+      //
+    }
   }
 
   return {
     // login
+    loginLoading,
     loginData,
     userInfo,
     rememberMe,
@@ -368,9 +336,14 @@ export const useUserStore = defineStore('userStore', () => {
     logout,
 
     // signup
+    signupLoading,
+    signupName,
+    signupEmail,
+    signupPassword,
+    passwordConfirm,
+    signupPhone,
     signupData,
     signupStep,
-    passwordConfirm,
     birthdate,
     selectedCity,
     detailedAddress,
