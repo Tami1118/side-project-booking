@@ -43,7 +43,7 @@ export const useFoodStore = defineStore('foodStore', () => {
   const getFoods = async () => {
     try {
       console.log('getFood')
-      const url = `${VITE_URL}/api/v1/admin/culinary/`
+      const url = `/admin/culinary/`
       const res = await axios.get(url)
       foodList.value = res.data.result
       console.log('getFoods 已取得', res)
@@ -56,7 +56,7 @@ export const useFoodStore = defineStore('foodStore', () => {
    * 後台-(post)新增 佳餚資料
    */
   const createFood = () => {
-    const url = `${VITE_URL}/api/v1/admin/culinary/`
+    const url = `/admin/culinary/`
     axios.post(url, tempFood.value)
       .then((res) => {
         console.log(res)
@@ -81,7 +81,7 @@ export const useFoodStore = defineStore('foodStore', () => {
   const updateFoodType = ref<string>('')
   const editFoodId = ref<string>('')
   const editFood = () => {
-    const url = `${VITE_URL}/api/v1/admin/culinary/${editFoodId.value}`
+    const url = `/admin/culinary/${editFoodId.value}`
     axios.put(url, tempFood.value)
       .then((res) => {
         console.log('editFood 已更新',res)
@@ -104,7 +104,7 @@ export const useFoodStore = defineStore('foodStore', () => {
    * 後台-(delete)刪除 佳餚資料
    */
   const deleteFood = () => {
-    const url = `${VITE_URL}/api/v1/admin/culinary/${editFoodId.value}`
+    const url = `/admin/culinary/${editFoodId.value}`
     axios.delete(url)
       .then((res) => {
         console.log('deleteFood 已刪除',res)
@@ -128,7 +128,7 @@ export const useFoodStore = defineStore('foodStore', () => {
    * 前台-(get)取得 所有美饌列表
    */
   const getFrontFoods = () => {
-    const url = `${VITE_URL}/api/v1/home/culinary/`
+    const url = `/home/culinary/`
     axios.get(url)
       .then(res => {
         console.log('getFrontFoods 已取得美食', res)
@@ -145,7 +145,7 @@ export const useFoodStore = defineStore('foodStore', () => {
   const getFrontFood = async () => {
     // console.log('getFrontFood 單一')
     try {
-      const url = `${VITE_URL}/api/v1/culinary/`
+      const url = `/culinary/`
       const res = await axios.get(url)
       tempFood.value = res.data.result
       console.log('getFrontFood 已取得單一美食', res)
@@ -164,7 +164,7 @@ export const useFoodStore = defineStore('foodStore', () => {
     showFoodModal.value = false
     resetTempFood()
   }
-  const toogleModal = () => {
+  const toggleModal = () => {
     showFoodModal.value = !showFoodModal.value
   }
   const showDelModal = ref<boolean>(false)
@@ -198,7 +198,7 @@ export const useFoodStore = defineStore('foodStore', () => {
     showFoodModal,
     openFoodModal,
     closeFoodModal,
-    toogleModal,
+    toggleModal,
     showDelModal,
     openFoodDelModal,
     closeFoodDelModal,

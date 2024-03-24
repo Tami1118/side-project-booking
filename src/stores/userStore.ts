@@ -65,7 +65,11 @@ export const useUserStore = defineStore('userStore', () => {
       });
       router.push('/');
     } catch (error) {
-      //
+      console.log('登入失敗', error);
+      Alert.fire({
+        icon: 'error',
+        title: '登入失敗，請檢查您的帳號密碼'
+      });
     } finally {
       loginLoading.value = false;
     }
@@ -126,7 +130,11 @@ export const useUserStore = defineStore('userStore', () => {
       resetSignupForm();
       router.push('/login');
     } catch (error) {
-      //
+      console.log('註冊失敗', error);
+      Alert.fire({
+        icon: 'error',
+        title: '註冊失敗，請檢查您的資料'
+      });
     } finally { 
       signupLoading.value = false;
     }
@@ -303,12 +311,12 @@ export const useUserStore = defineStore('userStore', () => {
         }
       })
     } catch (error) {
-      // console.log('checkUser 驗證失敗', err)
-      // Swal.fire({
-      //   title: "驗證失敗，請確認Email",
-      //   text: err.response.data.message,
-      //   icon: "error"
-      // })
+      console.log('generateEmailCode 失敗', error)
+      Swal.fire({
+        title: "發送驗證碼失敗",
+        // text: "",
+        icon: "error"
+      })
     }
   }
 
