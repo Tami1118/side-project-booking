@@ -1,9 +1,9 @@
 import { ref, computed } from 'vue';
 import { defineStore } from "pinia";
-import axios from "axios";
+// import axios from 'axios'; // 之後可以拿掉
+import { axiosInstance } from '@/api/userApi';
 import { useRoute, useRouter } from "vue-router";
 
-const { VITE_URL } = import.meta.env;
 import format from "@/mixins/format";
 import { Toast, Alert } from "@/mixins/swal";
 import type { Order, TempOrder, CheckDate } from "@/interfaces/order";
@@ -160,10 +160,11 @@ export const useOrderStore = defineStore('order', () => {
     }
     try {
       isLoading.value = true
-      const url = `${VITE_URL}/api/v1/orders/`
-      const res = await axios.post(url, orderForm)
+      // const url = `/orders/`
+      // const res = await axios.post(url, orderForm)
+      const res = await axiosInstance.post('/orders/', orderForm) // 新的
       console.log('createOrder 新增成功', res)
-      isLoading.value = false
+      // isLoading.value = false // 改放在finally可以只寫一次
       cleanStorageData()
       router.push(`/booking-complete/${res.data.result._id}`)
       resetTempOrder()
@@ -173,11 +174,13 @@ export const useOrderStore = defineStore('order', () => {
       })
     } catch (err) {
       console.log('createOrder 失敗', err)
-      isLoading.value = false
+      // isLoading.value = false
       Alert.fire({
         title: '請填寫正確格式',
         icon: 'error'
       })
+    } finally {
+      isLoading.value = false
     }
   }
 
@@ -202,8 +205,9 @@ export const useOrderStore = defineStore('order', () => {
   const getFrontOrder = async () => {
     try {
       console.log('getFrontOrder 取得資料', order.value)
-      const url = `${VITE_URL}/api/v1/orders/${route.params.id}`
-      const res = await axios.get(url)
+      // const url = `/orders/${route.params.id}`
+      // const res = await axios.get(url)
+      const res = await axiosInstance.get(`/orders/${route.params.id}`)
       order.value = res.data.result
     } catch (err) {
       console.log('getFrontOrder 失敗', err)
@@ -227,8 +231,9 @@ export const useOrderStore = defineStore('order', () => {
   const orderList = ref<Order[]>([])
   const getFrontOrders = async () => {
     try {
-      const url = `${VITE_URL}/api/v1/orders/`
-      const res = await axios.get(url)
+      // const url = `/orders/`
+      // const res = await axios.get(url)
+      const res = await axiosInstance.get('/orders/')
       orderList.value = res.data.result
       // console.log('getFrontOrders 取得所有訂單', orderList.value)
     } catch (err) {
@@ -241,24 +246,38 @@ export const useOrderStore = defineStore('order', () => {
    * 
    * @param id 訂單order._id
    */
-  const deleteFrontOrder = (id: string) => {
-    const url = `${VITE_URL}/api/v1/orders/${id}`
-    axios.delete(url)
-      .then(() => {
-        // console.log('deleteFrontOrder 成功刪除',res)
-        getFrontOrders()
-        Toast.fire({
-          icon: 'success',
-          title: '成功刪除訂單'
-        })
+  const deleteFrontOrder = async(id: string) => {
+    try {
+      await axiosInstance.delete(`/orders/${id}`)
+      getFrontOrders()
+      Toast.fire({
+        icon: 'success',
+        title: '成功刪除訂單'
+      })      
+    } catch (err) { 
+      console.log('deleteFrontOrder 失敗',err)
+      Alert.fire({
+        icon: 'error',
+        title: '請重新再試一次'
       })
-      .catch(() => {
-        // console.log('deleteFrontOrder 失敗',err)
-        Alert.fire({
-          icon: 'error',
-          title: '請重新再試一次'
-        })
-      })
+    }
+    // const url = `/orders/${id}`
+    // axios.delete(url)
+    //   .then(() => {
+    //     // console.log('deleteFrontOrder 成功刪除',res)
+    //     getFrontOrders()
+    //     Toast.fire({
+    //       icon: 'success',
+    //       title: '成功刪除訂單'
+    //     })
+    //   })
+    //   .catch(() => {
+    //     // console.log('deleteFrontOrder 失敗',err)
+    //     Alert.fire({
+    //       icon: 'error',
+    //       title: '請重新再試一次'
+    //     })
+    //   })
   }
 
 
@@ -266,16 +285,22 @@ export const useOrderStore = defineStore('order', () => {
   /**
    * 後台-取得訂單列表
    */
-  const getOrders = () => {
-    const url = `${VITE_URL}/api/v1/admin/orders/`
-    axios.get(url)
-      .then(res => {
-        console.log('getOrder 訂單列表', res)
-        orderList.value = res.data.result
-      })
-      .catch(err => {
-        console.log(err)
-      })
+  const getOrders = async() => {
+    try { 
+      const res = await axiosInstance.get('/admin/orders/')
+      orderList.value = res.data.result
+    } catch (err) { 
+      console.log('getOrders 失敗',err)
+    }
+    // const url = `/admin/orders/`
+    // axios.get(url)
+    //   .then(res => {
+    //     console.log('getOrder 訂單列表', res)
+    //     orderList.value = res.data.result
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //   })
   }
 
   /**
@@ -283,24 +308,38 @@ export const useOrderStore = defineStore('order', () => {
    * 
    * @param id 訂單詳細資料
    */
-  const editOrder = () => {
-    const url = `${VITE_URL}/api/v1/admin/orders/${editOrderId.value}`
-    axios.put(url, tempOrder.value)
-      .then(res => {
-        console.log('editOrder 更新成功',res)
-        Toast.fire({
-          icon: 'success',
-          title: '更新訂單成功',
-        })
-        getOrders()
+  const editOrder = async() => {
+    try {
+      await axiosInstance.put(`/admin/orders/${editOrderId.value}`, tempOrder.value)
+      Toast.fire({
+        icon: 'success',
+        title: '更新訂單成功',
       })
-      .catch(err => {
-        console.log('editOrder 失敗',err)
-        Alert.fire({
-          icon: 'error',
-          title: '更新失敗，請稍後再試一次',
-        })
+      getOrders()
+    } catch (err) { 
+      console.log('editOrder 失敗',err)
+      Alert.fire({
+        icon: 'error',
+        title: '更新失敗，請稍後再試一次',
       })
+    }
+    // const url = `/admin/orders/${editOrderId.value}`
+    // axios.put(url, tempOrder.value)
+    //   .then(res => {
+    //     console.log('editOrder 更新成功',res)
+    //     Toast.fire({
+    //       icon: 'success',
+    //       title: '更新訂單成功',
+    //     })
+    //     getOrders()
+    //   })
+    //   .catch(err => {
+    //     console.log('editOrder 失敗',err)
+    //     Alert.fire({
+    //       icon: 'error',
+    //       title: '更新失敗，請稍後再試一次',
+    //     })
+    //   })
   }
 
   /**
@@ -308,24 +347,38 @@ export const useOrderStore = defineStore('order', () => {
    * 
    * @param id 訂單order._id
    */
-  const deleteOrder = () => {
-    const url = `${VITE_URL}/api/v1/admin/orders/${editOrderId.value}`
-    axios.delete(url)
-      .then(res => {
-        console.log('deleteOrder 刪除成功', res)
-        Toast.fire({
-          icon: 'success',
-          title: '成功刪除訂單',
-        })
-        getOrders()
+  const deleteOrder = async() => {
+    try {
+      await axiosInstance.delete(`/admin/orders/${editOrderId.value}`)
+      Toast.fire({
+        icon: 'success',
+        title: '成功刪除訂單',
       })
-      .catch(err => {
-        console.log('deleteOrder 失敗',err)
-        Alert.fire({
-          icon: 'error',
-          title: '刪除失敗，請稍後再試一次',
-        })
+      getOrders()
+    } catch (err) { 
+      console.log('deleteOrder 失敗',err)
+      Alert.fire({
+        icon: 'error',
+        title: '刪除失敗，請稍後再試一次',
       })
+    }
+    // const url = `/admin/orders/${editOrderId.value}`
+    // axios.delete(url)
+    //   .then(res => {
+    //     console.log('deleteOrder 刪除成功', res)
+    //     Toast.fire({
+    //       icon: 'success',
+    //       title: '成功刪除訂單',
+    //     })
+    //     getOrders()
+    //   })
+    //   .catch(err => {
+    //     console.log('deleteOrder 失敗',err)
+    //     Alert.fire({
+    //       icon: 'error',
+    //       title: '刪除失敗，請稍後再試一次',
+    //     })
+    //   })
   }
 
   /**
@@ -366,7 +419,7 @@ export const useOrderStore = defineStore('order', () => {
     showOrderModal.value = false
     resetTempOrder()
   }
-  const toogleModal = () => {
+  const toggleModal = () => {
     showOrderModal.value = !showOrderModal.value
   }
 
@@ -414,7 +467,7 @@ export const useOrderStore = defineStore('order', () => {
     showOrderModal,
     openOrderModal,
     closeOrderModal,
-    toogleModal,
+    toggleModal,
     showDelModal,
     openOrderDelModal,
     closeOrderDelModal,

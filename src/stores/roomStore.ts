@@ -1,9 +1,8 @@
 import { ref } from 'vue';
 import { defineStore } from "pinia";
-import axios from 'axios';
+// import axios from 'axios'; // 之後可以拿掉
+import { axiosInstance } from '@/api/userApi';
 import { useRoute } from 'vue-router';
-
-const { VITE_URL } = import.meta.env;
 import type { Room } from "@/interfaces/room";
 import { Toast, Alert } from '@/mixins/swal';
 
@@ -136,8 +135,10 @@ export const useRoomStore = defineStore('roomStore', () => {
   const getFrontRooms = async () => {
     try {
       console.log('getFrontRooms 取得資料', roomList.value)
-      const url = `${VITE_URL}/api/v1/rooms/`
-      const res = await axios.get(url)
+      // const url = `/rooms/`
+      // const res = await axios.get(url)
+      const res = await axiosInstance.get('/rooms');
+      console.log(res)
       roomList.value = res.data.result
     } catch (err) {
       console.log('getFrontRooms 失敗', err)
@@ -151,8 +152,9 @@ export const useRoomStore = defineStore('roomStore', () => {
   const getFrontRoom = async () => {
     try {
       console.log('getFrontRoom 取得資料', roomDetail.value)
-      const url = `${VITE_URL}/api/v1/rooms/${route.params.id}`
-      const res = await axios.get(url);
+      // const url = `/rooms/${route.params.id}`
+      // const res = await axios.get(url);
+      const res = await axiosInstance.get(`/rooms/${route.params.id}`);
       roomDetail.value = res.data.result
     } catch (err) {
       console.log('getFrontRoom 失敗', err)
@@ -172,8 +174,9 @@ export const useRoomStore = defineStore('roomStore', () => {
    */
   const getRooms = async () => {
     try {
-      const url = `${VITE_URL}/api/v1/admin/rooms/`
-      const res = await axios.get(url)
+      // const url = `/admin/rooms/`
+      // const res = await axios.get(url)
+      const res = await axiosInstance.get('/admin/rooms/');
       roomList.value = res.data.result
       console.log('getRooms 成功取得資料', roomList.value)
     } catch (err) {
@@ -184,77 +187,127 @@ export const useRoomStore = defineStore('roomStore', () => {
   /**
    * 後台-(post)新增 房型資料
    */
-  const createRoom = () => {
-    // console.log('createRoom')
-    const url = `${VITE_URL}/api/v1/admin/rooms/`
-    axios.post(url, tempRoom.value)
-      .then((res) => {
-        console.log('createRoom 已新增房型', res)
-        Toast.fire({
-          icon: 'success',
-          title: '成功新增房型'
-        })
-        resetTempRoom()
-        getRooms()
+  const createRoom = async() => {
+    try {
+      const res = await axiosInstance.post('/admin/rooms/', tempRoom.value)
+      console.log('createRoom 已新增房型', res)
+      Toast.fire({
+        icon: 'success',
+        title: '成功新增房型'
       })
-      .catch((err) => {
-        console.log('createRoom 失敗', err)
-        Alert.fire({
-          icon: 'errors',
-          title: '房型新增失敗',
-          text: '格式有誤，請稍後再試一次'
-        })
+      resetTempRoom()
+      getRooms()
+    } catch (err) { 
+      console.log('createRoom 失敗', err)
+      Alert.fire({
+        icon: 'errors',
+        title: '房型新增失敗',
+        text: '格式有誤，請稍後再試一次'
       })
+    }
+    // 舊的
+    // const url = `/admin/rooms/`
+    // axios.post(url, tempRoom.value)
+    //   .then((res) => {
+    //     console.log('createRoom 已新增房型', res)
+    //     Toast.fire({
+    //       icon: 'success',
+    //       title: '成功新增房型'
+    //     })
+    //     resetTempRoom()
+    //     getRooms()
+    //   })
+    //   .catch((err) => {
+    //     console.log('createRoom 失敗', err)
+    //     Alert.fire({
+    //       icon: 'errors',
+    //       title: '房型新增失敗',
+    //       text: '格式有誤，請稍後再試一次'
+    //     })
+    //   })
   }
 
   /**
    * 後台-(put)編輯 房型資料
    */
   const editRoomId = ref("")
-  const editRoom = () => {
+  const editRoom = async() => {
     console.log('editRoom', editRoomId.value)
-    const url = `${VITE_URL}/api/v1/admin/rooms/${editRoomId.value}`
-    axios.put(url, tempRoom.value)
-      .then((res) => {
-        console.log('editRoomId 已更新房型', res)
-        resetTempRoom()
-        Toast.fire({
-          icon: 'success',
-          title: '更新成功',
-        })
-        getRooms()
+    try {
+      const res = await axiosInstance.put(`/admin/rooms/${editRoomId.value}`, tempRoom.value)
+      console.log('editRoomId 已更新房型', res)
+      resetTempRoom()
+      Toast.fire({
+        icon: 'success',
+        title: '更新成功',
       })
-      .catch((err) => {
-        console.log('editRoomId 失敗', err)
-        Alert.fire({
-          icon: 'error',
-          title: '更新失敗',
-          text: '請稍後再試一次',
-        })
+      getRooms()
+    } catch (err) {
+      console.log('editRoomId 失敗', err)
+      Alert.fire({
+        icon: 'error',
+        title: '更新失敗',
+        text: '請稍後再試一次',
       })
+    }
+    // 舊的
+    // const url = `/admin/rooms/${editRoomId.value}`
+    // axios.put(url, tempRoom.value)
+    //   .then((res) => {
+    //     console.log('editRoomId 已更新房型', res)
+    //     resetTempRoom()
+    //     Toast.fire({
+    //       icon: 'success',
+    //       title: '更新成功',
+    //     })
+    //     getRooms()
+    //   })
+    //   .catch((err) => {
+    //     console.log('editRoomId 失敗', err)
+    //     Alert.fire({
+    //       icon: 'error',
+    //       title: '更新失敗',
+    //       text: '請稍後再試一次',
+    //     })
+    //   })
   }
 
   /**
    * 後台-(del)刪除 單一房型資料
    */
   const deleteRoom = () => {
-    const url = `${VITE_URL}/api/v1/admin/rooms/${editRoomId.value}`
-    axios.delete(url)
-      .then((res) => {
-        console.log('deleteRoom 已刪除房型', res)
-        Toast.fire({
-          icon: 'success',
-          title: '成功刪除房型',
-        })
-        getRooms()
+    try {
+      const res = axiosInstance.delete(`/admin/rooms/${editRoomId.value}`)
+      console.log('deleteRoom 已刪除房型', res)
+      Toast.fire({
+        icon: 'success',
+        title: '成功刪除房型',
       })
-      .catch((err) => {
-        console.log('deleteRoom 失敗',err)
-        Alert.fire({
-          title: '刪除失敗，請稍後再試一次',
-          icon: 'error'
-        })
+      getRooms()
+    } catch (err) {
+      console.log('deleteRoom 失敗', err)
+      Alert.fire({
+        title: '刪除失敗，請稍後再試一次',
+        icon: 'error'
       })
+    }
+    // const url = `/admin/rooms/${editRoomId.value}`
+    // axios.delete(url)
+    //   .then((res) => {
+    //     console.log('deleteRoom 已刪除房型', res)
+    //     Toast.fire({
+    //       icon: 'success',
+    //       title: '成功刪除房型',
+    //     })
+    //     getRooms()
+    //   })
+    //   .catch((err) => {
+    //     console.log('deleteRoom 失敗',err)
+    //     Alert.fire({
+    //       title: '刪除失敗，請稍後再試一次',
+    //       icon: 'error'
+    //     })
+    //   })
   }
 
 
@@ -267,7 +320,7 @@ export const useRoomStore = defineStore('roomStore', () => {
     showRoomModal.value = false
     resetTempRoom()
   }
-  const toogleModal = () => {
+  const toggleModal = () => {
     showRoomModal.value = !showRoomModal.value
   }
 
@@ -318,7 +371,7 @@ export const useRoomStore = defineStore('roomStore', () => {
     showRoomModal,
     openRoomModal,
     closeRoomModal,
-    toogleModal,
+    toggleModal,
     showDelModal,
     openRoomDelModal,
     closeRoomDelModal,

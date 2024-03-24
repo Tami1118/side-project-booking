@@ -20,7 +20,7 @@ const isPhone = (value: string) => {
 // 取得子元件資料事件
 const userAddressRef = ref();
 const getUser = () => {
-  const url = `${VITE_URL}/api/v1/user`
+  const url = `/user`
   axios.get(url)
     .then(res => {
       userInfo.value = res.data.result
