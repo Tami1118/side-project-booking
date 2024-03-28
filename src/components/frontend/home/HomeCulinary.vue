@@ -10,7 +10,7 @@ const foodList = ref<SupplyInfo[]>(supplyInfo);
 </script>
 
 <template>
-  <section class="bg-primary-10">
+  <section class="bg-primary-10 overflow-hidden">
     <div class="home-container ms-auto py-20 lg:py-30 ps-4 xl:ps-0 overflow-hidden">
       <div class="flex gap-6 items-center mb-10 lg:mb-20">
         <h2 class="text-primary-100 text-8 lg:text-12 font-bold">佳餚<br>美饌</h2>
