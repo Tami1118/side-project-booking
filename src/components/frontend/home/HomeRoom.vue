@@ -29,7 +29,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section class="bg-neutral" v-if="roomList">
+  <section class="bg-neutral overflow-hidden" v-if="roomList">
     <div class="home-container py-20 lg:py-30 px-4 lg:px-0 text-white">
       <Swiper :navigation="navigation"
               :spaceBetween="30"

@@ -24,17 +24,17 @@ import { useOrderStore } from "@/stores/orderStore";
 const orderStore = useOrderStore();
 const getStorageData = orderStore.getStorageData;
 const createOrder = orderStore.createOrder;
-const { peopleNum, bookingDate, isLoading, userInfo, selectDistrict, addressDetail } = storeToRefs(orderStore);
+const { peopleNum, bookingDate, isLoading, selectDistrict, addressDetail } = storeToRefs(orderStore);
 
 // 確保所有欄位都有值
 const isFormAll = computed(() => {
-  return userInfo.value.name && userInfo.value.phone && userInfo.value.email && selectDistrict.value && addressDetail.value;
+  return userInfoTemp.value.name && userInfoTemp.value.phone && userInfoTemp.value.email && selectDistrict.value && addressDetail.value;
 });
 
 // 預約前驗證會員是否已登入
 import { useUserStore } from "@/stores/userStore";
 const userStore = useUserStore();
-const { isChecked } = storeToRefs(userStore);
+const { isChecked, userInfoTemp } = storeToRefs(userStore);
 const checkUser = userStore.checkUser;
 const isLogin = () => {
   if (isChecked.value) {
