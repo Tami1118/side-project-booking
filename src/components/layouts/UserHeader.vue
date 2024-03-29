@@ -41,7 +41,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <header v-if="!isModalOpen" class="top-0 left-0 w-full duration-800 z-10 overflow-hidden" :class="{ 'fixed': pathName === '/' || pathName === '/room', 'sticky bg-neutral': pathName !== '/' && pathName !== '/room', 'bg-neutral': isScroll }">
+  <header v-if="!isModalOpen" class="top-0 left-0 w-full duration-800 z-10" :class="{ 'fixed': pathName === '/' || pathName === '/room', 'sticky bg-neutral': pathName !== '/' && pathName !== '/room', 'bg-neutral': isScroll }">
     <div class="px-5 lg:px-[4.166vw] py-4 lg:py-6">
       <div class="flex items-center justify-between text-white">
         <router-link to="/">
