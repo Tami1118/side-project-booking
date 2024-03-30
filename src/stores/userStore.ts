@@ -50,6 +50,11 @@ export const useUserStore = defineStore('userStore', () => {
   const loginData = ref<LoginData>({ email: '', password: '' });
   const loginLoading = ref<boolean>(false);
   const userInfo = ref<UserInfo>({});
+  const userInfoTemp = ref({
+    name: '',
+    phone: '',
+    email: ''
+  });
   const rememberMe =  ref<boolean>(false);
   const login = async () => {
     loginLoading.value = true;
@@ -339,6 +344,7 @@ export const useUserStore = defineStore('userStore', () => {
     loginLoading,
     loginData,
     userInfo,
+    userInfoTemp,
     rememberMe,
     login,
     logout,

@@ -7,7 +7,7 @@ const newsData = ref<News[]>(news);
 
 <template>
   <section class="bg-primary-10 overflow-hidden">
-    <div class="container mx-auto px-3 xl:px-0 py-20 lg:py-30 ">
+    <div class="container mx-auto px-3 xl:px-0 py-20 lg:py-30">
       <div class="flex flex-col lg:flex-row gap-10">
         <div class="w-full lg:w-2/12" data-aos="fade-right">
           <h2 class="text-primary-100 text-8 lg:text-12 font-bold mb-6 lg:mb-10">最新<br>消息</h2>

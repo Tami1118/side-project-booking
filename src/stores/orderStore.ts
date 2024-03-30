@@ -7,6 +7,7 @@ import { useRoute, useRouter } from "vue-router";
 import format from "@/mixins/format";
 import { Toast, Alert } from "@/mixins/swal";
 import type { Order, TempOrder, CheckDate } from "@/interfaces/order";
+import { useUserStore } from "@/stores/userStore";
 
 interface User {
   name: string,
@@ -18,6 +19,7 @@ interface User {
 export const useOrderStore = defineStore('order', () => {
   const route = useRoute()
   const router = useRouter()
+  const userStore = useUserStore();
   const editOrderId = ref('')
   const defaultOrder = {
     "checkInDate": "",
@@ -149,9 +151,9 @@ export const useOrderStore = defineStore('order', () => {
       peopleNum: peopleNum.value,
       roomId: route.params.id,
       userInfo: {
-        name: userInfo.value.name,
-        phone: userInfo.value.phone,
-        email: userInfo.value.email,
+        name: userStore.userInfoTemp.name,
+        phone: userStore.userInfoTemp.phone,
+        email: userStore.userInfoTemp.email,
         address: {
           zipcode: parseInt(selectDistrict.value),
           detail: addressDetail.value
