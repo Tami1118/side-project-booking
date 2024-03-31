@@ -3,6 +3,7 @@ import { watch, onMounted } from "vue";
 import { storeToRefs } from 'pinia';
 
 import LoginHeader from "@/components/layouts/LoginHeader.vue";
+import ButtonLoading from "@/components/widgets/ButtonLoading.vue";
 
 // User
 import { useUserStore } from '@/stores/userStore';
@@ -42,7 +43,7 @@ onMounted(() => {
 
 <template>
   <LoginHeader />
-
+  <ButtonLoading/>
   <div class="bg-neutral">
     <div class="flex overflow-hidden">
       <!-- 左圖 -->
@@ -105,7 +106,7 @@ onMounted(() => {
 
               </div>
               <button type="submit" class="btn-primary font-bold btn text-center mt-10 w-full" :disabled="loginLoading">
-                會員登入
+                <span>會員登入</span><ButtonLoading v-if="loginLoading"/>
               </button>
             </VForm>
 
@@ -121,3 +122,4 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
