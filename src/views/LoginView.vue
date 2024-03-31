@@ -43,7 +43,6 @@ onMounted(() => {
 
 <template>
   <LoginHeader />
-  <ButtonLoading/>
   <div class="bg-neutral">
     <div class="flex overflow-hidden">
       <!-- 左圖 -->
